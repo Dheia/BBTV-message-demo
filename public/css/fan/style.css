@@ -83,7 +83,7 @@ img.search-im {
             border: 1pxsolidrgba(0, 0, 0, .2);
             border-radius: 0.3rem;
             outline: 0;
-            background: linear-gradient(to left, #0f1e2e 0%, #0f1e2e 100%) !important;
+            background: #091625 !important;
             border: none;
         }
 
@@ -120,7 +120,7 @@ img.search-im {
         }
 
 .colname-wrapper {
-  bottom: 99px !important;
+  bottom: 99px;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -416,10 +416,9 @@ a.nav_tab {
 .nav-link:focus, .nav-link:hover {
   color: #ffffff;
 }
-.dropdown-item:focus, .dropdown-item:hover {
-  color: white;
-  background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
-}
+/*.dropdown-item:focus, .dropdown-item:hover small{
+  color: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%) !important;
+}*/
 .item:hover {
   background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
 }
@@ -563,7 +562,7 @@ i.bi {
                 color: #cd1919;
               }
               button.btn.disabled {
-                background: #363d44;
+                /*background: #363d44;*/
               }
               /*.card img {
                 width: 4%;
@@ -589,12 +588,28 @@ i.bi {
                 bottom: 18px;
                 left: 142px;
               }
+              .fa-caret-down {
+                  float: right;
+                   padding-right: 0px !important; 
+              }
               .nav-link:focus, .nav-link:hover {
                 color: #ffffff;
               }
-              .dropdown-item:focus, .dropdown-item:hover {
-                color: white;
-                background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
+              .dropdown-container {
+                  padding: 5px 12px !important;
+              }
+              .dropdown-item:focus, .dropdown-item:hover small{
+                color: #f700ab !important;
+               
+              }
+               .dropdown-item small{
+                font-family: Montserrat;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 17px;
+                letter-spacing: 0em;
+                text-align: left;
+
               }
               .item:hover {
                 background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
@@ -960,4 +975,10 @@ a.dropdown-item.dropdown-item {
 .content-wrapper{
             background: #091625;
         }
-/*sidebar*/
+.fa-caret-down {
+    /* float: right; */
+    padding-right: 0px !important;
+}
+a.list-group-item.dropdown-item {
+    padding: 8px 15px !important;
+}

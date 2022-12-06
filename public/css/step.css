@@ -342,7 +342,7 @@ ul.form-stepper>li:not(:last-of-type) {
     transition: 0.5s;
 }
 
-.form-stepper-horizontal li:not(:last-child):after   {
+/*.form-stepper-horizontal li:not(:last-child):after   {
     position: relative;
     -webkit-box-flex: 1;
     -ms-flex: 1;
@@ -350,16 +350,16 @@ ul.form-stepper>li:not(:last-of-type) {
     height: 1px;
     content: "";
     top: 25%;
-}
+}*/
 
-.form-stepper-horizontal li:after {
+/*.form-stepper-horizontal li:after {
     background-color: #dee2e6;
 }
 
 .form-stepper-horizontal li.form-stepper-completed:after {
     background-color: #4da3ff;
 }
-
+*/
 
 
 ul.form-stepper li a .form-stepper-circle {

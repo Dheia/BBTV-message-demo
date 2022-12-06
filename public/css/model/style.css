@@ -187,8 +187,12 @@ button.send-tip-btn:hover {
             color: rgba(175, 41, 144, 0.8) !important;
         }
         
-        .list-group-item.dropdown-item.active {
-            background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%) !important;
+        
+        .list-group-item.dropdown-item.active small{
+           color: #f700ab !important;
+        }
+        .list-group-item.dropdown-item.active span{
+           background-color: red !important;;
         }
 
         .fa-ellipsis-v:before,
@@ -657,17 +661,8 @@ tr:nth-child(even) {
         .nav-link:hover {
             color: #ffffff;
         } */
-        
-        .dropdown-item:focus,
-        .dropdown-item:hover {
-            color: white;
-            background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
-        }
-        
-        .item:hover {
-            background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
-        }
-        
+       
+       
         .nav-link {
             color: #fff !important;
             display: block !important;
@@ -957,11 +952,6 @@ margin-left: 13px;
             color: #ffffff;
         }
         
-        .dropdown-item:focus,
-        .dropdown-item:hover {
-            color: white;
-            background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
-        }
         
         .item:hover {
             background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
@@ -1190,9 +1180,7 @@ margin-left: 13px;
             border: 0;
         }
         
-        .nav-link {
-            color: white;
-        }
+      
         /* ul#pills-tab {
         border-bottom: 1px solid #a901a4;
       } */
@@ -1629,9 +1617,7 @@ border: 1px solid #c73ca9; */
             border: 0px;
             margin-top: 3px;
         }
-        a.list-group-item.dropdown-item {
-            border: 0px;
-        }
+       
         .explore-posts-wraper {
             margin-top: 8px;
             background: #0c1d2d;
@@ -1660,7 +1646,7 @@ border: 1px solid #c73ca9; */
 }*/
         
         span.item:hover {
-            background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
+            background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%) !important;
             color: #fff;
             text-decoration: none;
         }
@@ -2177,7 +2163,7 @@ border: 1px solid #c73ca9; */
             border: 1px solid none;
             border-radius: 0.25rem;
             box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
-            margin-right: 1rem;
+            margin-right: 0 !important;
             max-width: 140px;
             padding: 0.25rem;
         }
@@ -2190,7 +2176,7 @@ border: 1px solid #c73ca9; */
             color: red;
             font-size: .7rem;
             top: 1px;
-            right: -10px;
+            right: -8px;
             width: 20px;
             height: 20px;
             background: white;
@@ -2242,4 +2228,31 @@ border: 1px solid #c73ca9; */
             margin-top: 0;
         }
         
-        
+        /*new added*/
+    a.list-group-item.dropdown-item {
+        border: 0;
+        background: #162637 !important;
+        padding: 8px 15px !important;
+    }
+    .dropdown-item:focus, .dropdown-item:hover small{
+        color: #f700ab !important;
+    }
+    .dropdown-item small{
+        font-family: Montserrat;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+
+    }
+    .dropdown-container {
+          padding: 5px 12px !important;
+      }
+      .fa-caret-down {
+    /* float: right; */
+    padding-right: 0px !important;
+}
+a.list-group-item.dropdown-item {
+    padding: 8px 15px !important;
+}
