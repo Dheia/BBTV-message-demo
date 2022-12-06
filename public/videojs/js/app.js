@@ -145,7 +145,7 @@
 
                 /** render stateBoard */
                 app.helpers.stateBoard = new app.helpers.StateBoard('.j-state_board', {
-                    title: 'tpl_default',
+                    title: '',
                     property: {
                         'name': app.caller.full_name,
                     }
@@ -427,7 +427,7 @@
                     app.currentSession = {};
 
                     app.helpers.stateBoard.update({
-                        'title': 'tpl_default',
+                        'title': '',
                         'property': {
                             'name':  app.caller.full_name,
                         }
@@ -875,7 +875,7 @@
                 });
             } else {
                 app.helpers.stateBoard.update({
-                    title: 'tpl_default',
+                    title: '',
                     property: {
                         'name':  app.caller.full_name,
                     }

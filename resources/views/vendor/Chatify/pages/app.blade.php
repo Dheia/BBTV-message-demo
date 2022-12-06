@@ -1,4 +1,5 @@
 @if(Auth::user()->roles->first()->title == 'model'||Auth::user()->roles->first()->title == 'Model') 
+@endif
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -111,8 +112,7 @@ span.plus.price_pluse {
 
 
 </style>
-@if(Auth::user()->roles->first()->title == 'model'||Auth::user()->roles->first()->title == 'Model') 
-@endif -->
+
 @include('frontend.fan.section.head')    
 <script> 
   var userRole = {!! json_encode(Auth::user()->roles->first()->title) !!};
@@ -728,6 +728,7 @@ span.plus.price_pluse {
 <!-- Modal -->
 <div class="modal fade" id="hellomodal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="hellomodalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
+    <span class="close_calling">X</span>
     <div class="modal-content">
       <div class="modal-body"> 
         @include('vendor.Chatify.pages.calling')

@@ -315,19 +315,31 @@ b {
 .dashboard__inner {
     margin-top: 33px;
 }
-
+.close_calling {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    padding: 10px 12px;
+    color: #fff;
+    border: 1px solid;
+    cursor: pointer !important;
+    width: 35px;
+    height: 35px;
+}
 /**
  * stateBoard
  */
-.state_board {
-    padding: 10px 0 12px 0;
+    .state_board {
+        padding: 10px 0 12px 0;
 
-    font-size: 13px;
-    line-height: 1.4;
-    color: #808080;
+        font-size: 13px;
+        line-height: 1.4;
+        color: #808080;
 
-    background: #efeff4;
-}
+        background: #efeff4;
+    }
+
     .state_board .fw-link {
         margin: 0 0 0 10px;
     }
