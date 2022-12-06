@@ -42,12 +42,11 @@ class Models extends Model
         'deleted_at',
     ];
     protected $dates = [
-       
         'deleted_at',
         'created_at',
         'updated_at',
     ];
-
+ 
     public function user()
     {
         return $this->belongsTo('App\Models\User');

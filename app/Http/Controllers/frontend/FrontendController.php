@@ -299,7 +299,7 @@ class FrontendController extends Controller
         ->where('model_feeds.explore', '1')
         ->where('model_feeds.schedule_date', '<=', $current_time)
         ->groupBy('model_feeds.id')
-        ->orderBy('model_feeds.schedule_date','DESC');
+        ->orderBy('model_feeds.schedule_date','DESC')->take(6);
       
         if($request->post_type == 'video'){
             $q->where('feed_media.media_type', 'mp4');  
@@ -328,6 +328,7 @@ class FrontendController extends Controller
                  ->select('feed_id', DB::raw('count(*) as number'))
                  ->orderBy('number','desc')
                  ->groupBy('feed_id')
+                 ->take(6)
                  ->get();
                
         return view('frontend.explore',$d);
