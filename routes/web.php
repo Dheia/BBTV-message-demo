@@ -155,12 +155,15 @@ Route::group(['prefix' => '', 'as' => '.', 'middleware' => ['DashboardMiddleware
 });
 Route::POST('model-online-notify', [fandashboardController::class, 'model_online_notify']);
 Route::group(['prefix' => 'fan', 'as' => 'fan.', 'middleware' => ['auth','FanMiddleware']], function () { 
+  Route::GET('feed_impressions',[FeedsController::class,'feed_impressions']);
   Route::get('dismiss-notifications',[ModeldashboardController::class, 'dismiss_notifications']);
-
+  
   Route::get('/call', [App\Http\Controllers\VoiceController::class, 'initiateCall'])->name('initiate_call');
   Route::get('/creditcall', [App\Http\Controllers\VoiceController::class, 'creditcall'])->name('creditcall');
    Route::get('/call', [App\Http\Controllers\VoiceController::class, 'initiateCall'])->name('initiate_call');
   Route::get('sendSMS', [fandashboardController::class, 'sendsms']);
+  Route::get('add-contact-ajax',[ModeldashboardController::class, 'add_contact_ajax']);
+  Route::get('feeds-render',[ModeldashboardController::class, 'feeds_render']);
   Route::post('prefrence', [fandashboardController::class, 'prefrence']);
   Route::get('online-now',[fandashboardController::class, 'online'])->name('online-now');
   Route::get('phone-sex',[fandashboardController::class, 'phonesex'])->name('phone-sex');
@@ -170,7 +173,7 @@ Route::group(['prefix' => 'fan', 'as' => 'fan.', 'middleware' => ['auth','FanMid
   Route::resource('explore',FeedsdashboardController::class);
   Route::get('add-like',[fandashboardController::class, 'add_like']);
   Route::POST('report-post',[fandashboardController::class, 'report_post']);
-  Route::POST('model-tip',[fandashboardController::class, 'model_tip']);
+  Route::GET('model-tip',[fandashboardController::class, 'model_tip']);
   Route::get('send-message-feed',[fandashboardController::class, 'send_message']);
   Route::POST('feed-unlock',[fandashboardController::class, 'feed_lock']);
   Route::GET('add-collection',[fandashboardController::class,'add_collection'])->name('add-collection');
@@ -216,15 +219,16 @@ Route::group(['prefix' => 'model', 'as' => 'model.', 'middleware' => ['auth','Mo
   Route::get('model-availability-off',[ModeldashboardController::class, 'model_availability_off']);
   Route::resource('dashboard',ModeldashboardController::class);
   Route::resource('feeds',FeedsController::class);
+
   Route::get('explore',[ModeldashboardController::class,'explore'])->name('explore');
   Route::get('pricing',[ModeldashboardController::class,'pricing'])->name('pricing');
   Route::get('calls',[ModeldashboardController::class,'calls'])->name('calls');
   // Route::get('{slug}',[App\Http\Controllers\ProfileController::class, 'index']);
   Route::get('earnings',[ModeldashboardController::class,'earnings'])->name('earnings');
   Route::post('paymentdetails',[ModeldashboardController::class,'paymentdetails'])->name('paymentdetails');
-  Route::post('audiocalling',[ModeldashboardController::class,'audiocalling'])->name('audiocalling');
+  Route::GET('audiocalling',[ModeldashboardController::class,'audiocalling'])->name('audiocalling');
   Route::post('tip-update',[ModeldashboardController::class,'tip_update'])->name('tip-update');
-  Route::post('videocalling',[ModeldashboardController::class,'videocalling'])->name('videocalling');
+  Route::GET('videocalling',[ModeldashboardController::class,'videocalling'])->name('videocalling');
   Route::get('payout-history',[ModeldashboardController::class,'payouthistory'])->name('payout-history');
   Route::get('top-spenders',[ModeldashboardController::class,'topspenders'])->name('top-spenders');
   Route::get('leaderboard',[ModeldashboardController::class,'leaderboard'])->name('leaderboard');
@@ -234,6 +238,8 @@ Route::group(['prefix' => 'model', 'as' => 'model.', 'middleware' => ['auth','Mo
   Route::Post('updateprofile',[ModeldashboardController::class,'updateprofile'])->name('updateprofile');
   Route::post('draft-feed-post-now',[FeedsController::class,'draft_feed_post_now'])->name('draft-feed-post-now');
   Route::post('feeds-pin',[FeedsController::class,'pin'])->name('feeds-pin');
+ 
+  
   Route::get('profile-edit/{id}',[ModeldashboardController::class,'profile'])->name('profile-edit');
   Route::post('update_title',[FeedsController::class,'update_title'])->name('update_title');
   Route::post('feed-delete',[FeedsController::class,'feed_delete'])->name('feed-delete');
@@ -721,9 +727,6 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
   // User Packages
   Route::resource('packages', PackageController::class);
   // Route::get('packages/', [PackageController::class, 'index'])->name('packages.index');
-
-
-  
  
 });
 Route::group(['middleware' => ['auth','AdminDashboard']], function () {
