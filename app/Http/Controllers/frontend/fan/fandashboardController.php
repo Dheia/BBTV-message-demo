@@ -21,6 +21,7 @@ use App\Models\ModelFeed;
 use App\Models\Model_location;
 use App\Models\Contacts;
 use App\Models\User;
+use App\Models\ChMessage;
 use App\Models\Collection;
 use App\Models\Feed_unlock;
 use App\Models\Setting;
@@ -59,7 +60,7 @@ class fandashboardController extends Controller
         ->where('contacts.fan_id', Auth::user()->id)
         ->where('model_feeds.schedule_date', '<=', $current_time)
         ->groupBy('model_feeds.id')
-        ->orderBy('model_feeds.schedule_date','DESC');
+        ->orderBy('model_feeds.schedule_date','DESC')->take(5)->get();
       
         if($request->post_type == 'video'){
             $q->where('feed_media.media_type', 'mp4');  
@@ -79,7 +80,7 @@ class fandashboardController extends Controller
         }
        
         $d['explorecount']=$q->count(); 
-        $d['explore']=$q->paginate(5);
+        $d['explore']=$q;
         $data = '';
         if ($request->ajax()) {
             
@@ -99,8 +100,8 @@ class fandashboardController extends Controller
        $d['auth_id']=Auth::user()->id;
 
        
-
-     
+       $d['latestMessage']=ChMessage::where('to_id',Auth::user()->id)->orderby('created_at','desc')->first();
+//    return $d['latestMessage'];
         return view('frontend.fan.index',$d);
     }
 
@@ -142,20 +143,20 @@ class fandashboardController extends Controller
 
         $user_id= Auth::user()->id;
         $del=Prefrence::where('user_id',$user_id)->delete();
-        $prefrence["male"] = $request->male ?? '0';
-        $prefrence["female"] = $request->female ?? '0';
-        $prefrence["trans"] = $request->trans ?? '0';
+        // $prefrence["male"] = $request->male ?? '0';
+        // $prefrence["female"] = $request->female ?? '0';
+        // $prefrence["trans"] = $request->trans ?? '0';
     
-        foreach ($prefrence as $key => $value) {
-            if ($value) {
+       
+           if(!empty($request->gender)){
                 Prefrence::updateOrCreate(
                     ["user_id" => $user_id,
-                    "gender" => $key],
+                    "gender" => $request->gender],
                   
-                    ["value" => $value,]
+                   
                 );
+           
             }
-        }
         return back(); 
     }
 
@@ -367,11 +368,13 @@ class fandashboardController extends Controller
         return  redirect('/');
     }
     public function dactive(Request $request,$id)
-    {
+    { 
+        
           $user = User::where('id',$id)->first();
           $user->status=$request->status;
           $user->save();
-          return  back();
+          Auth::logout();
+          return  redirect('/');
     }
     public function waalet_status(Request $request)
     {
@@ -430,18 +433,18 @@ class fandashboardController extends Controller
         $d['userdata']=$this->getUserMeta($user_id);
         $d['loactions']=Model_location::where('user_id',$user_id)->get();
         $d['notification']=Notification::where('user_id',$user_id)->get();
-        $d['prefrence']=Prefrence::where('user_id',$user_id)->get();
-        foreach($d['prefrence'] as $item){
-            if($item->gender=='male' && $item->value=='1'){
-                $d['male']='1';
-               }
-               if($item->gender=='female' && $item->value=='1'){
-                $d['female']='1';
-               }
-               if($item->gender=='trans' && $item->value=='1'){
-                $d['trans']='1';
-               }
-        }
+        $d['prefrence']=Prefrence::where('user_id',$user_id)->first();
+        // foreach($d['prefrence'] as $item){
+        //     if($item->gender=='male' && $item->value=='1'){
+        //         $d['male']='1';
+        //        }
+        //        if($item->gender=='female' && $item->value=='1'){
+        //         $d['female']='1';
+        //        }
+        //        if($item->gender=='trans' && $item->value=='1'){
+        //         $d['trans']='1';
+        //        }
+        // }
         
     foreach($d['notification'] as $item){
        if($item->notification_type=='textmessagesms' && $item->value=='1'){
@@ -557,18 +560,18 @@ class fandashboardController extends Controller
     }
     public function model_tip(Request $request){
       
-        if (Auth::user()->wallet>=$request->tip_amount) {
+        if (Auth::user()->wallet>=$request->tipAmount) {
             $commission = Setting::pluck("value", "name");
 
-            $admin_comi=($request->tip_amount*$commission['commission'])/100;
-            $model_comi=$request->tip_amount-$admin_comi;
+            $admin_comi=($request->tipAmount*$commission['commission'])/100;
+            $model_comi=$request->tipAmount-$admin_comi;
 
             $fan_charge=User::where('id',Auth::user()->id)->first();
 
-            $fan_charge->wallet=$fan_charge->wallet-$request->tip_amount;
+            $fan_charge->wallet=$fan_charge->wallet-$request->tipAmount;
             $fan_charge->save();
 
-            $model_earning=User::where('id',$request->model_id)->first();
+            $model_earning=User::where('id',$request->modelID)->first();
             $model_earning->wallet=$model_earning->wallet + $model_comi;
             $model_earning->save();
 
@@ -576,19 +579,19 @@ class fandashboardController extends Controller
             $User_logs->method='Tip';
             $User_logs->tips_type='feed';
             $User_logs->fan_balance=$fan_charge->wallet;
-            $User_logs->message=$request->tip_mess;
+            $User_logs->message=$request->tipMessage;
             $User_logs->from=Auth::user()->id;
-            $User_logs->to=$request->model_id;
-            $User_logs->price=$request->tip_amount;
+            $User_logs->to=$request->modelID;
+            $User_logs->price=$request->tipAmount;
             $User_logs->model_earning=$model_comi;
             $User_logs->earnings	=$admin_comi;
             $User_logs->save();
               
-           return redirect()->back();
-
-           }else{
           
-            return redirect()->back()->with('error','Insufficient Credit');
+            return response()->json(['status' => 'success','wallet'=>$fan_charge->wallet]);
+           }else{
+            return response()->json(['status' => 'insufficientCredit']);
+           
           }
 
         }

@@ -417,7 +417,7 @@ class HomeController extends Controller
           
           if (Auth::user()->status=='Pending') {
             Auth::logout();
-            return redirect()->back()->with('error', 'Your account is not activated');
+            return redirect()->back()->with('error', 'Your account is not active');
           }
           if (Auth::user()->status=='Blocked') {
           
@@ -443,7 +443,7 @@ class HomeController extends Controller
               }
               if (Auth::user()->status=='Pending') {
                 Auth::logout();
-                return redirect()->back()->with('error', 'Your account is not activated');
+                return redirect()->back()->with('error', 'Your account is not active');
               }
               if (Auth::user()->status=='Blocked') {
               
@@ -502,7 +502,7 @@ class HomeController extends Controller
              'user_id'=>$user->id,
             ];
        
-        Session::flash('success', "Success");
+        Session::flash('success', "A verification link has been sent to your email account");
              
         Mail::send('mails.new_fan_mail', $details, function($message) use ($details){
             $message->to($details['email'])->subject('Thanks for sign up')->from(env('MAIL_FROM_ADDRESS'));
@@ -540,7 +540,7 @@ class HomeController extends Controller
             'last_name'     => $request->last_name,
              'email'         => $request->email,
              'phone'         => $request->phone_number,
-            'profile_image' =>$profile_image,
+            'profile_image' =>'',
             'gender'        => $request->gender,
             'user_status'   =>'unverified',
             'status'        =>'Pending',
@@ -610,32 +610,32 @@ class HomeController extends Controller
 
     // froentend user support page
 
-    public function user_support(Request $request)
-    { 
-        $request->validate([
+     public function user_support(Request $request)
+     { 
+            $request->validate([
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'message' => 'required',
-        ]);
-        $support = new User_support;
-        $support->name = $request->name;
-        $support->email = $request->email;
-        $support->phone = $request->phone;
-        $support->message = $request->message;
-        $support->save();
-        return redirect()->back()->with('message', 'Your Message Resverd successfully Our Team Contact With You Soon!');
-    }
+            ]);
+            $support = new User_support;
+            $support->name = $request->name;
+            $support->email = $request->email;
+            $support->phone = $request->phone;
+            $support->message = $request->message;
+            $support->save();
+             return redirect()->back()->with('message', 'Your Message Resverd successfully Our Team Contact With You Soon!');
+            }
 
-    public function updateCallId(Request $request)
-    {
-        # code...
-        User::updateOrCreate(['id' => $request->user_id],[
-            'call_id' => $request->call_id
-        ]);
-        return response()->json(['status' => true], 200);
-    }
+            public function updateCallId(Request $request)
+            {
+                # code...
+                User::updateOrCreate(['id' => $request->user_id],[
+                    'call_id' => $request->call_id
+                ]);
+                return response()->json(['status' => true], 200);
+            }
 
-    
 
+            
 }

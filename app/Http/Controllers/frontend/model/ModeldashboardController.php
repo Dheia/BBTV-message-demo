@@ -7,6 +7,7 @@ use App\Models\Models;
 use Carbon\Carbon;
 use App\Models\refferal_users;
 use App\Models\Page;
+use App\Models\Contacts;
 use App\Models\PayHistory;
 use App\Models\UserMeta;
 use App\Models\Model_location;
@@ -52,19 +53,20 @@ class ModeldashboardController extends Controller
 
         $user_id= Auth::user()->id;
         $data['model']=Models::where('user_id',$user_id)->first();
-
-        $d= $this->earningsshow($request);
-        // return view('frontend.model.index',$d,$data);
+        $data['d']= $this->earningsshow($request);
         return view('frontend.model.index',$data);
     }
     public function audiocalling( Request $request)
     {
-
+      
         $current=Carbon::now()->toDateTimeString();
-        $added= Carbon::now()->addHour($request->hour);
+        $added= Carbon::now()->addHour($request->phoneCallTimer);
+      
         $user_id= Auth::user()->id;
         $d['model']=Models::where('user_id',$user_id)->first();
-        if($request->calling == 0){
+
+        if($request->calling == 0)
+        {
             $d['model']->audio_call_start_time='';
             $d['model']->audio_call_end_time='';
             $d['model']->phone=$request->calling;
@@ -75,32 +77,37 @@ class ModeldashboardController extends Controller
         }
        
         $d['model']->save();
-       
-         return redirect()->back();
+        return response()->json(['status' => 'success','endTime' =>$d['model']->audio_call_end_time ]);
     }
     public function videocalling( Request $request)
     {
        
         $current=Carbon::now()->toDateTimeString();
-        $added= Carbon::now()->addHour($request->hour);
+        $added= Carbon::now()->addHour($request->phoneCallTimer);
+ 
         $user_id= Auth::user()->id;
         $d['model']=Models::where('user_id',$user_id)->first();
-        if($request->calling == 0){
-        $d['model']->video_call_starttime='';
-        $d['model']->video_call_endtime='';
-        $d['model']->video=$request->calling;
-    }else{
-        $d['model']->video_call_starttime=$current;
-        $d['model']->video_call_endtime=$added;
-        $d['model']->video=$request->calling;
-    }
+
+        if($request->calling == 0)
+        {
+            $d['model']->video_call_starttime='';
+            $d['model']->video_call_endtime='';
+            $d['model']->video=$request->calling;
+        }else{
+            $d['model']->video_call_starttime=$current;
+            $d['model']->video_call_endtime=$added;
+            $d['model']->video=$request->calling;
+        }
+      
         $d['model']->save();
-         return redirect()->back();
+        return response()->json(['status' => 'success','endTime' =>$d['model']->video_call_endtime ]);
+
+
     }
     
     public function profile(Request $request,$id)
     {
-        
+    
         $d['Orientation']=ModelOrientation::all();
         $d['ModelCategory']=ModelCategory::all();
         $d['ModelEthnicity']=ModelEthnicity::all();
@@ -113,14 +120,17 @@ class ModeldashboardController extends Controller
         $d['model_hair'] = ModelHair::where('status','active')->get();
         $d['model_lang'] = ModelLanguage::where('status','active')->get();
         $d['model_orient'] = ModelOrientation::where('status','active')->get();
+        
         $model = User::leftjoin('models', 'models.user_id', '=', 'users.id')
                     ->select('users.*','models.*','users.id as users_auto_id')
                     ->where('models.user_id', '=', $id)
                     ->where('users.id', '=', $id)
                     ->first();
                     
-                   
-       
+        if($model->profile_image==null){
+            $model->profile_image='user.png';
+        }
+        // return $model;
        $model_tags=Models::where('user_id',$id)->first();
        
        
@@ -1611,6 +1621,18 @@ class ModeldashboardController extends Controller
                
                 return 'succus';
         }
+        public function sleep_mode_off(Request $request){
+
+            $sleepMode=SleepMode::where('model_id',Auth::user()->id)->get();
+             foreach($sleepMode as $item){
+                $item->delete();
+             }
+           
+                $user=User::where('id',Auth::user()->id)->first();
+                $user->is_sleep_mode='0';
+                $user->save();
+                return 'succus';
+        }
         
         public function model_availability(Request $request){
 
@@ -1818,5 +1840,65 @@ public function dismiss_notifications(Request $request){
     }
     return redirect()->back();
 }
+public function add_contact_ajax(Request $request){
+  $Contact=Contacts::where('fan_id',Auth::user()->id)->where('model_id',$request->ModelID)->count();
+  if($Contact<=0){
+   $newContact=new Contacts;
+   $newContact->fan_id=Auth::user()->id;
+   $newContact->model_id=$request->ModelID;
+   $newContact->save();
+   return response()->json(['status' => 'added']);
+  }
 
+}
+public function feeds_render(Request $request){
+
+    $auth_id=Auth::user()->id;
+    $current_time = Carbon::now();
+
+    $explore=ModelFeed::leftjoin('users', 'users.id', '=', 'model_feeds.model_id')
+        ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
+        ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
+        ->leftjoin('contacts', 'contacts.model_id', '=', 'model_feeds.model_id')
+        ->where('model_feeds.status', '1')
+        ->where('model_feeds.explore', '1')
+        ->where('contacts.fan_id', Auth::user()->id)
+        ->where('model_feeds.schedule_date', '<=', $current_time)
+        ->groupBy('model_feeds.id')
+        ->orderBy('model_feeds.schedule_date','DESC')->skip($request->take)->take(5)->get();
+   
+   
+    $options = view("frontend.fan.render-feeds",compact('explore','auth_id'))->render();
+
+        $feed=ModelFeed::leftjoin('users', 'users.id', '=', 'model_feeds.model_id')
+        ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
+        ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
+        ->where('model_feeds.status', '1')
+        ->where('model_feeds.explore', '1')
+        ->where('model_feeds.schedule_date', '<=', $current_time)
+        ->groupBy('model_feeds.id')
+        ->orderBy('model_feeds.schedule_date','DESC')->skip($request->takeFeedPage)->take(6)->get();
+
+        
+      
+        $feedData = view("frontend.fan.render-feeds-page",compact('feed','auth_id'))->render();
+        $feedDataSecond = view("frontend.fan.render-feeds-page-2",compact('feed','auth_id'))->render();
+          
+
+        $popularSection = DB::table('model_feed_like')
+             ->select('feed_id', DB::raw('count(*) as number'))
+             ->orderBy('number','desc')
+             ->groupBy('feed_id')
+             ->skip($request->takeFeedPagePopular)
+             ->take(6)
+             ->get();  
+
+        $puplarData = view("frontend.fan.render-feeds-popular",compact('popularSection','auth_id'))->render();
+        $puplarDataSecond = view("frontend.fan.render-feeds-popular-2",compact('popularSection','auth_id'))->render();
+
+        $newTake=$request->take+'5';
+        $newTakePage=$request->takeFeedPage+'6';
+         $takePopular=$request->takeFeedPagePopular+'6';
+        return response()->json(['status' => 'added','dataRender'=>$options,'newTake'=>$newTake,'feedData'=>$feedData,'feedDataSecond'=>$feedDataSecond,'newTakePage'=>$newTakePage,'takePopular'=>$takePopular,'puplarData'=>$puplarData,'puplarDataSecond'=>$puplarDataSecond]);
+  }
 }

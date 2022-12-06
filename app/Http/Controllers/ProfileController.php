@@ -9,6 +9,7 @@ use App\Models\ModelFeed;
 use App\Models\Feed_media;
 use App\Models\LogActivity;
 use Carbon\Carbon;
+use App\Models\Contacts;
 use DateTime;
 use Auth;
 use App\Models\User_logs;
@@ -83,7 +84,8 @@ class ProfileController extends Controller
           
         }
 
-        $model_feeds= Feed_media::join('model_feeds','model_feeds.id','feed_media.feed_id')->where('model_feeds.model_id', $profile_user)->where('model_feeds.status','1')->where('model_feeds.schedule_date', '<=', $current_time)->orderBy('feed_media.created_at','DESC')->get();
+        $model_feeds= Feed_media::join('model_feeds','model_feeds.id','feed_media.feed_id')->select('model_feeds.id as org_id','model_feeds.*','feed_media.*')->where('model_feeds.model_id', $profile_user)->where('model_feeds.status','1')->where('model_feeds.schedule_date', '<=', $current_time)->orderBy('feed_media.created_at','DESC')->get();
+   
         $model_feeds_count= Feed_media::join('model_feeds','model_feeds.id','feed_media.feed_id')->where('model_feeds.model_id', $profile_user)->where('model_feeds.status','1')->where('model_feeds.schedule_date', '<=', $current_time)->orderBy('feed_media.created_at','DESC')->count();
         $d['model_feeds_video_count']=Feed_media::join('model_feeds','model_feeds.id','feed_media.feed_id')->whereIn('feed_media.media_type',['mp4','wmv'])->where('model_feeds.model_id', $profile_user)->where('model_feeds.status','1')->where('model_feeds.schedule_date', '<=', $current_time)->orderBy('feed_media.created_at','DESC')->count();
         $d['model_feeds_pic_count']=Feed_media::join('model_feeds','model_feeds.id','feed_media.feed_id')->whereIn('feed_media.media_type',['jpg','png','jpeg','gif'])->where('model_feeds.model_id', $profile_user)->where('model_feeds.status','1')->where('model_feeds.schedule_date', '<=', $current_time)->count();
@@ -136,7 +138,7 @@ $rank='0';
           
           return view('frontend/model/profile',$d);
         }else{
-
+           $d['Contact']=Contacts::where('fan_id',Auth::user()->id)->where('model_id',$profile_user)->get();
           return view('frontend/fan/profile',$d);
         }
         }else{

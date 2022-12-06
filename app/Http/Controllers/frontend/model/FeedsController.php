@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helper\Helper;
 use App\Models\ModelFeed;
+use App\Models\FeedImpressions;
 use App\Models\Feed_media;
 use App\Models\Model_feed_likes;
 use App\Models\Collection;
@@ -568,12 +569,16 @@ class FeedsController extends Controller
       }
     }
     public function feed_impressions(Request $request){
-      $feedImpressions=FeedImpressions::where('user_id',Auth::user()->id)->where('feed_id',$request->feed_id)->count();
-        if(count($feedImpressions)<=0){
+     
+      $feedImpressions=FeedImpressions::where('user_id',Auth::user()->id)->where('feed_id',$request->feedID)->count();
+   
+        if($feedImpressions<=0){
           $newImpression= new FeedImpressions;
           $newImpression->user_id=Auth::user()->id;
-          $newImpression->feed_id=$request->feed_id;
+          $newImpression->feed_id=$request->feedID;
           $newImpression->save();
+          return 'Impressions added';
       }
+      return 'Impressions already added';
     }
 }

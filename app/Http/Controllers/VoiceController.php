@@ -25,27 +25,22 @@ class VoiceController extends Controller
    */
   public function initiateCall(Request $request) {
 
-//  $sid = getenv("ACCOUNT_SID");
-// $token = getenv("AUTH_TOKEN");
-// $twilio = new Client($sid, $token);
+ $sid = getenv("ACCOUNT_SID");
+$token = getenv("AUTH_TOKEN");
+$twilio = new Client($sid, $token);
 
 
-// // $recording_settings = $twilio->video->v1->recordingSettings()->fetch();
+// $recording_settings = $twilio->video->v1->recordingSettings()->fetch();
 
-// // print($recording_settings->friendlyName);
+// print($recording_settings->friendlyName);
 
-// $call = $twilio->calls
-//                ->create($request->phone_number, // to
-//                       '+91'.Auth::user()->phone, // from
-//                         ["url" => "http://www.bbtv.com"]
-//                );
-//                return back();
-//   }
-return view('vendor/chatify/pages/calling');
-
-}
-
-
+$call = $twilio->calls
+               ->create($request->phone_number, // to
+                      '+91'.Auth::user()->phone, // from
+                        ["url" => "http://www.bbtv.com"]
+               );
+               return back();
+  }
   public function creditcall(Request $request) {
     print_r($request->userid);
     dd('ffsd');

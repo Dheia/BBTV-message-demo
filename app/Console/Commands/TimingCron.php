@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\TimeEntry;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Models;
 use App\Models\SleepMode;
 use App\Models\ModelAvailability;
 use DateTime;
@@ -46,9 +47,13 @@ class TimingCron extends Command
     {
         $dt = new DateTime();
         $laravelCronTime= $dt->format('H:i:s');
+        $laravelCronTimeDay= $dt->format('Y-m-d H:i:s');
         $userData=User::all();
         if(!empty($userData)){
             foreach($userData as $item){
+
+                //sleep mode
+
               if($item->sleepMode){
                  $sleepMode=SleepMode::where('model_id',$item->id)->first();
                     if($sleepMode->start_time<$laravelCronTime){
@@ -72,8 +77,7 @@ class TimingCron extends Command
                     }
               }
 
- //Model availabality
-
+                    //Model availabality
 
                 $DayOfWeek= Carbon::now()->format("l");
                 $ModelAvailability=ModelAvailability::where('model_id',$item->id)->where('week_day',$DayOfWeek)->first();
@@ -97,6 +101,27 @@ class TimingCron extends Command
                     }
                     $item->save();
                 }
+                
+                //model audio call or video call availability
+                  $modelData=Models::where('user_id',$item->id)->first();
+                  if($modelData){
+                   if($modelData->audio_call_end_time<$laravelCronTimeDay){
+                    $modelData->audio_call_end_time='0000-00-00 00:00:00';
+                    $modelData->phone="0";
+                    $modelData->save();
+                  
+
+                   }
+                   if($modelData->video_call_endtime<$laravelCronTimeDay){
+                    $modelData->video_call_endtime='0000-00-00 00:00:00';
+                    $modelData->video="0";
+                    $modelData->save();
+
+                   }
+                   \Log::info($modelData);
+                  }
+
+
 
             }
         }
