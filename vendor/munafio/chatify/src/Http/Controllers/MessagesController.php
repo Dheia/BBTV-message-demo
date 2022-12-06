@@ -89,6 +89,11 @@ class MessagesController extends Controller
         // User data
         if ($request['type'] == 'user') {
             $fetch = User::where('id', $request['id'])->first();
+            if($fetch->wallet_visible=='1'){
+              $wallet=$fetch->wallet.' Cr';
+            }else{
+                $wallet='';
+            }
             if($fetch){
                 $userAvatar = Chatify::getUserWithAvatar($fetch)->profile_image;
                 $number = Chatify::getUserWithAvatar($fetch)->phone;
@@ -99,6 +104,7 @@ class MessagesController extends Controller
         return Response::json([
             'favorite' => $favorite,
             'fetch' => $fetch ?? [],
+            'wallet' => $wallet,
             'user_avatar' => $userAvatar ?? null,
             'number' => $number ?? null,
         ]);
@@ -496,7 +502,7 @@ class MessagesController extends Controller
                     'from_id' => Auth::user()->id,
                     'to_id' => $request['id'],
                     'attachment_price' => $request->price,
-                    'mass_status' => '1',
+                    'mass_status' => '0',
                     'seen' => '0',
                     'attachment_type' => $type,
                     'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
@@ -537,6 +543,7 @@ class MessagesController extends Controller
                         'type' => $request['type'],
                         'from_id' => Auth::user()->id,
                         'to_id' => $request['id'],
+                        'mass_status' => '0',
                         'attachment_price' => $request->price,
                         'attachment_type' => $type,
                         'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
@@ -577,6 +584,7 @@ class MessagesController extends Controller
                         'id' => $messageID,
                         'type' => $request['type'],
                         'from_id' => Auth::user()->id,
+                        'mass_status' => '0',
                         'to_id' => $request['id'],
                         'attachment_price' => $request->price,
                         'attachment_type' => $type,
@@ -617,6 +625,7 @@ class MessagesController extends Controller
                     Chatify::newMessage([
                         'id' => $messageID,
                         'type' => $request['type'],
+                        'mass_status' => '0',
                         'from_id' => Auth::user()->id,
                         'to_id' => $request['id'],
                         'attachment_price' => $request->price,
@@ -662,7 +671,7 @@ class MessagesController extends Controller
                     'from_id' => Auth::user()->id,
                     'to_id' => $request['id'],
                     'attachment_price' => $request->price,
-                    'mass_status' => '1',
+                    'mass_status' => '0',
                     'attachment_type' => $type,
                     'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
                     'attachment' => ($attachment) ? json_encode((object)[
@@ -923,6 +932,19 @@ class MessagesController extends Controller
      */
     public function sharedPhotos(Request $request)
     {
+   
+        $ModelsPricing=Models::where('user_id',$request->user_id)->first();
+
+        if(!empty($ModelsPricing))
+        {
+            $textMsg= '$'.$ModelsPricing->cost_msg.' / msg sent';
+            $videoMsg='$'.$ModelsPricing->cost_videomsg.' / video sent';
+            $imageMsg='$'.$ModelsPricing->cost_pic.' / image sent';
+            $audioMsg='$'.$ModelsPricing->cost_audiomsg.' / audio sent';
+            $audioCall='$'.$ModelsPricing->cost_audiocall.' / minute*';
+            $videoCall='$'.$ModelsPricing->cost_videocall.' / minute*';
+        }
+
         $shared = Chatify::getSharedPhotos($request['user_id']);
         $sharedPhotos = null;
         // shared with its template
@@ -935,6 +957,12 @@ class MessagesController extends Controller
         // send the response
         return Response::json([
             'shared' => count($shared) > 0 ? $sharedPhotos : '<p class="message-hint"><span>Nothing shared yet</span></p>',
+            'textMsg'=>$textMsg??'',
+            'videoMsg'=>$videoMsg ?? '',
+            'imageMsg'=>$imageMsg ?? '',
+            'audioMsg'=>$audioMsg ?? '',
+            'audioCall'=>$audioCall ?? '',
+            'videoCall'=>$videoCall ?? '',
         ], 200);
     }
     /**
