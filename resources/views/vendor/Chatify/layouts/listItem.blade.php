@@ -63,7 +63,8 @@
 
 {{-- -------------------- Search Item -------------------- --}}
 @if($get == 'search_item')
-<table class="messenger-list-item" data-contact="{{ $user->id }}" data-callid="{{$user->call_id}}" data-username="{{$user->first_name}}">
+<table class="messenger-list-item" data-contact="{{ $user->id }}" data-callid="{{$user->call_id}}" data-username="{{$user->first_name}}"> 
+    
     <tr data-action="0">
         {{-- Avatar side --}}
         <td>

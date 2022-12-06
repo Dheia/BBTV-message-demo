@@ -196,6 +196,19 @@ div#img-preview {
     padding: 10px 65px;
     /*margin-left: 82px;*/
 }
+.ckeckfilter .filterbig-checkbox+label {
+    padding: 7px !important;
+    margin-right: 7px;
+    height: 11px !important;
+    margin-top: 0px !important;
+}
+span.minus {
+    cursor: pointer;
+}
+span.plus {
+    cursor: pointer;
+}
+
 </style>
 
 <body style="background-color: #081420">
@@ -359,8 +372,8 @@ div#img-preview {
                                                 <input type="checkbox" id="agreement"  value="0"
                                                     class="filter-checkbox filterbig-checkbox ckeckoutinpt" />
                                                 <label for="agreement"></label>
-                                                <p class="text-white mt-3 agree_text">I agreeing to our Terms of Service and
-                                Privacy Policy</p>
+                                                <p class="text-white mt-3 agree_text">I agreeing to our Terms of Service and <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank" >Privacy Policy</a></b>
+                                                    </p>
                              
                                             </div><br>
                                          

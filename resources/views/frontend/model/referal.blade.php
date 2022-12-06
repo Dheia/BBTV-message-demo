@@ -27,8 +27,8 @@
                         @endphp
                           <div class="form-group "> 
                           <div class="copy-text d-flex">
-                        <input type="text" class="form-control msg_input text" value="{{url('refferal-apply/?id=')}}{{$id}}" />
-                        <button class="btn feel-btn text-white  btn_cre fill-btn"><small>Copy Link</small></button>
+                        <input disabled type="text" class="form-control msg_input text" value="{{url('refferal-apply/?id=')}}{{$id}}" />
+                        <button class="btn feel-btn text-white  btn_cre fill-btn"  onclick="copyToClip_Referral('{{ url('refferal-apply/?id=') }}{{ $id }}')"><small>Copy Link</small></button>
                       
                     </div>
                          

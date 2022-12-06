@@ -13,9 +13,6 @@
 <script src="{{ asset('js/slidediv.js') }}"></script>
 
 <script>
- 
- 
-
         var sync1 = $("#sync1");
         var sync2 = $("#sync2");
         var slidesPerPage = 3; //globaly define number of elements per page

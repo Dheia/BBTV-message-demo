@@ -1,4 +1,4 @@
-<div class="col-sm-12 col-md-3 col-xl-3 mt-5 mb-5 model_dashboard_sidebar">
+<div class="col-sm-12 col-md-4 col-lg-4 col-xl-3 mt-5 mb-5 model_dashboard_sidebar">
   <div class="sidebar-wrapper">
     <div class="fan-menu">
       <ul class="list-group"> 
@@ -18,7 +18,7 @@
                     @endphp
         <a href="{{url('/chatify')}}"> 
                     <li class="list-group-item li_type {{ url('/chatify') == url(request()->path()) ? 'active' : '' }}">
-                    <span class="item"><i class="bi bi-chat-dots-fill"></i>Messages @if(isset($notification)) @if($notification>'0')  <p class="tipending">{{$notification}} </p> @endif @endif</span>
+                    <span class="item"><i class="bi bi-chat-dots-fill"></i>Messages @if(Auth::user()->is_sleep_mode==false) @if(isset($notification)) @if($notification>'0')  <p class="tipending">{{$notification}} </p> @endif @endif @endif</span>
                     </li></a>
 
         <a href="{{ route('model.calls') }}"
@@ -40,7 +40,7 @@
             class="list-group-item li_type {{ url('/model/tips') == url(request()->path()) ? 'active' : '' }}"
           >
           @php $tip_amount=App\Models\User_logs::where('to',Auth::user()->id)->where('method','Tip')->where('status','0')->count(); @endphp
-            <span class="item"><i class="bi bi-heart-fill"></i>Tips @if(isset($tip_amount)) @if($tip_amount>'0')  <p class="tipending">{{$tip_amount}} </p> @endif @endif</span>
+            <span class="item"><i class="bi bi-heart-fill"></i>Tips @if(Auth::user()->is_sleep_mode==false) @if(isset($tip_amount)) @if($tip_amount>'0')  <p class="tipending">{{$tip_amount}} </p> @endif @endif @endif </span>
           </li></a
         >
         <a href="{{ url('/model/pricing') }}"
@@ -232,7 +232,26 @@
   </div>
 </div>
 
+
+
+
+<script>
+// $( document ).ready(function() {
+// $(".dropdown-item").on("click", function(){
+//     $(this).closest(".list-group-item ").addClass('active');
+// });
+// });
+
+//   $(document).ready(function() {
+//   $('.fan-menu ul li .dropdown-item .active').closest('li.list-group-item').find('.list-group-item').addClass('active');
+  
+// });
+</script>
 <style>
+.dropdown-item.active>.list-group-item{
+  height: 50px;
+
+}
   @media screen and (max-width: 992px) {
     span.item {
        font-size: 11px !important;

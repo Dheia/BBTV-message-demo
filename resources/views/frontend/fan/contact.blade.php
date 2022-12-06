@@ -2,7 +2,7 @@
 @section('content')
 
   
-<div class="col-sm-12 col-md-9 col-lg-9 mt-5 mb-5">
+<div class="col-sm-12 col-md-8 col-lg-9 mt-5 mb-5">
                             <div class="heading mt-4">
                                     <h4 class="text-white"><b>Contact Fan Support</b></h4></div>
                                   <div class="card">
@@ -20,7 +20,7 @@
                                             <label>Username<span class="requir ml-1">*</span></label>
                                             <input type="text" name="name" class="form-control" placeholder="Enter your name">
                                              @error('name')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    <div class="alert alert-danger mt-1 mb-1 text-danger">{{ $message }}</div>
                     @enderror
                                           </div>
                                         </div>
@@ -29,7 +29,7 @@
                                             <label>Email Address<span class="requir ml-1">*</span></label>
                                             <input type="email" name="email" class="form-control" placeholder="Enter your email" >
                                              @error('email')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    <div class="alert alert-danger mt-1 mb-1 text-danger">{{ $message }}</div>
                     @enderror
                                           </div>
                                         </div>
@@ -41,7 +41,7 @@
     type = "number"
     maxlength = "10">
                                             @error('phone')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    <div class="alert alert-danger mt-1 mb-1 text-danger">{{ $message }}</div>
                     @enderror
                                           </div>
                                         </div>
@@ -50,7 +50,7 @@
                                             <label>Message<span class="requir ml-1">*</span></label>
                                     <textarea name="message" class="form-control" placeholder="Enter your message"></textarea>
                                      @error('message')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    <div class="alert alert-danger mt-1 mb-1 text-danger">{{ $message }}</div>
                     @enderror
                                           </div>
                                         </div>

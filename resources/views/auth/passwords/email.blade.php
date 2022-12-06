@@ -51,12 +51,18 @@
     border: 1px solid #c73ca9;
     color: #c73ca9;
 }
+/*new added*/
+.reset_pas_page{
+    background-color: #0c1d2d;
+    height: 100%;
+    padding: 132px 0px;
+}
     </style>
 </head>
 
 <body>
    
-    <div class="login-bg">
+    <div class="login-bg reset_pas_page">
       
         <div class="container">
             <div class="login-wrapper">

@@ -125,7 +125,7 @@ i.bi-pencil-square {
                                             <div class="">
                                               <a  class="edit"><i for="profile-upload-img" class="bi-pencil-square"></i></a>  
                                                   <div class="pro-img">
-                                                    <img  class="myp-picture-img"  src="{{ url('profile-image') . '/' . $model->profile_image ?? '' }}" alt="" >
+                                                    <img  class="myp-picture-img"  src="{{ url('profile-image') . '/' . $model->profile_image  }}" alt="" >
                                                   </div>
                                                              
                                                 </div>

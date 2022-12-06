@@ -1,5 +1,6 @@
 @php
 $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
+$feedmedialikes = App\Models\Model_feed_likes::where('feed_id', $value->feed_id)->count();
 @endphp
 
 @if (count($feedcount) > 1)
@@ -64,8 +65,9 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                 </div>
 
                 <div class="post-icon-wrapepr ">
-                    @php $likes_count= count($value->feedmedialikes) @endphp
-                    <a class="addwish"><i data-id="{{ $value->id ?? '' }}" data-toggle="modal" data-target="#exampleModalCenter3" class="fa fa-heart-o add-to-wishlist"></i>  @if($likes_count>999) {{app(\App\Http\Controllers\frontend\model\FeedsController::class)->likesCounter($likes_count)}} @else 
+                    @php $likes_count= $feedmedialikes @endphp
+                   
+                    <a class="addwish "><i data-id="{{ $value->id ?? '' }}" data-toggle="modal" data-target="#exampleModalCenter3" class="fa fa-heart-o add-to-wishlist"></i>  @if($likes_count>999) {{app(\App\Http\Controllers\frontend\model\FeedsController::class)->likesCounter($likes_count)}} @else 
                  {{$likes_count}}
                  @endif</a>
                     <script src="https://kit.fontawesome.com/d97b87339f.js" crossorigin="anonymous"></script>
@@ -85,6 +87,7 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
             </div>
             <div class="postimgs-wraper">
                 <p>{!! $value->description !!}
+                  
                 </p>
                 <div class="post-img-wrapper">
                     @if ($value->price > 0)
@@ -97,7 +100,7 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                             </div>
                         </div>
                     @endif
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <div id="myCarousel{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
                             @foreach ($feedcount as $valu)
@@ -113,7 +116,7 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                                         $item->media_type == 'png' or
                                         $item->media_type == 'jpeg' or
                                         $item->media_type == 'gif')
-                                        <img class="expolor-img"
+                                        <img class="expolor-img curouel-img-item"
                                             src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
                                             alt="" />
                                     @endif
@@ -131,11 +134,11 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                             @endforeach
                         </div>
                         <!-- Left and right controls -->
-                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <a class="left carousel-control" href="#myCarousel{{$value->feed_id}}" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                             <span class="sr-only">Previous</span>
                         </a>
-                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <a class="right carousel-control" href="#myCarousel{{$value->feed_id}}" data-slide="next">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                             <span class="sr-only">Next</span>
                         </a>
@@ -145,7 +148,7 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                     <input type="text" placeholder="Send a message for ${{ $value->model->cost_msg }}"
                         class="postinput" />
                     <button type="button" data-toggle="modal" data-target="#exampleModalCenter3"
-                        class="model-contect-btn send-msg"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                        class="model-contect-btn send-msg"><span class="send_msgbox"><i class="fa fa-paper-plane" aria-hidden="true"></i></span></button>
                 </div>
             </div>
             <div class="tips-add-icon-wrapper">
@@ -160,7 +163,8 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
 @else
     @php
         $pupular = App\Models\ModelFeed::where('id', $value->feed_id)->first();
-        
+        $feedmedialikes = App\Models\Model_feed_likes::where('feed_id', $value->feed_id)->count();
+     
         $total = count($explore);
         $dt = new DateTime();
         $laraveltime = $dt->format('Y-m-d H:i:s');
@@ -214,7 +218,7 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                     </small>
                 </div>
                 <div class="post-icon-wrapepr ">
-                @php $likes_count= count($value->feedmedialikes) @endphp
+                @php $likes_count= $feedmedialikes @endphp
                     <a class="addwish"><i data-id="{{ $value->id ?? '' }}" data-toggle="modal" data-target="#exampleModalCenter3"
                             class="fa fa-heart-o add-to-wishlist"></i>@if($likes_count>999) {{app(\App\Http\Controllers\frontend\model\FeedsController::class)->likesCounter($likes_count)}} @else 
                  {{$likes_count}}
@@ -230,7 +234,7 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                 </div>
             </div>
             <div class="postimgs-wraper">
-                <p>{!! $value->description !!}</p>
+                <p>{!! $value->description !!}</p> <br>           
                 <div class="post-img-wrapper">
 
                     @if ($value->price > 0)
@@ -282,8 +286,8 @@ $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
                     <input type="text" placeholder="Send a message for ${{ $value->model->cost_msg }}"
                         class="postinput" />
                     <button type="button" data-toggle="modal" data-target="#exampleModalCenter3"
-                        class="model-contect-btn send-msg"><i class="fa fa-paper-plane"
-                            aria-hidden="true"></i></button>
+                        class="model-contect-btn send-msg"><span class="send_msgbox"><i class="fa fa-paper-plane"
+                            aria-hidden="true"></i></span></button>
                 </div>
             </div>
             <div class="tips-add-icon-wrapper">

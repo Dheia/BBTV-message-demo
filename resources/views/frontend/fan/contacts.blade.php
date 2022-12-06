@@ -1,6 +1,6 @@
 @extends('frontend.fan.main')
 @section('content')
-<div class="col-sm-12 col-md-9 col-xl-9 mt-5">
+<div class="col-sm-12 col-md-8 col-xl-9 mt-5">
     <div class="col_wrapper">
       <div class="row d-flex">
         
@@ -82,7 +82,7 @@ use App\Http\Controllers\Controller;
     <div id="myModal{{$item->id}}" class="modal fade">
 	<div class="modal-dialog modal-confirm">
 		<div class="modal-content">
-			<div class="modal-header d-flex">
+			<div class="modal-header d-flex ">
 				<h4 class="modal-title w-100">Are you sure?</h4>	
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
@@ -92,7 +92,7 @@ use App\Http\Controllers\Controller;
 			<div class="modal-footer justify-content-center">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				<!-- <button type="button" class="btn btn-danger">Delete</button> -->
-                <a href="{{url('fan/delmodel',$item->id)}}" class="del_btn">Delete</a>
+                <a href="{{url('fan/delmodel',$item->id)}}" class="  del_btn">Delete</a>
 			</div>
 		</div>
 	</div>
@@ -101,20 +101,20 @@ use App\Http\Controllers\Controller;
  @else
  <h6 class="text-white">Contact list is empty</h6>
  @endif
- <div class="modal fade" id="TipPoPup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+ <div class="modal fade " id="TipPoPup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered TipPop_model" role="document">
             <div class="modal-content ">
-                <div class="modal-header ">
+                <div class="modal-header TipPop_model_header">
                     <h5 class="modal-title color-white" id="exampleModalLongTitle">Send a tip<br>
-                        <div class="tip_option d-flex">
-                            <div class="tipoption "value="1">$1</div>
-                            <div class="tipoption " value="5">$5</div>
-                            <div class="tipoption" value="10">$10</div>
-                            <div class="tipoption" value="20">$20</div>
-                            <div class="tipoption" value="50">$50</div>
-                            <div class="tipoption" value="100">$100</div>
-                        </div>
+                        <div class="tip_option d-flex text-white">
+                     <div class="tipoption tip_options text-white"value="1"><small>$1</small></div>
+                     <div class="tipoption tip_options text-white" value="5"><small>$5</small></div>
+                     <div class="tipoption tip_options text-white" value="10"><small>$10</small></div>
+                     <div class="tipoption tip_options text-white" value="20"><small>$20</small></div>
+                     <div class="tipoption tip_options text-white" value="50"><small>$50</small></div>
+                     <div class="tipoption tip_options text-white" value="100"><small>$100</small></div>
+                  </div>
                     </h5>
 
                     <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
@@ -124,10 +124,11 @@ use App\Http\Controllers\Controller;
                 <div class="modal-body">
                     <form action="{{ url('fan/model-tip') }}" method="post">
                         @csrf
-                        <label for="">Tip Amount</label>
-                        <input type="number" name="tip_amount" class="form-control tip_amount" value=""
+                        <label class="text-muted" for="">Tip Amount sdds</label>
+                        <span class="PoPup_sign text-muted " id="amount_sign">$</span>
+                        <input type="number" name="tip_amount" id="tip_fild" class="form-control tip_amount" value=""
                             placeholder=" Enter Tip amount $1-999" required min="1" max="999">
-                        <label for="" class="mt-2">What is this for?</label>
+                        <label class="text-white" for="" class="mt-2">What is this for?</label>
                         <input type="text" class="form-control" name="tip_mess" placeholder="What is this for?"
                             required>
                         <input type="hidden" class="tip_model_id" name="model_id" value="" required>
@@ -147,12 +148,47 @@ use App\Http\Controllers\Controller;
   </div>
   </div>
   </div>
-  
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+
+     $( document ).ready(function() {
+       
+           $(document).on("change blur keyup keydown",'#tip_fild',function() 
+              { 
+                 $(this).val(); 
+                  if($(this).val()!='') 
+                  { 
+                        $('.PoPup_sign').addClass('d-block');
+                  }
+                  // return $('.PoPup_sign').removeClass('d-none'); 
+                  
+                 
+              });
+                
+      
+    });
+
+    </script>
+
 @endsection
 @section('scripts')
     @parent
+
+   
 @endsection
 <style type="text/css">
+.d-none{
+    display: none !important;
+}
+
+.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
+    outline: none !important;
+}
+  //
+
  small.sm_time{
     font-size:10px;
  }
@@ -397,5 +433,47 @@ button.send-tip-btn:hover {
     line-height: 29px;
         border-radius: 6px;
     }
-    
+    /*new added*/
+ .modal-header.TipPop_model_header {
+    overflow: hidden;
+}
+.TipPop_model {
+    width: 423px;
+}
+span.PoPup_sign {
+    position: absolute;
+    left: 17px;
+    top: 54px;
+    z-index: 999;
+}
+input.form-control.tip_amount {
+    position: relative;
+}
+    /*new added*/
+    .modal-header.d-flex {
+    overflow: hidden;
+}
+.del_btn{
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+}
+span.PoPup_sign {
+    display: none;
+}
+span.PoPup_sign.text-muted{
+
+}
+.tipoption {
+    cursor: pointer;
+    border: 1px solid;
+    height: 35px !important;
+    width: 35px !important;
+    text-align: center;
+    border-radius: 50% !important;
+    padding-top: 8px !important;
+    margin-top: 6px !important;
+    margin-right: 0.91rem !important;
+}
+.tipoption small{
+    color: #ffff !important;
+}
       </style>

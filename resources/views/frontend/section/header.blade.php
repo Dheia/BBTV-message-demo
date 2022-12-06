@@ -7,7 +7,7 @@
                   <img src="{{ url('images/logo') . '/' . $logo['logo'] }}" alt="Logo" class="nav-logo" /></a>
 
               <div class="serch-wrapper">
-                  <input type="text" placeholder="Search for Models and tags" class="serch-input" id="search"
+                  <input type="text" placeholder="Search for Models and tags " class="serch-input" id="search"
                       autocomplete="off" />
                   <i class="fa fa-search serch-icon" aria-hidden="true"></i>
                   <div class="search-res wrap" id="wrap">
@@ -197,6 +197,14 @@
       a.link.btn {
           border-color #d900ae;
       }
+      /*new added*/
+      .login-btn{
+        border: 1px solid #451c4a;
+
+      }
+      i.fa.fa-search.serch-icon {
+    font-size: medium;
+}
 
      
 </style>

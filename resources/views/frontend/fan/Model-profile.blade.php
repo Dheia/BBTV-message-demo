@@ -102,6 +102,13 @@ use App\Http\Controllers\Controller;
     justify-content: space-between;
     margin: 10px 0px;
 }
+
+span.wishlist {
+    padding: 13.5px 3px 13.5px 14px;
+    background: #1a2a39;
+    border-radius: 50%;
+    margin-right: 8px;
+}
 </style>
 <div class="detailspaeg-bg">
    <div class="container">
@@ -928,37 +935,45 @@ use App\Http\Controllers\Controller;
                   @endif
                   @if(!empty($json_data['facebook']))
                   <div class="modellink-wrrap  mt-4 ">
-                     <img src="./image/ball1.png" alt="" />
+                     <img src="./image/ball3.png" alt="" />
                      <a href="">{{$json_data['facebook']}}</a>
                   </div>
                   @endif
                   @if(!empty($json_data['snapchat']))
                   <div class="modellink-wrrap mt-4 ">
-                     <img src="./image/ball3.png" alt="" />
+                     <img src="./image/ball1.png" alt="" />
                      <a href="">{{$json_data['snapchat']}}</a>
                   </div>
                   @endif
                   @if(!empty($json_data['website']))
                   <div class="modellink-wrrap mt-4 ">
-                     <img src="./image/ball3.png" alt="" />
+                     <span class="wishlist">
+                      <img src="./image/ball5.png" alt="" />
+                     </span>
                      <a href="">{{$json_data['website']}}</a>
                   </div>
                   @endif
                   @if(!empty($json_data['camsite']))
                   <div class="modellink-wrrap mt-4 ">
-                     <img src="./image/ball3.png" alt="" />
+                     <span class="wishlist">
+                     <img src="./image/ball8.png" alt="" />
+                     </span>
                      <a href="">{{$json_data['camsite']}}</a>
                   </div>
                   @endif
                   @if(!empty($json_data['spankpay']))
                   <div class="modellink-wrrap mt-4 c">
-                     <img src="./image/ball3.png" alt="" />
+                     <span class="wishlist">
+                        <img src="./image/ball10.png" alt="" />
+                     </span>
                      <a href="">{{$json_data['spankpay']}}</a>
                   </div>
                   @endif
                   @if(!empty($json_data['instagram']))
                   <div class="modellink-wrrap mt-4 ">
-                     <img src="./image/ball3.png" alt="" />
+                     <span class="wishlist">
+                        <img src="./image/ball24.png" alt="" />
+                     </span>
                      <a href="">{{$json_data['instagram']}}</a>
                   </div>
                   @endif
@@ -1152,8 +1167,8 @@ use App\Http\Controllers\Controller;
                                              </div>
                                              <p class="byloginline mb-0">
                                                 By logging in you are agreeing to our
-                                                <b class="text-white"><a class="terms_link" href="{{ url('/terms-conditions') }}">Terms of Service</a></b> and
-                                                <b><a class="terms_link" href="{{ url('/terms-conditions') }}">Privacy Policy.</a> </b>
+                                                <b class="text-white"><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Terms of Service</a></b> and
+                                                <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Privacy Policy.</a> </b>
                                              </p>
                                           </form>
                                        </div>
@@ -1211,7 +1226,7 @@ use App\Http\Controllers\Controller;
                                                          class="filter-checkbox filterbig-checkbox filter ckeckoutinpt">
                                                       <label for="checkbox-2-12"></label>
                                                       <p class=" mt-3 Service_text"> I have read and agreed to Bad Bunnies Tv.com’s
-                                                         &nbsp;&nbsp;<a class="terms_link" href="{{ url('/terms-conditions') }}"><b>Terms of Service</b></a>
+                                                         &nbsp;&nbsp;<a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank"><b>Terms of Service</b></a>
                                                       </p>
                                                    </div>
                                                 </div>

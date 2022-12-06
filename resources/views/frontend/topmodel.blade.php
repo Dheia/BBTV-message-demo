@@ -138,7 +138,7 @@ width: 545px !important;
 
       <div class="row">
         @foreach($topmodel as $key => $item)
-        @if($key>10 && $key<22) <div class="col-lg-4 col-md-4 col-sm-4 mb-4 col-6">
+        @if($key>10 && $key<22) <div class="col-lg-2 col-md-2 col-sm-4 mb-4 col-6">
           <div class="card" style="background-color: #162637 !important;  border-radius: 10px;">
             <div class="card-body p-0">
               <div class="topmodelimg-wrapepr">
@@ -166,7 +166,7 @@ width: 545px !important;
 
       <div class="row">
         @foreach($topmodel as $key => $item)
-        @if($key>20 && $key<32) <div class="col-lg-4 col-md-4 col-sm-4 mb-4 col-6">
+        @if($key>20 && $key<32) <div class="col-lg-2 col-md-2 col-sm-4 mb-4 col-6">
           <div class="card" style="background-color: #162637 !important;  border-radius: 10px;">
             <div class="card-body p-0">
               <div class="topmodelimg-wrapepr">
@@ -194,7 +194,7 @@ width: 545px !important;
 
       <div class="row">
         @foreach($topmodel as $key => $item)
-        @if($key>30 && $key<42) <div class="col-lg-4 col-md-4 col-sm-4 mb-4 col-6">
+        @if($key>30 && $key<42) <div class="col-lg-2 col-md-2 col-sm-4 mb-4 col-6">
           <div class="card" style="background-color: #162637 !important;  border-radius: 10px;">
             <div class="card-body p-0">
               <div class="topmodelimg-wrapepr">

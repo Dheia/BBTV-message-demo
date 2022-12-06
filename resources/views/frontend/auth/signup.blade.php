@@ -117,13 +117,13 @@
                                             <input type="checkbox" id="checkbox-2-12" name="readbox" value="1"
                                                 class="filter-checkbox filterbig-checkbox filter ckeckoutinpt">
                                             <label for="checkbox-2-12"></label>
-                                            <p class="Service_text mb-0"> I have read and agreed to Bad Bunnies Tv.com’s <b><a class="terms_link" href="{{ url('/terms-conditions') }}">Terms of Service</a></b>
+                                            <p class="Service_text mb-0"> I have read and agreed to Bad Bunnies Tv.com’s <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Terms of Service</a></b>
                                             </p>
                                             
                                             </div>
                                               
                                               
-                                        </div
+                                        </div>
                                             <small class="text-danger" style="margin: 0px 30px;">
                                                 @error('readbox')
                                                 {{ $message }}
@@ -211,8 +211,8 @@
                                         </div>
                                         <p class="byloginline">
                                             By logging in you are agreeing to our
-                                            <b><a class="terms_link" href="{{ url('/terms-conditions') }}">Terms of Service</a></b> and
-                                            <b> Privacy Policy. </b>
+                                            <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Terms of Service</a></b> and
+                                            <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank"> Privacy Policy. </a></b>
                                         </p>
                                     </form>
                                 </div>

@@ -67,18 +67,18 @@
    background: linear-gradient(to left, #0f1e2e 0%, #0f1e2e 100%) !important;
    border: none;
    }
-   .tipoption {
+   /*.tipoption {
    cursor: pointer;
    border: 1px solid;
    height: 40PX;
    width: 40PX;
    text-align: center;
-   border-radius: 21px;
+   border-radius: 21px;*/
    /* padding: 9px 4px; */
-   padding-top: 9px;
+ /*  padding-top: 9px;
    margin-top: 6px;
    margin-right: 16px;
-   }
+   }*/
    .credit-error {
    left: 135px;
    }
@@ -107,12 +107,55 @@
 input.form-control.tip_amount {
     position: relative;
 }
+span.send_msgbox {
+   background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%) !important;
+   padding: 7px 21px;
+   /*margin-left: 14px;*/
+   border-radius: 3px;
+   }
+.tipoption {
+    cursor: pointer;
+    border: 1px solid;
+    height: 35px !important;
+    width: 35px !important;
+    text-align: center;
+    border-radius: 50% !important;
+    padding-top: 5px !important;
+    margin-top: 6px !important;
+    margin-right: 1.15rem !important;
+}
+.tipoption small{
+    color: #ffff !important;
+}
+.tip_btn{
+       background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+}
+.tip_btn:hover{
+       color: #bf00b0 !important;
+       background: 0;
+       border: 1px solid #bf00b0;
+}
+
 span.doller_sin {
+    display: none;
     color: #fff;
     padding: 10px;
     position: absolute;
     top: 12px;
-    left: 9px;
+    left: 8.5px;
+}
+
+@media only screen and (max-width: 448px) {
+ span.send_msgbox {
+    padding: 7px 13px !important;
+}
+}
+.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
+    outline: none !important;
+    opacity: .75;
+}
+input#tips_fild {
+    padding-left: 16px;
 }
 </style>
 <script>
@@ -123,7 +166,7 @@ span.doller_sin {
        });
    });
 </script>
-<div class="col-sm-12 col-md-9 col-xl-9 pt-0">
+<div class="col-sm-12 col-md-8 col-xl-9 pt-0">
    <div id="copied-success" class="copied">
       <span>Copied!</span>
    </div>
@@ -151,45 +194,7 @@ span.doller_sin {
          </div>
       </div>
    </div>
-   <div class="modal fade" id="TipPoPup" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content ">
-            <div class="modal-header ">
-               <h5 class="modal-title color-white" id="exampleModalLongTitle">
-                  Send a tip to Christine Lewis
-                  <br>
-                  <div class="tip_option d-flex">
-                     <div class="tipoption "value="1">$1</div>
-                     <div class="tipoption " value="5">$5</div>
-                     <div class="tipoption" value="10">$10</div>
-                     <div class="tipoption" value="20">$20</div>
-                     <div class="tipoption" value="50">$50</div>
-                     <div class="tipoption" value="100">$100</div>
-                  </div>
-               </h5>
-               <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true" class="text-white">x</span>
-               </button>
-            </div>
-            <div class="modal-body">
-               <form action="{{ url('fan/model-tip') }}" method="post">
-                  @csrf
-                  <!-- <label for="">Tip Amount</label> -->
-                  <input type="number" name="tip_amount" class="form-control tip_amount mb-3" value=""
-                     placeholder=" Enter Tip amount $1-999" required min="1" max="999">
-                     <span class="doller_sin">$</span>
-                  <!-- <label for="" class="mt-2">What is this for?</label> -->
-                  <input type="text" class="form-control" name="tip_mess"
-                     placeholder="What is this for?" required>
-                  <input type="hidden" class="tip_model_id" name="model_id" value="" required>
-            </div>
-            <div class="modal-footer">
-            <button type="submit" class="btn btn-secondary">Send Tip</button> </form>
-            </div>
-         </div>
-      </div>
-   </div>
+   
    <div class="row">
       <div class="Explore-bg">
          <div class="">
@@ -197,12 +202,12 @@ span.doller_sin {
                <h1 class="explore-heading">Feed</h1>
                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                   <li class="nav-item">
-                     <a class="nav-link active" id="pills-view-tab" data-toggle="pill" href="#pills-view"
+                     <a class="nav-link feeds-all-section active" id="pills-view-tab" data-toggle="pill" href="#pills-view"
                         role="tab" aria-controls="pills-view" aria-selected="true">View Feed
                      <small>(+{{ count($explore) }}&nbsp;Posts)</small></a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" id="pills-Popular-tab" data-toggle="pill" href="#pills-Popular"
+                     <a class="nav-link feeds-pupular-section" id="pills-Popular-tab" data-toggle="pill" href="#pills-Popular"
                         role="tab" aria-controls="pills-Popular" aria-selected="false">
                      View Popular</a>
                   </li>
@@ -230,20 +235,28 @@ span.doller_sin {
                                        </p>
                                     </div>
                                     @else
-                                    <div class="column  col-lg-6 col-md-6 col-sm-12 ">
+                                   <div class="feed-page-render"> 
+                                   <input type="hidden" class="render-data-takes-page" value="6">
+                                    <div class="column first-render-data col-lg-10 col-md-10 col-sm-12 col-xl-6">
                                        @foreach ($explore as $number => $value)
                                        @if ($number % 2 != 0)
+                                      
                                        @include('frontend.fan.explore_feeds')
                                        @endif
                                        @endforeach
                                     </div>
-                                    <div class="column col-lg-6 col-md-6 col-sm-12">
+                                    <div class="column second-render-data col-lg-6 col-md-6 col-sm-12">
                                        @foreach ($explore as $number => $value)
                                        @if ($number % 2 == 0)
+                                       
                                        @include('frontend.fan.explore_feeds')
                                        @endif
                                        @endforeach
                                     </div>
+                                 </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center mt-3 pt-5">
+                                          <div class="load-more-loader"></div>
+                                       </div>
                                     @endif
                                  </div>
                               </div>
@@ -252,7 +265,8 @@ span.doller_sin {
                               aria-labelledby="pills-Popular-tab">
                               <div class="explorepost-inner-wrapper">
                                  <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                     <input type="hidden" class="render-data-takes-page-popular" value="6">
+                                    <div class="col-lg-10 col-md-10 render-popular-first-section col-sm-12 col-xl-6">
                                        @foreach ($likes as $number => $value)
                                        @if($number%2 != 0)
                                        @php
@@ -374,7 +388,7 @@ span.doller_sin {
                                                    @endif
                                                    @endforeach
                                                    @else
-                                                   <div id="myCarousel1" class="carousel slide" data-ride="carousel">
+                                                   <div id="myCarousel1{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
                                                       <!-- Indicators -->
                                                       <ol class="carousel-indicators">
                                                          @foreach ($pupular->feedmedia as $valu)
@@ -390,7 +404,7 @@ span.doller_sin {
                                                             $item->media_type == 'png' or
                                                             $item->media_type == 'jpeg' or
                                                             $item->media_type == 'gif')
-                                                            <img class="expolor-img"
+                                                            <img class="expolor-img curouel-img-item"
                                                                src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
                                                                alt="" />
                                                             @endif
@@ -408,11 +422,11 @@ span.doller_sin {
                                                          @endforeach
                                                       </div>
                                                       <!-- Left and right controls -->
-                                                      <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
+                                                      <a class="left carousel-control" href="#myCarousel1{{$value->feed_id}}" data-slide="prev">
                                                       <span class="glyphicon glyphicon-chevron-left"></span>
                                                       <span class="sr-only">Previous</span>
                                                       </a>
-                                                      <a class="right carousel-control" href="#myCarousel1" data-slide="next">
+                                                      <a class="right carousel-control" href="#myCarousel1{{$value->feed_id}}" data-slide="next">
                                                       <span class="glyphicon glyphicon-chevron-right"></span>
                                                       <span class="sr-only">Next</span>
                                                       </a>
@@ -424,7 +438,7 @@ span.doller_sin {
                                                        <input type="text " id="emoji-picker" value="" placeholder="Send a message for "
                                                            class="postinput emoji-picker-input" />
                                                        <button type="button" 
-                                                           class="model-contect-btn send-msg send-message-to-feed" value="{{$pupular->user->id}}"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                                           class="model-contect-btn send-msg send-message-to-feed" value="{{$pupular->user->id}}"> <span class="send_msgbox"><i class="fa fa-paper-plane " aria-hidden="true"></i></span></button>
                                                    </div>
                                              </div>
                                              <div class="tips-add-icon-wrapper">
@@ -452,7 +466,7 @@ span.doller_sin {
                                        @endif
                                        @endforeach
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="col-lg-10 col-md-10 col-sm-12 col-xl-6 render-popular-second-section">
                                        @foreach ($likes as $number => $value)
                                        @if($number%2 == 0)
                                        @php
@@ -655,6 +669,9 @@ span.doller_sin {
                                        @endif
                                        @endforeach
                                     </div>
+                                     <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center mt-3 pt-5">
+                                          <div class="load-more-loader"></div>
+                                       </div>
                                     @if (count($explore) < 1)
                                     <div class="empty_state">
                                        <img src="image/sad_icon.png" alt="">
@@ -1310,14 +1327,32 @@ span.doller_sin {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
    $(document).ready(function() {
        $('.recentoption').on('change', function(e) {
    
            $('#rati').submit()
        });
+       //
+
+       
+            $(document).on("change blur keyup keydown",'#tips_fild',function() 
+              { 
+                 $(this).val(); 
+                  if($(this).val()!='') 
+                  { 
+                        $('.doller_sin').addClass('d-block');
+                  }
+                  // return $('.PoPup_sign').removeClass('d-none'); 
+                  
+                 
+              });
    
-   });
+      });
    
    function openfilter() {
        document.getElementById("Filter-wrapp").style.width = "360px";

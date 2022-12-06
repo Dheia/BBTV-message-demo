@@ -13,16 +13,16 @@
                             </p>
                             <div class="footer-icons-wrapepr">
                                 <span class="footer-icons-wrap">
-                                    <a href="{{$logo['facebook']}}"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="{{$logo['facebook']}}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                                     
                                 </span>
 
                                 <span class="footer-icons-wrap">
-                                   <a href="{{$logo['twitter']}}"> <i class="fa-brands fa-twitter"></i></a>
+                                   <a href="{{$logo['twitter']}}" target="_blank"> <i class="fa-brands fa-twitter"></i></a>
                                 </span>
 
                                 <span class="footer-icons-wrap">
-                                   <a href="{{$logo['pinterest']}}"> <i class="fa-brands fa-pinterest"></i></a>
+                                   <a href="{{$logo['pinterest']}}" target="_blank"> <i class="fa-brands fa-pinterest"></i></a>
                                 </span>
                             </div>
                         </div>

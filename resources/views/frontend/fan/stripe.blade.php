@@ -45,7 +45,7 @@ button#navbtns {
     color: #fff;
     padding: 10px;
     border-radius: 8px;
-    border: 0px;
+    border: 1px solid #451c4a;
     padding-right: 26px;
     padding-left: 25px;
 }
@@ -134,7 +134,7 @@ button.packselect {
 }
 }
 </style>
- <div class="col-sm-12 col-md-9 col-xl-9 ">
+ <div class="col-sm-12 col-md-8 col-xl-9 ">
         <div class="sidebar-wrapper1" >
 <div class="onlinebg-wrapper">
 <div class="container">

@@ -54,14 +54,16 @@
    border-radius: 50%;
    }
    .input-price {
-   height: 49px;
-   width: 100px;
+   height: 42px;
+   width: 132px;
    text-align: center;
    font-size: 26px;
    border: 1px solid #ddd;
    border-radius: 4px;
    display: inline-block;
    vertical-align: middle;
+   background: #112435;
+   color: #fff;
    }
    .img-fluid.user_pro_img.m-0 {
    width: 40px !important;
@@ -279,6 +281,67 @@ a.feel-btn:hover {
     color: #c7009c !important;
     background: 0 !important;
 }
+.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
+    color: rgb(139 144 151 / 70%) !important;
+    content: attr(data-mce-placeholder);
+    position: absolute;
+}
+.mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
+    left: 1px;
+    color: rgb(139 144 151 / 70%) !important;
+}
+body#tinymce::before {
+    color: #f45515 !important;
+}
+.tox-dialog {
+    background: #091625 !important;
+}
+div.tox-tab {
+    color: #fff !important;
+}
+.tox-dialog__header {
+    background-color: #091625 !important;
+    color: #fff !important;
+}
+.tox-dialog__footer {
+    background: #091625 !important;
+}
+input#form-field_1507934642131669359514419 {
+    background: #112435 !important;
+}
+input#form-field_3934584092131669359991215 {
+    background-color: #112435 !important;
+}
+body#tinymce::before {
+    color: #fff;
+}
+.text.cp_text.copy-input:focus-visible{
+   outline: none;
+
+}
+span.minus.price_minus {
+      margin: 8px -17px 0px 4px;
+    /* position: absolute; */
+    z-index: 999;
+    height: 28px;
+    width: 35px;
+    padding: 2px;
+    border: none;
+    background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
+}
+
+span.plus.price_plus {
+    margin: 8px 0px 0px -16px !important;
+    z-index: 999;
+    height: 28px;
+    width: 35px;
+    padding: 2px;
+    border: none;
+    background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
+}
+div#timer {
+    font-size: 13px;
+}
 </style>
 <div class="col-sm-12 text-white col-md-8 col-lg-9 mt-5 mb-5">
    <div class="row mb-4">
@@ -299,14 +362,14 @@ a.feel-btn:hover {
                </div>
             </div>
             <div class="post_img"><img class="img-fluid user_pro_img m-0 "
-               src="{{ url('profile-image') . '/' . Auth::user()->profile_image }}" alt="" /><small
-               class="ml-3">{{ Auth::user()->first_name }}</small></div>
+               src="@if(!empty(Auth::user()->profile_image)) {{ url('profile-image') . '/' . (Auth::user()->profile_image) }} @else {{ url('profile-image/user.png') }} @endif " alt="" /><small
+               class="ml-3">{{ Auth::user()->first_name ??'' }}</small></div>
             <div class="textarea">
                <form method="post" action="{{ route('model.feeds.store') }}" enctype="multipart/form-data"
                   id="form_submit">
                   @csrf
                   <div class="form-group">
-                     <textarea type="text" name="description" class="form-control mt-4" id="exampleInputEmail1"
+                     <textarea type="text" name="description" class="form-control mt-4" placeholder="type a message" id="exampleInputEmail1"
                         aria-describedby="emailHelp" maxlength="240"></textarea>
                   </div>
                   <div class="form-group">
@@ -326,10 +389,10 @@ a.feel-btn:hover {
                               <div class="img-thumbs img-thumbs-hidden" id="img-preview">
                                  <div class="price">
                                     <div class="number  mt-3 d-flex">
-                                       <span class="minus ">-</span>
+                                       <span class="minus price_minus">-</span>
                                        <input name="price" class="input-price" type="text"
                                           id="premium_cost" value="0.00" />
-                                       <span class="plus ml-1">+</span>
+                                       <span class="plus ml-1 price_plus">+</span>
                                     </div>
                                  </div>
                               </div>
@@ -383,12 +446,17 @@ a.feel-btn:hover {
                                      id="flexCheckChecked" name="explore">
                                  <label class="form-check-label" for="flexCheckChecked"> </label>
                                  </div> -->
-                              <div class=" sec_1 explore_checkbox ckeckfilter col-4">
+                            
+                              @if(Auth::user()->status=="Inreview") 
+                                            <p class="text-grey mt-3 ml-5">Your account is In review <br> You can't able post to explore</p>
+                                            @else
+                                            <div class=" sec_1 explore_checkbox ckeckfilter col-4">
                                  <input type="checkbox" id="checkbox-15" name="explore" value="1"
                                     class="filter-checkbox filterbig-checkbox ckeckoutinpt" />
                                  <label for="checkbox-15"></label>
-                                 <p class="text-grey mt-2">Post to Explore </p>
+                                 <p class="text-grey mt-3">Post to Explore </p>
                               </div>
+                                            @endif
                               @endif
                               <input type="hidden" id="count" value="1" name="save_as_draft">
                               <div class="time_wrapper mb-3 col-md-12 col-xl-6 col-sm-12">
@@ -412,7 +480,7 @@ a.feel-btn:hover {
                                     class="btn btn-primary post_schedule sub_btn">Schedule Post</button>
                                  <div class="select">
                                     <select class="save_val" id="purpose">
-                                       <option value="2" class="post_now_btn earning-filter-option" c>Post Now</option>
+                                       <option value="2" class="post_now_btn earning-filter-option" >Post Now</option>
                                        <option value="0" class="draft_post earning-filter-option">Save as Draft</option>
                                        <option value="1" class="schedule_post earning-filter-option">Schedule Post
                                        </option>
@@ -435,7 +503,7 @@ a.feel-btn:hover {
          $date22 = new DateTime($laraveltime1);
          $difference1 = $date22->diff($date11);
          @endphp
-         <input class="posttime1" type="hidden" value="{{ $model->audio_call_end_time}}">
+         <input class="posttime1" type="hidden" value="{{ $model->audio_call_end_time ?? ''}}">
          <input class="laraveltime1" type="hidden" value="{{ $laraveltime1 }}">
          <div class="col-12  mt-4">
             <div class="card-body text-white">
@@ -449,28 +517,28 @@ a.feel-btn:hover {
                         <div class="d-flex">
                            <small class="mode_dwitch">Phone Calls</small>
                            <div class="switch phon_switch">
-                              <input type="checkbox"  id="c2" @if( isset($model->phone) && $model->phone =="1")  checked @endif>
-                              <label class="lab_switch" for="c2"><span class="switch_span"></span></label>
+                              <input type="checkbox"  id="phone-call-ajax" @if( isset($model->phone) && $model->phone =="1")  checked @endif>
+                              <label class="lab_switch" for="phone-call-ajax"><span class="switch_span"></span></label>
                            </div>
                         </div>
                         <br>
-                        <small class="text-muted1 home-page-call-timer" >
-                           @if($model->phone == '1')
-                           <div class="d-flex pr-2" id="timer" style="float: right;" >
-                              <div id="days1">
-                              </div>
-                              <div id="hours1">
-                              </div>
-                              <div id="minutes1"></div>
-                              <div id="seconds1"></div>
-                           </div>
-                           @endif
+                        <small class="text-muted1 home-page-call-timer audio-call-timer" >
+                           <!-- @if($model->phone == '1') -->
+                           <!-- @endif -->
                         </small>
+                        <div class="d-flex pr-2 text-muted1" id="timer" style="float: right;" >
+                           <div id="days1">
+                           </div>
+                           <div id="hours1">
+                           </div>
+                           <div id="minutes1"></div>
+                           <div id="seconds1"></div>
+                        </div>
                      </div>
                   </div>
                   <div class="col-6 col-sm-6  col-md-6 col-lg-3 mt-3 d-none" id="pprice">
                      <div class="pricing">
-                        <form action="{{route('model.audiocalling')}}" method="post" id="callable">
+                        <form action="" method="post" id="callable">
                            @csrf
                            <input type="hidden" class="phour" name="hour" value="1">
                            <input type="hidden" class="calling" name="calling" value="1">
@@ -483,7 +551,7 @@ a.feel-btn:hover {
                                  <span class="quantity2" >1</span>
                                  Hour
                               </p>
-                              <button type="submit" class="feel-btn text-white mt-1">Add</button>
+                              <button type="button" class="feel-btn text-white mt-1 model-phone-call">Add</button>
                            </div>
                         </form>
                      </div>
@@ -502,26 +570,26 @@ a.feel-btn:hover {
                         <div class="d-flex">
                            <small class="mode_dwitch">Video Calls </small>
                            <div class="switch phon_switch">
-                              <input type="checkbox" id="c3" @if( isset($model->video) && $model->video =="1")  checked @endif>
-                              <label class="lab_switch" for="c3"><span class="switch_span"></span></label>
+                              <input type="checkbox" id="video-call-ajax" @if( isset($model->video) && $model->video =="1")  checked @endif>
+                              <label class="lab_switch" for="video-call-ajax"><span class="switch_span"></span></label>
                            </div>
                         </div>
                         <br>
                         <small class="text-muted1 home-page-call-timer">
-                           @if($model->video == '1')
+                         
                            <div class="d-flex pr-2" id="timer1" style="float: right;" >
                               <div id="days2"></div>
                               <div id="hours2"></div>
                               <div id="minutes2"></div>
                               <div id="seconds2"></div>
                            </div>
-                           @endif
+                         
                         </small>
                      </div>
                   </div>
                   <div class="col-6 col-sm-6  col-md-6 col-lg-3 mt-3 d-none" id="vprice">
                      <div class="pricing">
-                        <form action="{{route('model.videocalling')}}" method="post" id="videoable">
+                        <form action="" method="post" id="videoable">
                            @csrf
                            <input type="hidden" class="vhour" name="hour" value="1">
                            <input type="hidden" class="calling" name="calling" value="1">  
@@ -534,7 +602,7 @@ a.feel-btn:hover {
                                  <span class="quantity1">1</span>
                                  Hour
                               </p>
-                              <button type="submit" class=" feel-btn text-white mt-1">Add</button>
+                              <button type="button" class="model-video-call feel-btn text-white mt-1">Add</button>
                            </div>
                         </form>
                      </div>
@@ -637,7 +705,10 @@ a.feel-btn:hover {
                               alt=""></span>
                            <div class="ml-3">
                               <small class="text-muted1">Unread Messages</small>
-                              <br><small class="text-muted1">0</small>
+                              @php
+                    $notification=App\Models\ChMessage::where('to_id',Auth::user()->id)->where('seen','0')->count();
+                    @endphp
+                              <br><small class="text-muted1">@if($notification>'0') {{$notification}} @endif</small>
                            </div>
                         </div>
                         <a href="{{url('/chatify')}}" class="view "><small class="tags_data pt-3">Click to view all
@@ -709,7 +780,7 @@ a.feel-btn:hover {
                   <div class="type_input mt-4">
                      <div class="col-12 p-0">
                         <div class="form-group d-flex">
-                           <input type="" name="" value="{{ url('refferal-apply/?id=') }}{{ $id }}" class="form-control msg_input"
+                           <input type="" name="" disabled value="{{ url('refferal-apply/?id=') }}{{ $id }}" class="form-control msg_input"
                               placeholder="">
                            <button class="copy-btn btn feel-btn text-white" id="copyButton" onclick="copyToClip_Referral('{{ url('refferal-apply/?id=') }}{{ $id }}')"><small>Copy Link</small></button>
                         </div>

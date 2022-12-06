@@ -4,6 +4,39 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script>
+
+   $(window).scroll(function() {
+
+
+      var position = $(".footer-bg-wrapper").position();
+      // $( "p" ).last().text( "left: " + position.left + ", bottom: " + position.bottom );
+
+      if($(window).scrollTop() >= position.top - 400) {
+            
+         $('#exampleModalCenter3').modal('show'); 
+
+           
+      }
+   });
+
+   jQuery(document).ready(function() {
+       $('#like').click(function() {
+           console.log('liked');
+           alert('dfd');
+       });
+   });
+
+   // $(window).scroll(function() {
+
+   //    if($(window).scrollTop()+$(window).height() == $(document).height()){
+
+   //     alert('dfghfgf');
+
+   //      }
+
+   //  });
+</script>                                                                                                                                                                                                             
 <style>
    ul.mydropdown-menu {
     display: none;
@@ -101,15 +134,32 @@
    ol.carousel-indicators {
    display: none;
    }
+   input.postinput {
+    width: 83%;
+}
+span.send_msgbox {
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%) !important;
+    padding: 7px 21px;
+    /*margin-left: 14px;*/
+    border-radius: 3px;
+}
+ .send-msg .send-message-to-feed:focus {
+        outline: none;
+      }
+      button.model-contect-btn.send-msg {
+    outline: none !important;
+}
+
+@media only screen and (max-width: 448px){
+
+span.send_msgbox {
+    padding: 7px 13px !important;
+}
+}
+input.postinput {
+    font-size: 14px;
+}
 </style>
-<script>
-   jQuery(document).ready(function() {
-       $('#like').click(function() {
-           console.log('liked');
-           alert('dfd');
-       });
-   });
-</script>
 <div class="Explore-bg">
    <div class="container">
       <div class="explore-heading-wrapper">
@@ -150,6 +200,7 @@
                                  <div class="column col-lg-6 col-md-6 col-sm-12">  
                                     @foreach ($explore as $number =>  $value)
                                     @if($number%2 != 0)
+                                   
                                     @include('frontend.explore_feeds')
                                     @endif
                                     @endforeach
@@ -170,22 +221,22 @@
                            <div class="explorepost-inner-wrapper">
                               <div class="row">
                                <div class="col-lg-6 col-md-6 col-sm-12">
-@foreach ($likes as $number => $value)
-   @if($number%2 != 0)
-   @php
-   $pupular = App\Models\ModelFeed::where('id', $value->feed_id)->first();
-   $dt = new DateTime();
-   $laraveltime = $dt->format('Y-m-d H:i:s');
-   $date1 = new DateTime($pupular->schedule_date);
-   $date2 = new DateTime($laraveltime);
-   $difference = $date1->diff($date2);
-   $diffInSeconds = $difference->s; //45
-   $diffInMinutes = $difference->i; //23
-   $diffInHours = $difference->h; //8
-   $diffInDays = $difference->d; //21
-   $diffInMonths = $difference->m; //4
-   $diffInYears = $difference->y;
-   @endphp
+            @foreach ($likes as $number => $value)
+               @if($number%2 != 0)
+               @php
+               $pupular = App\Models\ModelFeed::where('id', $value->feed_id)->first();
+               $dt = new DateTime();
+               $laraveltime = $dt->format('Y-m-d H:i:s');
+               $date1 = new DateTime($pupular->schedule_date);
+               $date2 = new DateTime($laraveltime);
+               $difference = $date1->diff($date2);
+               $diffInSeconds = $difference->s; //45
+               $diffInMinutes = $difference->i; //23
+               $diffInHours = $difference->h; //8
+               $diffInDays = $difference->d; //21
+               $diffInMonths = $difference->m; //4
+               $diffInYears = $difference->y;
+               @endphp
 
    <div class="explore-posts-wraper">
       <div class="expolor-post-wraper">
@@ -287,7 +338,7 @@
               
                @else
               
-               <div id="myCarousel1" class="carousel slide" data-ride="carousel">
+               <div id="myCarousel1{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
 <!-- Indicators -->
 <ol class="carousel-indicators">
 @foreach ($pupular->feedmedia as $valu)
@@ -303,7 +354,7 @@
        $item->media_type == 'png' or
        $item->media_type == 'jpeg' or
        $item->media_type == 'gif')
-       <img class="expolor-img"
+       <img class="expolor-img curouel-img-item"
            src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
            alt="" />
    @endif
@@ -322,11 +373,11 @@
               
    </div>
    <!-- Left and right controls -->
-   <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
+   <a class="left carousel-control" href="#myCarousel1{{$value->feed_id}}" data-slide="prev">
        <span class="glyphicon glyphicon-chevron-left"></span>
        <span class="sr-only">Previous</span>
    </a>
-   <a class="right carousel-control" href="#myCarousel1" data-slide="next">
+   <a class="right carousel-control" href="#myCarousel1{{$value->feed_id}}" data-slide="next">
        <span class="glyphicon glyphicon-chevron-right"></span>
        <span class="sr-only">Next</span>
    </a>
@@ -338,7 +389,8 @@
                <input type="text"
                   placeholder="Send a message for ${{ $pupular->model->cost_msg }}"
                   class="postinput" />
-               <button type="button" data-toggle="modal" data-target="#exampleModalCenter3" class="model-contect-btn send-msg"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+               <button type="button" data-toggle="modal" data-target="#exampleModalCenter3" class="model-contect-btn send-msg">
+                  <span class="send_msgbox"><i class="fa fa-paper-plane" aria-hidden="true"></i></span></button>
             </div>
          </div>
          <div class="tips-add-icon-wrapper">
@@ -466,7 +518,7 @@
                                               
                                                @else
                                               
-                                               <div id="myCarousel1" class="carousel slide" data-ride="carousel">
+                                               <div id="myCarousel1{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
                                 <ol class="carousel-indicators">
                                 @foreach ($pupular->feedmedia as $valu)
@@ -482,7 +534,7 @@
                                        $item->media_type == 'png' or
                                        $item->media_type == 'jpeg' or
                                        $item->media_type == 'gif')
-                                       <img class="expolor-img"
+                                       <img class="expolor-img curouel-img-item"
                                            src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
                                            alt="" />
                                    @endif
@@ -501,11 +553,11 @@
                                               
                                    </div>
                                    <!-- Left and right controls -->
-                                   <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
+                                   <a class="left carousel-control" href="#myCarousel1{{$value->feed_id}}" data-slide="prev">
                                        <span class="glyphicon glyphicon-chevron-left"></span>
                                        <span class="sr-only">Previous</span>
                                    </a>
-                                   <a class="right carousel-control" href="#myCarousel1" data-slide="next">
+                                   <a class="right carousel-control" href="#myCarousel1{{$value->feed_id}}" data-slide="next">
                                        <span class="glyphicon glyphicon-chevron-right"></span>
                                        <span class="sr-only">Next</span>
                                    </a>
@@ -517,7 +569,7 @@
                                                <input type="text"
                                                   placeholder="Send a message for ${{ $pupular->model->cost_msg }}"
                                                   class="postinput" />
-                                               <button type="button" data-toggle="modal" data-target="#exampleModalCenter3" class="model-contect-btn send-msg"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                                               <button type="button" data-toggle="modal" data-target="#exampleModalCenter3" class="model-contect-btn send-msg"><span class="send_msgbox"><i class="fa fa-paper-plane" aria-hidden="true"></i></span></button>
                                             </div>
                                          </div>
                                          <div class="tips-add-icon-wrapper">
@@ -1126,8 +1178,8 @@
                                                       <input  type="password" id="log_password"class="lockpassword" required
                                                          name="log_password" required="true" aria-label="password" aria-describedby="basic-addon1">
                                                       <div class="input-group-append">
-                                                         <span class="input-group-text" onclick="password_show_hide_log();">
-                                                         <i class="bi bi-eye" id="show_eye_log"></i>
+                                                         <span class="input-group-text" onclick="password_show_hide_log_explore();">
+                                                         <i class="bi bi-eye fa-2x" id="show_eye_log"></i>
                                                          <i class="bi bi-eye-slash d-none fa-2x" id="hide_eye_log"></i>
                                                          </span>
                                                       </div>
@@ -1157,8 +1209,8 @@
                                              </div>
                                              <p class="byloginline">
                                                 By logging in you are agreeing to our
-                                                <b class="text-white"><a class="terms_link" href="{{ url('/terms-conditions') }}">Terms of Service</a></b> and
-                                                <b><a class="terms_link" href="{{ url('/terms-conditions') }}">Privacy Policy.</a> </b>
+                                                <b class="text-white"><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Terms of Service</a></b> and
+                                                <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Privacy Policy.</a> </b>
                                              </p>
                                           </form>
                                        </div>
@@ -1194,8 +1246,8 @@
                                                          <input type="password" id="password"class="lockpassword" required
                                                             name="password" required="true" aria-label="password" aria-describedby="basic-addon1" />
                                                          <div class="input-group-append">
-                                                            <span class="input-group-text" onclick="password_show_hide();">
-                                                            <i class="bi bi-eye" id="show_eye"></i>
+                                                            <span class="input-group-text" onclick="password_show_hide_explore();">
+                                                            <i class="bi bi-eye fa-2x" id="show_eye"></i>
                                                             <i class="bi bi-eye-slash d-none fa-2x" id="hide_eye"></i>
                                                             </span>
                                                          </div>
@@ -1212,7 +1264,7 @@
                                                       <input type="checkbox" id="checkbox-2-12" name="readbox" value="1"
                                                          class="filter-checkbox filterbig-checkbox  ckeckoutinpt">
                                                       <label for="checkbox-2-12"></label>
-                                                      <p class=" mt-3 Service_text"> I have read and agreed to Bad Bunnies Tv.com’s<b><a class="terms_link" href="{{ url('/terms-conditions') }}">Terms of Service</a></b>
+                                                      <p class=" mt-3 Service_text"> I have read and agreed to Bad Bunnies Tv.com’s&nbsp;<b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Terms of Service</a></b>
                                                       </p>
                                                    </div>
                                                 </div>
@@ -1232,11 +1284,12 @@
                                                    </small>
                                                    </a>
                                                    </button> -->
-                                                <div class="login-pagebtn-wrapp">
-                                                   <input type="submit" value="Sign up " class="singupbtn" name="fan">
+                                                <div class="login-pagebtn-wrapp pop_log_box">
+                                                   <input type="submit" value="Sign up " class="singupbtn mt-2" name="fan">
                                              </form>
-                                             <button value="" class="applyasmodel-btn">
-                                             <a class="Applybtn_text" href="{{url('/storeuser')}}">  Apply as a model </a></button>
+                                                <a class="Applybtn_text mt-1" href="{{url('/storeuser')}}"> 
+                                                <button value="" type="button" class="applyasmodel-btn">
+                                                 Apply as a model </button></a>
                                              </div>
                                           </div>
                                        </div>
@@ -1274,7 +1327,7 @@
    }, 3000);
 </script>
 <script type="text/javascript">
-   function password_show_hide() {
+   function password_show_hide_explore() {
    var x = document.getElementById("password");
    var show_eye = document.getElementById("show_eye");
    var hide_eye = document.getElementById("hide_eye");
@@ -1291,7 +1344,7 @@
    }
 </script>
 <script type="text/javascript">
-   function password_show_hide_log() {
+   function password_show_hide_log_explore() {
    var x = document.getElementById("log_password");
    var show_eye_log = document.getElementById("show_eye_log");
    var hide_eye_log = document.getElementById("hide_eye_log");
@@ -1306,6 +1359,7 @@
    hide_eye_log.style.display = "none";
    }
    }
+
 </script>
 </body>
 <style type="text/css">

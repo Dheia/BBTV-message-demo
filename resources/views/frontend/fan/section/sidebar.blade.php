@@ -4,13 +4,14 @@
   .col-sm-12.col-md-3.col-xl-3.mt-5.mb-5.fandashboard_sidebar {
       padding: 30px 10px ! important;
   }}
+ 
 </style>
 <div class="content-wrapper">
-    <div class="container ">
+    <div class="container warp-container">
       <div class="content">
         <div class="row ">
-          <div class="col-sm-12 col-md-3 col-xl-3 mt-5 mb-5 fandashboard_sidebar" >
-                <div class="sidebar-wrapper">
+          <div class="col-sm-12 col-md-4 col-xl-3 col-lg-3 mt-4 mb-5 fandashboard_sidebar" >
+                <div class="sidebar-wrapper mt-1">
                   <div class="fan-menu">
                     <ul class="list-group">
                     <a href="{{url('/model/dashboard')}}">

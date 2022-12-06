@@ -63,7 +63,11 @@
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade @if(!$validation) show active @endif loginform-wrapper " id="pills-home" role="tabpanel"
                                     aria-labelledby="pills-home-tab">
-
+                                    @if (Session::has('success'))
+                                    <div class="alert alert-success" id="alert">
+                                        <span>{{ Session::get('success') }}</span>
+                                    </div>
+                                    @endif
                                     @if (Session::has('error'))
                                     <div class="alert alert-danger" id="alert">
 
@@ -139,14 +143,19 @@
                                         </div>
                                         <p class="byloginline">
                                             By logging in you are agreeing to our
-                                            <b class="text-white"><a class="terms_link" href="{{ url('/terms-conditions') }}">Terms of Service</a></b> and
-                                            <b><a class="terms_link" href="{{ url('/terms-conditions') }}">Privacy Policy.</a> </b>
+                                            <b class="text-white"><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Terms of Service</a></b> and
+                                            <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank">Privacy Policy.</a> </b>
                                         </p>
                                     </form>
 
                                 </div>
                                 <div class="tab-pane fade  @if($validation)  active show @endif" id="pills-profile" role="tabpanel"
                                     aria-labelledby="pills-profile-tab">
+                                    @if (Session::has('success'))
+                                    <div class="alert alert-success" id="alert">
+                                        <span>{{ Session::get('success') }}</span>
+                                    </div>
+                                    @endif
                                     <!-- <div class="tab-pane fade loginform-wrapper" id="pills-home"
                                         role="tabpanel" aria-labelledby="pills-home-tab"> -->
                                         <form method="POST" action="{{ route('storeuser') }}">
@@ -199,7 +208,7 @@
                                                 <input type="checkbox" id="checkbox-2-12" name="readbox" value="1"
                                                     class="filter-checkbox filterbig-checkbox filter ckeckoutinpt">
                                                 <label for="checkbox-2-12"></label>
-                                                <p class="Service_text mb-0"> I have read and agreed to Bad Bunnies Tv.com’s <b><a class="terms_link" href="{{ url('/terms-conditions') }}">Terms of Service</a></b>
+                                                <p class="Service_text mb-0"> I have read and agreed to Bad Bunnies Tv.com’s <b><a class="terms_link" href="{{ url('/terms-conditions') }}" target="_blank" >Terms of Service</a></b>
                                                 </p>
                                                 
                                                 </div>

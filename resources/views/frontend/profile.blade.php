@@ -303,13 +303,16 @@ a.badge.badge-primary:hover {
     justify-content: center;
     align-items: center;
 }
+@media (max-width: 768px) {
+        .profile_image_box {    height: 440px;}}
+
 
    </style>
 <!-- copylink end -->
 <div class="detailspaeg-bg mt-5">
    <div class="container">
       <div class="row">
-         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 profile_image_box">
             <!-- copylink post -->
             <div class="model-img-wrapepr">
                @php

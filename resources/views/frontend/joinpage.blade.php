@@ -11,12 +11,205 @@
   #Error {
     color: red;
   }
+  input.file_input:before {
+    background: red;
+}
+.custom-file-input1 {
+    opacity: 0;
+}
+/*new added*/
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Browse";
+    background: #ff005e;
+    color: #fff;
+}
+.custom-file-input1:lang(en)~.custom-file-label1::after {
+content: "Browse";
+    background: #ff005e;
+    color: #fff;
+}
+label.custom-file-label {
+        background: #142639;
+    border: none;
+    height: 47px;
+    padding: 12px 0px 0px 12px;
+    text-align: left;
+    border-radius: 6px;
+}
+label.custom-file-label1 {
+        background: #142639;
+    border: none;
+    height: 47px;
+    padding: 12px 0px 0px 12px;
+    text-align: left;
+    border-radius: 6px;
+}
+.custom-file-label::after{
+    position: absolute;
+    right: 6px;
+    content: "REPLACE FILE";
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+    color: #fff;
+}
+.custom-file-label1::after{
+    position: absolute;
+    right: 6px;
+    content: "REPLACE FILE";
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+    color: #fff;
+}
+.custom-file-label {  
+  position: relative;
+    /* top: 0; */
+    /* right: 0; */
+    /* left: 0; */
+    /* z-index: 1; */
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+.custom-file-label1 {  
+  position: relative;
+    /* top: 0; */
+    /* right: 0; */
+    /* left: 0; */
+    /* z-index: 1; */
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+.custom-file-label.special::after {
+content: "REPLACE FILE";
+/* position: absolute; */
+    border: none !important;
+    top: 6px;
+    /* right: 0; */
+    /* bottom: 0; */
+    /* z-index: 3; */
+    /* display: block; */
+    /* height: calc(calc(2.25rem + 2px) - 1px * 2); */
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #fff;
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+    border-left: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: Montserrat !important;
+    font-weight: 600;
+    text-align: center !important;
+    font-size: 13px;
+    padding-top: 8px !important;
+    height: 35.63px;
+}
+  .custom-file-label::after {
+    /* position: absolute; */
+    border: none !important;
+    top: 6px;
+    /* right: 0; */
+    /* bottom: 0; */
+    /* z-index: 3; */
+    /* display: block; */
+    /* height: calc(calc(2.25rem + 2px) - 1px * 2); */
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #fff;
+    content: "CHOOSE FILE";
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+    border-left: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: Montserrat !important;
+    font-weight: 600;
+    text-align: center !important;
+    font-size: 13px;
+    padding-top: 8px !important;
+    height: 35.63px;
+}
+.custom-file-label1::after {
+    /* position: absolute; */
+    border: none !important;
+    top: 6px;
+    /* right: 0; */
+    /* bottom: 0; */
+    /* z-index: 3; */
+    /* display: block; */
+    /* height: calc(calc(2.25rem + 2px) - 1px * 2); */
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #fff;
+    content: "CHOOSE FILE";
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+    border-left: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: Montserrat !important;
+    font-weight: 600;
+    text-align: center !important;
+    font-size: 13px;
+    padding-top: 8px !important;
+    height: 35.63px;
+
+}
+.custom-file-label1.special1::after {
+    /* position: absolute; */
+    border: none !important;
+    top: 6px;
+    /* right: 0; */
+    /* bottom: 0; */
+    /* z-index: 3; */
+    /* display: block; */
+    /* height: calc(calc(2.25rem + 2px) - 1px * 2); */
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #fff;
+    content: "REPLACE FILE";
+    background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+    border-left: 1px solid #ced4da;
+    border-radius: 6px;
+    font-family: Montserrat !important;
+    font-weight: 600;
+    text-align: center !important;
+    font-size: 13px;
+    padding-top: 8px !important;
+    height: 35.63px;
+
+}
+.custom-file-input, .custom-file-input1 {
+    height: 16px !important;
+}
+.heading_sub{
+  font-family: Montserrat !important;
+  font-Weight: 700;
+  font-Size: 30px;
+  line-height:30px;
+}
+.subm_subheading{
+  font-family: Montserrat !important;
+  font-Weight: 500;
+  font-Size: 18px;
+ line-height: 21.94px;
+}
+
+.subm_desc{
+  font-family: Montserrat !important;
+  font-Weight: 400;
+  font-Size: 16px;
+line-height: 28px;
+color: #a6a8ab;
+}
 </style>
+  
 <div class="joinpage-wrapper">
   <div class="container">
     <div class="becomemodel-wrapepr">
       <div class="adultmodel-wraper">
-        <h1 class="become-hading">Become a AdultX Model</h1>
+        <h1 class="become-hading">Become a Bad Bunnies Model</h1>
         <p class="becomewrapp-para">
           Monetize communication with fans all around the world via calls,
           text, pictures and videos right from your mobile phone.
@@ -215,7 +408,7 @@
     <div id="Div2" style="display: none;">
       <div class="joinform-wrapper">
         <div class="d-flex text-white">
-          <h1 class="text-uppercase mb-3">id submission </h1>
+          <h1 class="text-uppercase mb-3 heading_sub">id submission </h1>
         </div>
 
 
@@ -224,24 +417,27 @@
           <div class="col-sm-6" id="joinformfirst">
             <div>
               <div class="sub_text text-white">
-                <h5 class="mb-2">Goverment issued ID: <span style="color:red;">*</span></h5>
-                <p class="">the should be clear,legible image of your goverment issued ID(e.g drivers license
+                <h5 class="mb-2 subm_subheading mt-2">Goverment issued ID: <span style="color:red;">*</span></h5>
+                <p class="subm_desc">the image should be clear,legible image of your goverment issued ID(e.g drivers license
                   passport).</p>
               </div>
               <div class="Stagename-wraper mt-5">
-                <input class="file_input" type="file" id="Govt_id" name="govt_id" accept="">
+                <label class="custom-file-label" for="Govt_id" id="subimg_id"> No file Choose </label>
                 <span class="Govt_id_error" id="Error"></span>
+                <input class="file_input custom-file-input" type="file" id="Govt_id" name="govt_id" accept="">
+                
               </div>
             </div>
             <div>
               <div class="sub_text text-white">
-                <h5 class="mb-2">Your holding ID:<span style="color:red;">*</span></h5>
-                <p class="">the should be clear,legible image of you holding your ID(e.g drivers license passport).
+                <h5 class="mb-2 subm_subheading">Your holding ID:&nbsp;<span style="color:red;"> *</span></h5>
+                <p class="subm_desc">the image should be clear,legible image of you holding your ID(e.g drivers license passport).
                 </p>
               </div>
               <div class="Stagename-wraper mt-5">
-                <input class="file_input" type="file" id="Hold_id" name="holding_id" accept="">
+                <label class="custom-file-label1" for="Hold_id"> No file Choose </label>
                 <span class="Hold_id_error" id="Error"></span>
+                <input class="file_input custom-file-input1" type="file" id="Hold_id" name="holding_id" accept="">
               </div>
 
             </div>
@@ -258,6 +454,51 @@
     </form>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+   $( document ).ready(function() {
+      $(".custom-file-input").on("change", function() {
+        var govt_id = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(govt_id);
+      });
+
+      $(".custom-file-input1").on("change", function() {
+        var holding_id = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label1").addClass("selected").html(holding_id);
+      });
+          //
+
+             $('#Govt_id').bind("change",function() 
+              { 
+                  var imgVal = $('#Govt_id').val(); 
+                  if(imgVal=='') 
+                  { 
+
+                  } 
+                  return $('.custom-file-label').toggleClass('special');
+                           
+
+              }); 
+                // second input
+
+             $('#Hold_id').bind("change",function() 
+              { 
+                  var imgVal = $('#Hold_id').val(); 
+                  if(imgVal=='') 
+                  { 
+                      
+                  } 
+                  return $('.custom-file-label1').toggleClass('special1');
+                           
+
+              }); 
+                
+      
+    });
+  </script>
 <script type="text/javascript">
   @endsection
 @section('scripts')

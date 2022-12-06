@@ -1,61 +1,254 @@
-<meta charset="utf-8">
-<title></title>
-<br><br><br><br><br>
 <table
-   style="max-width: 600px;box-shadow: 0 8px 24px #e5e4e6; margin: 0px auto; height:  80px; background: #fff; width: 100%;">
-   <tbody style="
-      ">
-      <!-- <tr>
-         <th style="vertical-align: middle;text-align: center;height:  80px;background-color: #000;">
-             <img src="http://adultx.eoxyslive.com/assets/images/brand/final-logo.png"
-                 style="max-width: 140px; cursor: default;">
-         </th>
-         </tr> -->
+   style="table-layout: fixed"
+   width="600"
+   border="0"
+   cellspacing="0"
+   cellpadding="0"
+   align="center"
+   >
+   <tbody>
       <tr>
-         <th style="text-align:center;padding: 20px 0px;"><img
-            src="http://adultx.eoxyslive.com/image/backend-logo.png" style="cursor: default;"
-            style="max-width: 140px; cursor: default;">
-         </th>
+         <td height="1" style="line-height: 0px; font-size: 0px">
+            <img
+               src="https://ci4.googleusercontent.com/proxy/V9p1fF0AlSJUIY1kw83WBxkUFquD6YE7KlnHKgdQ5EL23QfaYpJPchMmOIX3HUxLogb_QaKMgYOikeqPIk_FOXgcdWq1KDNFquOLZGsCc2waYeh9ygM8_KLed7A_hNpQO2gRK2WWmxs_xyLF1XU=s0-d-e1-ft#https://api.sextpanther.com/pre?fk=https://media.sextpanther.com/Email_templetes/spacer.png"
+               height="1"
+               width="600"
+               style="
+               display: block;
+               width: 600px;
+               min-width: 600px;
+               max-height: 1px;
+               "
+               border="0"
+               alt="spacer"
+               class="CToWUd"
+               data-bit="iit"
+               />
+         </td>
       </tr>
       <tr>
-         <th style="padding:40px 40px 0px 40px;">
-            <h6 style="
-               margin: 0px;
-               font-size: 18px;
-               font-family: 'Raleway', sans-serif;
-               font-weight: 600;
-               text-align: center;
-               padding: 0px 0px 25px 0px;
-               color: #ffaa2e;
-               ">Thanks for joining!</h6>
-            <h3 align="left"
-               style="margin: 0px;font-size: 32px;font-family: 'Raleway', sans-serif;font-weight: 700;text-align: center;">
-               Your Registration is Complete.
-            </h3>
-            <h6 align="left"
-               style="font-size: 15px;font-family: 'Raleway', sans-serif;font-weight: 500; color:#4c4c53;line-height: 20px;margin: 20px 0px;text-align: center;">
-               Thanks For Creating Your Bad Bunnies TV Account. To Continue, Please Verify Your Account By Clicking The
-               Button Below<br>
-            </h6>
-            <h6 align="left"
-               style="font-size: 15px; font-family: 'Raleway', sans-serif; font-weight: 400; color:#4c4c53; line-height: 20px;  margin: 20px 0px;">
-            </h6>
-         </th>
+         <td height="55">&nbsp;</td>
       </tr>
-      <tr style="
-         ">
-         <th style="">
-            <h3
-               style="margin: 10px 0px;font-size: 30px;font-family: 'Raleway', sans-serif;font-weight: 800;text-align: center;color:#2b2e3e;">
-               <br><a href="{{url('/fan-email-verify',[$user_id])}}" style="font-size: 18px;color: #fff;
-                  background-color: #ffaa2e;
-                  padding: 10px 15px;
-                  border-radius: 5px;
-                  cursor: pointer;
-                  ">Verify Your Account
-               </a>
-            </h3>
-         </th>
+      <tr>
+         <td align="center" valign="top">
+            <font color="#888888"> </font>
+            <table
+               width="100%"
+               border="0"
+               cellspacing="0"
+               cellpadding="0"
+               align="center"
+               >
+               <tbody>
+                  <tr>
+                     <td>
+                        <table
+                           style="
+                           border-top-left-radius: 10px;
+                           border-top-right-radius: 10px;
+                           background-repeat: repeat;
+                           background-image: url(https://ci3.googleusercontent.com/proxy/wNYH3OZT9Mjx0lL-6eAgSam01QXKSsVIk5MpuuGOKvHtPajPPd4L9z8YUuJCRePoQly7OcJ1LE-8kskYvzeq=s0-d-e1-ft#https://api.sextpanther.com/images/black.jpg);
+                           "
+                           width="100%"
+                           >
+                           <tbody>
+                              <tr>
+                                 <td height="8" style="line-height: 17px">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                 <td align="center">
+                                    <a href="{{url('/')}}"
+                                       ><img
+                                       width="145"
+                                       height="55"
+                                       src="http://adultx.eoxyslive.com/assets/images/brand/final-logo.png"
+                                       alt="sextpanther"
+                                       class="CToWUd"
+                                       data-bit="iit"
+                                       /></a>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td height="8" style="line-height: 7px">&nbsp;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <font color="#888888"> </font><font color="#888888"> </font
+                           ><font color="#888888"> </font>
+                        <table
+                           width="100%"
+                           border="0"
+                           cellspacing="0"
+                           cellpadding="0"
+                           style="
+                           background: #1e1e20;
+                           border-bottom: none;
+                           border-top: none;
+                           "
+                           >
+                           <tbody>
+                              <tr>
+                                 <td height="50">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                 <td align="center" valign="top"></td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <font color="#888888"> </font
+                                       ><font color="#888888"> </font>
+                                    <table
+                                       align="center"
+                                       border="0"
+                                       cellpadding="0"
+                                       cellspacing="0"
+                                       width="100%"
+                                       bgcolor="#1E1E20"
+                                       >
+                                       <tbody>
+                                          <tr>
+                                             <td align="center">
+                                                <font color="#888888"> </font>
+                                                <table
+                                                   align="center"
+                                                   border="0"
+                                                   cellpadding="0"
+                                                   cellspacing="0"
+                                                   width="500"
+                                                   >
+                                                   <tbody style="color:white;">
+                                                      <tr>
+                                                         <td height="20">&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td align="center">
+                                                         Thanks! for connecting with Bad BunniesTv
+ 
+                                                      Please verify your email address by clicking on bellow button and connect with 
+                                                      thousands of Models.
+
+                                                         Thank you!
+                                                         </td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td
+                                                            height="15"
+                                                            style="line-height: 15px"
+                                                            ></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>
+                                                           <p style="text-align: center">
+                                                             <a
+                                                               href="{{url('/fan-email-verify',[$user_id])}}"
+                                                               style="
+                                                                 background: linear-gradient(
+                                                                   to left,
+                                                                   #4c2acd 0%,
+                                                                   #af2990 100%
+                                                                 );
+                                                                 border-radius: 20px;
+                                                                 color: #fff;
+                                                                 display: inline-block;
+                                                                 font-family: sans-serif;
+                                                                 font-size: 14px;
+                                                                 font-weight: bold;
+                                                                 text-align: center;
+                                                                 text-decoration: none;
+                                                                 width: 190px;
+                                                                 font-weight: bold;
+                                                                 line-height: 40px;
+                                                                 color: #fff;
+                                                                 text-align: center;
+                                                               "
+                                                               target="_blank"
+                                                               data-saferedirecturl="https://www.google.com/url?q=https://www.sextpanther.com/AllyRae&amp;source=gmail&amp;ust=1667643224366000&amp;usg=AOvVaw1rpWHTNL0_67YXVDXKRP2c"
+                                                               >Verify Your Account</a
+                                                             ><font color="#888888"> </font>
+                                                           </p>
+                                                           <font color="#888888"> </font>
+                                                         </td>
+                                                       </tr>
+                                                      <tr>
+                                                         <td height="30"></td>
+                                                      </tr>
+                                                      <tr>
+                                                      </tr>
+                                                      <tr>
+                                                         <td height="50"></td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                                <font color="#888888"> </font>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                    <font color="#888888"> </font>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td height="20">&nbsp;</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <font color="#888888"> </font>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <table
+                           style="
+                           background: #000000;
+                           width: 100%;
+                           border-bottom-left-radius: 10px;
+                           border-bottom-right-radius: 10px;
+                           "
+                           >
+                           <tbody>
+                              <tr>
+                                 <td>
+                                    <p
+                                       style="
+                                       display: block;
+                                       color: #fff;
+                                       font-size: 14px;
+                                       text-align: center;
+                                       font-weight: 800;
+                                       line-height: 34px;
+                                       "
+                                       >
+                                       <a
+                                          href="{{url('/')}}"
+                                          style="
+                                          display: block;
+                                          color: #fff;
+                                          font-size: 14px;
+                                          text-align: center;
+                                          font-weight: 700;
+                                          text-decoration: none;
+                                          "
+                                          target="_blank"
+                                          data-saferedirecturl="https://www.google.com/url?q=http://sextpanther.com&amp;source=gmail&amp;ust=1667643224366000&amp;usg=AOvVaw1J8Huax3cSXb8Vg33LcwlU"
+                                          >Badbunnistv.com</a
+                                          >
+                                    </p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td height="50">&nbsp;</td>
       </tr>
    </tbody>
 </table>

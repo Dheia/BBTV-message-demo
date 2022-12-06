@@ -3,6 +3,7 @@
 @php
 use App\Http\Controllers\Controller;
 @endphp
+
 <style>
   .bg-white {
     background-color: transparent !important;
@@ -59,10 +60,12 @@ use App\Http\Controllers\Controller;
   }
 </style>
 <!-- online wrapper start -->
+
 <div class="onlinewrapp-bg">
   <div class="container">
     <div class="onlinepage-hading-wrapp">
       <div class="spec">
+   
         <h1>Online <b>Now</b> <span>( {{$onlinecount}} Available ) </span></h1>
       </div>
 

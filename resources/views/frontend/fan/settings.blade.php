@@ -9,6 +9,11 @@
     line-height: 20px;
     color: #FFFFFF;
 }
+.genderbtn-warpp {
+    display: flex;
+    justify-content: unset !important;
+    width: 85%;
+}
 input.form-control {
     background: #112435 !important;
     color: #fff!important;
@@ -54,7 +59,7 @@ button.btn.feel-btn.text-white {
                                 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                   <a href="{{url('fan/dismiss-notifications')}}"> <button type="submit"  class="btn btn-danger">Dismiss</button></a>
+                                   <a href="{{url('fan/dismiss-notifications')}}"> <button type="submit"  class="btn feel-btn">Dismiss</button></a>
                                 </div>
                               </div>
                           </div>
@@ -97,7 +102,7 @@ button.btn.feel-btn.text-white {
                                         <div class="col-sm-12 col-md-12 col-xl-6 ">
                                           <div class="form-group ">
                                             <label><small>Phone Number</small></label>
-                                            <input type="number" name="number" class="form-control" value="{{$user->phone}}" placeholder="Enter your number">
+                                            <input type="number" name="number" class="form-control" value="{{$user->phone}}" placeholder="Enter your number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"/>
                                           </div>
                                         </div>
                                         <div class="col-sm-12 col-md-12 col-xl-6 ">
@@ -141,7 +146,7 @@ button.btn.feel-btn.text-white {
                 
                                             <div class="col-md-12">
                                             <label for="new-password" class=" control-label">Current Password</label>
-                                                <input id="current-password" type="password" class="form-control" name="current-password" required>
+                                                <input id="current-password" placeholder="Current Password" type="password" class="form-control" name="current-password" required>
                 
                                                 @if ($errors->has('current-password'))
                                                     <span class="help-block">
@@ -156,7 +161,7 @@ button.btn.feel-btn.text-white {
                 
                                             <div class="col-md-12">
                                             <label for="new-password" class=" control-label">New Password</label>
-                                                <input id="new-password" type="password" class="form-control" name="new-password" required>
+                                                <input id="new-password" placeholder="New Password" type="password" class="form-control" name="new-password" required>
                 
                                                 @if ($errors->has('new-password'))
                                                     <span class="help-block">
@@ -170,7 +175,7 @@ button.btn.feel-btn.text-white {
                 
                                             <div class="col-md-12">
                                             <label for="new-password-confirm" class=" control-label">Confirm New Password</label>
-                                                <input id="new-password-confirm" type="password" class="form-control" name="new-password_confirmation" required>
+                                                <input id="new-password-confirm" placeholder="Confirm New Password" type="password" class="form-control" name="new-password_confirmation" required>
                                             </div>
                               
                                      
@@ -346,7 +351,37 @@ button.btn.feel-btn.text-white {
                                       <h6><b>Gender Preference</b></h6>
                                       <form action="{{url('fan/prefrence')}}" method="post">
                                       @csrf
-                                      <div class="d-flex">
+                                      <div class="genderbtn-warpp">
+                                        <div class="gender-radio-wrapp">
+                                          <label class="ckeckfilter">
+                                            <input type="radio" name="gender" id="s-option1" class="filter orientation" value="female"
+                                            @if(($prefrence) && $prefrence->gender=="female")  checked @endif >
+                                            <label for="s-option1">Female</label>
+                                            <div class="check">
+                                              <div class="inside"></div>
+                                            </div>
+                                          </label>
+                                        </div>
+                                        <div class="gender-radio-wrapp ml-2">
+                                          <label class="ckeckfilter">
+                                            <input type="radio" name="gender" id="s-option2" class="filter orientation" value="male" @if(($prefrence) && $prefrence->gender=="male")  checked @endif>
+                                            <label for="s-option2">Male</label>
+                                            <div class="check">
+                                              <div class="inside"></div>
+                                            </div>
+                                          </label>
+                                        </div>
+                                        <div class="gender-radio-wrapp ml-2">
+                                          <label class="ckeckfilter">
+                                            <input type="radio" name="gender" id="s-option3" class="filter orientation" value="transgender" @if(($prefrence) && $prefrence->gender=="transgender")  checked @endif />
+                                            <label for="s-option3">Tran</label>
+                                            <div class="check">
+                                              <div class="inside"></div>
+                                            </div>
+                                          </label>
+                                        </div>
+                                      </div>
+                                      <!-- <div class="d-flex">
                                       <div class="ckeckfilter">
                                                 <input type="checkbox" id="checkbox-2-11" name="male" value="1"
                                                     class="filter-checkbox filterbig-checkbox ckeckoutinpt"  @if(isset($male) && $male=="1")  checked @endif />
@@ -365,7 +400,7 @@ button.btn.feel-btn.text-white {
                                                 <label for="checkbox-4-13"></label>
                                                 <p class="text-white mt-2">Trans</p>
                                       </div>
-                            </div>
+                            </div> -->
                                         <button class="btn hover-btn mb-2 mt-3">UPDATE</button>
 </form>
                                     
@@ -417,19 +452,10 @@ button.btn.feel-btn.text-white {
                                          
                                         
                                           @if($datauser->status == 'Active')
-                                            <form action="{{url('fan/dactive',Auth::user()->id)}}" method="post">
-                                          @csrf
-                                          <input type="hidden" name="status" value="DActive" >
 
-                                        <button  type="submit" class="btn feel-btn feel-btn ver_btn text-white mt-2">DEACTIVATE</button>
-                                        </form>
+                                        <button type="button" class="btn feel-btn feel-btn ver_btn text-white mt-2 " data-toggle="modal" data-target="#deact_popup">DEACTIVATE</button>
                                         @else
-                                        <form action="{{url('fan/dactive',Auth::user()->id)}}" method="post">
-                                          @csrf
-                                          <input type="hidden" name="status" value="Active" >
-
-                                        <button  type="submit" class="btn feel-btn feel-btn ver_btn text-white mt-2">ACTIVATE</button>
-                                        </form>
+                                        <button  type="button" class="btn feel-btn feel-btn ver_btn text-white mt-2"data-toggle="modal" data-target="#deact_popup"/>ACTIVATE</button>
                                         @endif
                                        
                                           
@@ -453,7 +479,40 @@ button.btn.feel-btn.text-white {
                              </div>
                              </div>
                              </div>
+                            //
+                            <div class="modal fade" id="deact_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header flex-column">
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                        <p class="text-white">Do you really want to deactivate Your Account?</p>
+                                    </div>
+                                  <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-secondary mt-2" data-dismiss="modal">Cancel</button>
+                                           @if($datauser->status == 'Active')
+                                            <form action="{{url('fan/dactive',Auth::user()->id)}}" method="post">
+                                          @csrf
+                                          <input type="hidden" name="status" value="Pending" >
 
+                                        <button type="submit" class="btn feel-btn feel-btn ver_btn text-white mt-2 ">DEACTIVATE</button>
+                                        </form>
+                                        @else
+                                        <form action="{{url('fan/dactive',Auth::user()->id)}}" method="post">
+                                          @csrf
+                                          <input type="hidden" name="status" value="Active" >
+
+                                        <button  type="submit" class="btn feel-btn feel-btn ver_btn text-white mt-2">ACTIVATE</button>
+                                        </form>
+                                        @endif
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+                            //
                              <div id="myModal" class="modal fade">
                                 	<div class="modal-dialog modal-confirm">
                                 		<div class="modal-content">

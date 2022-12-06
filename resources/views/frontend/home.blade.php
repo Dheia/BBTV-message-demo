@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
     align-items: center;
     margin-bottom: 0px !important;
 }
+/*new added*/
+.home_loginform {
+    display: flex;
+     align-items: center; 
+}
 </style>
 @php
 $home_slider = json_decode($homepage['home_slider']);
@@ -96,7 +101,6 @@ $home_category = json_decode($homepage['home_page_category']);
        
         @if(count($online) >= 0)
         <!-- OnlineNow-wrappers start -->
-
         <div class="OnlineNow-wrappers">
             <div class="online-hading-wrapp">
                 <h2>Online <span> Now</span></h2>
@@ -154,6 +158,7 @@ $home_category = json_decode($homepage['home_page_category']);
 
         @endif
         <!-- new model start -->
+        @if(count($new)>0)
         <div class="OnlineNow-wrappers">
             <div class="online-hading-wrapp">
                 <h2>New <span>Models</span></h2>
@@ -194,22 +199,23 @@ $home_category = json_decode($homepage['home_page_category']);
 
             </div>
         </div>
-
+        @endif
         <!-- new model close -->
     </div>
 </div>
 <!-- websbar-wraepper end -->
 
 <!-- Available For Phone start -->
+@if(count($phone)>0)
 <div class="available-bg-wrapp"
     style="background-image: url('{{ url('/images/Home-page-images/'.$homepage['phone_sex_banner'])  }}');">
     <div class="available-bgoverlay"></div>
     <div class="container">
-        <div class="availebaleforphone-wrapep">
+        <div class="availebaleforphone-wrapep pb-0">
             <h2 class="availableForHading">
                 Available For <span>Phone Sex</span>
             </h2>
-            <section class="sec sec-2 availablephoneslide-wrapper">
+            <section class="sec sec-2 availablephoneslide-wrapper pb-0">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="owl-carousel owl-theme" id="staff">
@@ -242,9 +248,11 @@ $home_category = json_decode($homepage['home_page_category']);
         </div>
     </div>
 </div>
+@endif
 <!-- Available For Phone end -->
 
 <!-- Available for Call wrapper start -->
+@if(count($video))
 <div class="availebalforcall-wrapperbg">
     <div class="container">
         <!-- Availebal call wrpp  start-->
@@ -317,9 +325,9 @@ $home_category = json_decode($homepage['home_page_category']);
                                     </div>
                                 </div>
                             </a>
-                            <div class="team-title">
+                            <div class="team-title ">
                                 <h5>{{ $item->first_name }}</h5>
-                                <p>
+                                <p >
                                     {{ $item->discription }}
                                 </p>
                             </div>
@@ -333,7 +341,7 @@ $home_category = json_decode($homepage['home_page_category']);
 
                     <div class="slideitem-wrapper">
                         <div>
-                            <h5 class="fetuedmodal-heading">
+                            <h5 class="fetuedmodal-heading mt-4">
                                 Featured <span>Models</span>
                             </h5>
                         </div>
@@ -368,6 +376,7 @@ $home_category = json_decode($homepage['home_page_category']);
         <!-- Featured model  end-->
     </div>
 </div>
+@endif
 <!-- Trending Models for Call wrapper  end-->
 
 <!-- Trending Models for Call wrapper  end-->
@@ -560,7 +569,7 @@ $home_category = json_decode($homepage['home_page_category']);
                             </div> -->
                             
                             <div class="ckeckfilter checkinput-wraper">
-                                                <div class="form-check d-flex p-0">
+                                                <div class="form-check d-flex p-0 home_loginform">
                                                 <input type="checkbox" id="checkbox-2-12" name="readbox" value="1"
                                                     class="filter-checkbox filterbig-checkbox filter ckeckoutinpt agreement">
                                                 <label for="checkbox-2-12"></label>

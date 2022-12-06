@@ -142,6 +142,9 @@ i.fa-solid.fa-ellipsis-vertical.dots:hover{
 
     background: #1a2b3a !important;
 }
+label.check_lab {
+    margin-top: 3px !important;
+}
     </style>
 
 <!-- post delete -->
@@ -174,7 +177,7 @@ i.fa-solid.fa-ellipsis-vertical.dots:hover{
                
                     </div>
                     <div class="post_img"><img class="img-fluid user_pro_img m-0 "
-                            src="{{ url('profile-image') . '/' . Auth::user()->profile_image }}" alt="" /><small
+                            src="@if(!empty(Auth::user()->profile_image)) {{ url('profile-image') . '/' . (Auth::user()->profile_image) }} @else {{ url('profile-image/user.png') }} @endif" alt="" /><small
                             class="ml-3">{{ Auth::user()->first_name }}</small></div>
                     <div class="textarea">
 
@@ -261,12 +264,17 @@ i.fa-solid.fa-ellipsis-vertical.dots:hover{
                                                 <p id="seconds"> </p>
                                             </div>
                                         @else
+                                            @if(Auth::user()->status=="Inreview") 
+                                            <p class="text-grey mt-2">Your account is In review <br> You can't able post to explore</p>
+                                            @else
                                             <div class=" sec_1 explore_checkbox ckeckfilter ">
                                                 <input type="checkbox" id="checkbox-15" name="explore" value="1"
                                                     class="filter-checkbox filterbig-checkbox ckeckoutinpt" />
                                                 <label for="checkbox-15"></label>
-                                                <p class="text-grey mt-2">Post to Explore </p>
+                                            <p class="text-grey mt-2">Post to Explore </p>
                                             </div>
+                                            @endif
+                                            
                                         @endif
 
                                  
@@ -669,7 +677,7 @@ i.fa-solid.fa-ellipsis-vertical.dots:hover{
                                                 
                                                  <input type="checkbox" id="checkbox-15{{$item->id}}" name="explore" value="1"
                                                     class="filter-checkbox filterbig-checkbox ckeckoutinpt" />
-                                                <label for="checkbox-15{{$item->id}}"></label>
+                                                <label for="checkbox-15{{$item->id}} " class="check_lab"></label>
                                                 <p class="text-grey ">Post to Explore </p>
                                                 <button class="draft-post-now" type="submit">Post Now</button></form>
                                             </div>

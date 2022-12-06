@@ -1,6 +1,6 @@
 @extends('frontend.fan.main')
 @section('content')
-<div class="col-sm-12 col-md-9 col-xl-9 mt-5 mb-5">
+<div class="col-sm-12 col-md-8 col-xl-9 mt-5 mb-5">
    <div class="onlinepage-hading-wrapp mt-4">
       <h1><b>Collection</b></h1>
       <div class="row d-flex">

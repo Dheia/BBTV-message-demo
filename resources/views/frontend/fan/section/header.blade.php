@@ -25,11 +25,11 @@ p.tipending {
     .Explore-bg {
         padding: 40px 30px !important;
     }
-    button.credit-add:hover {
+/*    button.credit-add:hover {
   
     padding-left: 10px !important;
 }
-    .sidelinks-wrapper {
+*/    .sidelinks-wrapper {
         height: 100%;
         width: 0;
         position: fixed;
@@ -55,15 +55,148 @@ p.tipending {
     /* align-items: center; */
     justify-content: right;
 }
+@use postcss-cssnext;
+:root {
+  --min-size: 2px;
+  --max-size: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, .backdrop {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.backdrop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  width:100%;
+  background-color: #091625;
+  position: fixed;
+  bottom: 0px;
+  top:10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: #000;
+  padding: 15px 15px;
+  border-radius: 5px;
+  z-index: 10000000;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  background: #a925cf;
+  margin: 5px;
+  animation-name: loader;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.dot:nth-child(4) {
+  animation-delay: 0.8s;
+}
+.dot:nth-child(5) {
+  animation-delay: 1s;
+}
+
+@keyframes loader {
+  from {
+    width: var(--min-size);
+    height: var(--min-size);
+    border-radius: calc(var(--min-size) / 2);
+  }
+  to {
+    width: var(--max-size);
+    height: var(--max-size);
+    border-radius: calc(var(--max-size) / 2);
+  }
+}
+
+/*new added*/
+button.credit-add:focus {
+    outline: 0 !important;
+}
 </style>
+<div class="modal fade" id="TipPoPup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+   aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content ">
+         <div class="modal-header ">
+               <h5 class="modal-title color-white" id="exampleModalLongTitle">
+                  Send a tip 
+                  <br>
+                  <div class="tip_option d-flex text-white">
+                     <div class="tipoption text-white"value="1"><small>$1</small></div>
+                     <div class="tipoption text-white" value="5"><small>$5</small></div>
+                     <div class="tipoption text-white" value="10"><small>$10</small></div>
+                     <div class="tipoption text-white" value="20"><small>$20</small></div>
+                     <div class="tipoption text-white" value="50"><small>$50</small></div>
+                     <div class="tipoption text-white" value="100"><small>$100</small></div>
+                  </div>
+               </h5>
+               <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true" class="text-white">x</span>
+               </button>
+            </div>
+         <div class="modal-body">
+            <form class="tip-form">
+               <label for="">Tip Amount</label>
+               <span class="doller_sin doll_sin ">$</span>
+               <input type="number" name="tip_amount" class="form-control tip_amount" id="tips_fild" value=""
+                  placeholder=" Enter Tip amount $1-999" maxlength="3"oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"required min="1" max="999">
+                  <span class="text-danger amount-error"></span> <br>
+               <label for="" class="mt-2">What is this for?</label>
+               <input type="text" class="form-control tip_mess" name="tip_mess" placeholder="What is this for?"
+                  required>
+               <input type="hidden" class="tip_model_id" name="model_id" value="" required>
+         </div>
+         <div class="modal-footer">
+         <button type="button" class="send-tip-btn send-tip-ajax">Send Tip</button> 
+        </form>
+         </div>
+      </div>
+   </div>
+</div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+<div class="backdrop">
+  <div class="loader"> 
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+   </div>
+</div>
 <nav class="navbar-bg sticky-top">
     <div class="container">
     <div id="feed-add-collection-success" class="copied text-center text-white" style="background-color: #50a750 ; width: 250px !important;    z-index: 99999;">
                                         <span>Feed added to collection</span>
                                         </div>
 
-                                        <div id="balence-visible" class="copied text-center text-white" style="background-color: #50a750 ; width: 250px !important;    z-index: 99999;">
+                                        <div id="balence-visible" class="copied text-center text-white" style="background-color: #50a750 ; width: 250px !important;    z-index: 99999999999999999999;">
                                         <span class="balence-visible"></span>
                                         </div>
         <div class="navbar-wrapper">
@@ -117,7 +250,7 @@ p.tipending {
                     <button class="credit-add">
                         <div class="d-flex align-items-center">
                             <div class="plus-icon mr-2">
-                                <svg class="pt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                <svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                     width="24" height="24">
                                     <path fill="none" d="M0 0h24v24H0z" />
                                     <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="rgba(175,41,144,1)" />
@@ -367,7 +500,7 @@ p.tipending {
         line-height: 17px;
         text-transform: uppercase;
         color: #fff;
-        border: none;
+        border: 1px solid #451c4a;
         outline: none;
     }
 

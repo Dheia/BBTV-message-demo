@@ -57,7 +57,7 @@
                     </tr>
                     <tr>
                       <td align="center">
-                        <a href="{{url('/')}}"
+                        <a href="{{ url('/') }}"
                           ><img
                             width="145"
                             height="55"
@@ -126,9 +126,9 @@
                                     </tr>
                                     <tr>
                                       <td align="center">
-                                        
-                                        Thanks for connecting with bad bunniesTv. Your email varification one time password: 
-                                        
+                                        Thanks for connecting with bad
+                                        bunniesTv. Your email varification one
+                                        time password:
                                       </td>
                                     </tr>
                                     <tr>
@@ -149,17 +149,14 @@
                                             margin: 0;
                                           "
                                         >
-                                         Your one time code :{{$otp}}
+                                          Your one time code :{{ $otp }}
                                         </p>
                                       </td>
                                     </tr>
                                     <tr>
                                       <td height="30"></td>
                                     </tr>
-                                    <tr>
-                                      
-                                    </tr>
-
+                                    <tr></tr>
                                     <tr>
                                       <td height="50"></td>
                                     </tr>
@@ -205,7 +202,7 @@
                           "
                         >
                           <a
-                            href="{{url('/')}}"
+                            href="{{ url('/') }}"
                             style="
                               display: block;
                               color: #fff;

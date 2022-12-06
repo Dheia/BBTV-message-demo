@@ -11,15 +11,15 @@
                                 {{$logo['discript']}}
                             </p>
                             <div class="footer-icons-wrapepr ">
-                            <a class="footer-icons-wrap" href="{{$logo['facebook']}}"> <span >
+                            <a class="footer-icons-wrap" href="{{$logo['facebook']}}" target="_blank"> <span >
                                    <i class="fa-brands fa-facebook-f mt-1"></i>
                                 </span></a>
 
-                                <a class="footer-icons-wrap" href="{{$logo['twitter']}}"> <span >
+                                <a class="footer-icons-wrap" href="{{$logo['twitter']}}" target="_blank"> <span >
                                    <i class="fa-brands fa-twitter mt-1"></i>
                                 </span></a>
 
-                                <a class="footer-icons-wrap" href="{{$logo['pinterest']}}"> <span >
+                                <a class="footer-icons-wrap" href="{{$logo['pinterest']}}" target="_blank"> <span >
                                     <i class="fa-brands fa-pinterest mt-1"></i>
                                 </span></a>
                             </div>
@@ -42,6 +42,12 @@
                                 </a>
                                 <a href="{{ route('top-models') }}">
                                     <li>Top Models</li>
+                                </a>
+                                <a href="{{ route('new-models') }}">
+                                    <li>New Models</li>
+                                </a>
+                                <a href="{{ route('explore') }}">
+                                    <li> Feeds</li>
                                 </a>
 
                         </div>

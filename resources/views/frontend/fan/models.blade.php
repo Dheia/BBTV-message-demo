@@ -29,10 +29,10 @@
     .recentoption {
       width: 100% !important;
     }
-    .av_model {
-      width: 100% !important;
+    .fan_mod_filter {
+      width: 98% !important;
       height: 44px;
-      margin-right: 12px;
+      margin-right: 12px !important;
       background: #081420;
       border: 1px solid #263e55;
       border-radius: 6px;
@@ -160,7 +160,7 @@ button.btn.disabled {
           <div  style="width:50%;"><form id="rati" method="get">
 
 <input type="hidden" value="" name="sortfilter">
-<select name="models" class="av_model text-center">
+<select name="models" class="fan_mod_filter text-center">
   <option value="allmodels">All Models
   </option>
   <option value="videoCall">Video Call
@@ -202,18 +202,19 @@ button.btn.disabled {
           <form id="rati" method="get" >
 
           <input type="hidden" value="" name="sortfilter">
-          <select name="models" class="av_model text-center">
+        
+          <select name="mode" class="fan_mod_filter">
             <option value="allmodels" {{request()->
-              input('model') == 'allmodels' ? 'selected' : ''}}>All Models
+              input('mode') == 'allmodels' ? 'selected' : ''}}>All Models
             </option>
             <option value="videoCall" {{request()->
-              input('model') == 'videoCall' ? 'selected' : ''}}>Video Call
+              input('mode') == 'videoCall' ? 'selected' : ''}}>Video Call
             </option>
             <option value="audiocall" {{request()->
-              input('model') == 'audiocall' ? 'selected' : ''}}>Audio Call
+              input('mode') == 'audiocall' ? 'selected' : ''}}>Audio Call
             </option>
             <option value="onlinenow" {{request()->
-              input('model') == 'onlinenow' ? 'selected' : ''}}>Online Chat
+              input('mode') == 'onlinenow' ? 'selected' : ''}}>Online Chat
             </option>
           </select>
             </form>
@@ -295,6 +296,7 @@ button.btn.disabled {
 
       <form id="serch" method="get" action="">
         <input type="hidden"  name="sort" value="{{request()->input('sort')}}"id="recentoption"/>
+        <input type="hidden"  name="mode" value="{{request()->input('mode')}}"id="fan_mod_filter"/>
         <input type="hidden" name="model"value="{{request()->input('model')}}"  id="ar_model"/>
 
         <div id="Filter-wrapp" class="filtersidenav">

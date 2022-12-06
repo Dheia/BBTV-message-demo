@@ -1,6 +1,6 @@
 <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
 <!-- <script src="{{ asset('js/chatify/pusher.js') }}"></script> -->
-<script>
+<script >
   // Enable pusher logging - don't include this in production
   Pusher.logToConsole = true;
 
@@ -25,9 +25,7 @@
 
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js">
-    
-</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <script type="text/javascript">
     function copy(text) {
@@ -69,8 +67,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-      
-              
         $(document).on('click', '.unlock_feed', function(e) {
 
             //$(this).parent(".unclock-overlay").find(".locked-text").addClass("d-none");
@@ -106,10 +102,3 @@
     });
 
 </script>
-
-
-
-
-
-
-

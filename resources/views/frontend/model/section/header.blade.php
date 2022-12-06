@@ -27,7 +27,9 @@
                                         <div id="Sleep-mode-off" class="copied text-center text-white" style="background-color: #50a750 ; width: 250px !important;    z-index: 99999;">
                                         <span>Sleep Mode Off</span>
                                         </div>
-
+                                        <div id="success-mgs" class="copied text-center text-white" style="background-color: #50a750 ; width: 250px !important;    z-index: 99999;">
+                                        <span class="success-mgs"></span>
+                                        </div>
                                         <div id="feed-updated" class="copied text-center text-white" style="background-color: #50a750 ; width: 250px !important;    z-index: 99999;">
                                         <span>Feed updated successfully</span>
                                         </div>
@@ -54,7 +56,7 @@
                                <div class="joinfree1 d-flex " id="navbtns">
                               
                                 <div class="profile-image  mt-1 ml-4">
-                                    <a href="{{route('model.profile-edit', Auth::user()->id) }}"><img src="{{ url('profile-image') . '/' . Auth::user()->profile_image }}" width="40" height="40" style="    border-radius: 100%;"></a> 
+                                    <a href="{{route('model.profile-edit', Auth::user()->id) }}"><img src="@if(!empty(Auth::user()->profile_image)) {{ url('profile-image') . '/' . (Auth::user()->profile_image) }} @else {{ url('profile-image/user.png') }} @endif" width="40" height="40" style="    border-radius: 100%;"></a> 
                                  </div>
                                 
                                  <div class="name-and-wallat ">
@@ -82,10 +84,10 @@
                        @php
                     $notification=App\Models\ChMessage::where('to_id',Auth::user()->id)->where('seen','0')->count();
                     @endphp
-                        <a href="{{url('/chatify')}}"><li class="list-group-item li_type "><span class="item "><i class="bi bi-chat-dots-fill"></i>Messages @if(isset($notification)) @if($notification>'0')  <p class="tipending">{{$notification}} </p> @endif @endif</span></li></a>
+                        <a href="{{url('/chatify')}}"><li class="list-group-item li_type "><span class="item "><i class="bi bi-chat-dots-fill"></i>Messages @if(Auth::user()->is_sleep_mode==false) @if(isset($notification)) @if($notification>'0')  <p class="tipending">{{$notification}} </p> @endif @endif @endif</span></li></a>
                         <a href="{{route('model.calls')}}"><li class="list-group-item li_type {{ url('/model/calls') == url(request()->path()) ? 'active' : '' }} "><span class="item"><i class="bi bi-telephone"></i>Calls</span></li></a>
                         <a href="{{route('model.feeds.index')}}"><li class="list-group-item li_type {{ url('/model/feeds') == url(request()->path()) ? 'active' : '' }}"><span class="item"><i class="bi bi-browser-safari"></i>Feed</span></li></a>
-                        <a href="{{route('model.tips')}}"><li class="list-group-item li_type {{ url('/model/tips') == url(request()->path()) ? 'active' : '' }}"><span class="item"><i class="bi bi-heart-fill"></i>Tips @if(isset($tip_amount)) @if($tip_amount>'0')  <p class="tipending">{{$tip_amount}} </p> @endif @endif </span></li></a>
+                        <a href="{{route('model.tips')}}"><li class="list-group-item li_type {{ url('/model/tips') == url(request()->path()) ? 'active' : '' }}"><span class="item"><i class="bi bi-heart-fill"></i>Tips @if(Auth::user()->is_sleep_mode==false) @if(isset($tip_amount)) @if($tip_amount>'0')  <p class="tipending">{{$tip_amount}} </p> @endif @endif @endif </span></li></a>
                         <a href="{{url('/model/pricing')}}"><li class="list-group-item li_type {{ url('/model/pricing') == url(request()->path()) ? 'active' : '' }}"><span class="item"><i class="bi bi-tag-fill "></i>Pricing</span></li></a>
                         <a href="{{url('/model/earnings')}}"><li class="list-group-item li_type {{ url('/model/earnings') == url(request()->path()) ? 'active' : '' }}"><span class="item"><i class="bi bi-coin"></i>Earnings</span></li></a>
                         <li class="list-group-item li_type  ">

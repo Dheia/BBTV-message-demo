@@ -1,3 +1,5 @@
+@if(count($explore)>0)
+@foreach ($explore as $number =>  $value)
 @php
 $feedcount = App\Models\Feed_media::where('feed_id', $value->feed_id)->get();
 $unlock_feed_check = App\Models\Feed_unlock::where('fan_id', $auth_id)
@@ -161,7 +163,6 @@ input#tips_fild {
 </style>
 <!-- <div class="col-lg-6 col-md-6 col-sm-12"> -->
 <div class="explore-posts-wraper mt-5">
-
    <p class="d-none copyTo"></p>
    <div class="expolor-post-wraper ">
       <div class="postprofile-wrapper">
@@ -201,7 +202,8 @@ input#tips_fild {
             </small>
          </div>
          <div class="post-icon-wrapepr added feedSection" feedId="{{$value->feed_id}}">
-          
+            {{-- <a class="addwish "><i data-id="{{ $value->id ?? '' }}" class="fa fa-heart-o add-to-wishlist">
+            </i>{{ count($value->feedmedialikes) }}</a> --}}
             <a class="addwish ">
             <i data-id="{{ $value->id ?? '' }}"
                class="fa add-to-wishlist addLike mr-3 @if ($Auth_feed > 0)fa-heart feed_liked @else fa-heart-o @endif"
@@ -273,7 +275,7 @@ input#tips_fild {
                <!-- Wrapper for slides -->
                <div class="carousel-inner">
                   @foreach ($feedcount as $item)
-                  <div class="item {{ $loop->first ? 'active' : '' }} carousel_media ">
+                  <div class="item {{ $loop->first ? 'active' : '' }} carousel_media">
                      @if ($item->media_type == 'jpg' or
                      $item->media_type == 'png' or
                      $item->media_type == 'jpeg' or
@@ -503,7 +505,45 @@ $diffInYears = $difference->y;
    </div>
 </div>
 <!-- </div> -->
-
+<div class="modal fade" id="TipPoPup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+   aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content ">
+         <div class="modal-header ">
+               <h5 class="modal-title color-white" id="exampleModalLongTitle">
+                  Send a tip 
+                  <br>
+                  <div class="tip_option d-flex text-white">
+                     <div class="tipoption text-white"value="1"><small>$1</small></div>
+                     <div class="tipoption text-white" value="5"><small>$5</small></div>
+                     <div class="tipoption text-white" value="10"><small>$10</small></div>
+                     <div class="tipoption text-white" value="20"><small>$20</small></div>
+                     <div class="tipoption text-white" value="50"><small>$50</small></div>
+                     <div class="tipoption text-white" value="100"><small>$100</small></div>
+                  </div>
+               </h5>
+               <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true" class="text-white">x</span>
+               </button>
+            </div>
+         <div class="modal-body">
+            <form action="{{ url('fan/model-tip') }}" method="post">
+               @csrf
+               <label for="">Tip Amount</label>
+               <span class="doller_sin doll_sin ">$</span>
+               <input type="number" name="tip_amount" class="form-control tip_amount" id="tips_fild" value=""
+                  placeholder=" Enter Tip amount $1-999" maxlength="3"oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"required min="1" max="999">
+               <label for="" class="mt-2">What is this for?</label>
+               <input type="text" class="form-control" name="tip_mess" placeholder="What is this for?"
+                  required>
+               <input type="hidden" class="tip_model_id" name="model_id" value="" required>
+         </div>
+         <div class="modal-footer">
+         <button type="submit" class="send-tip-btn">Send Tip</button> </form>
+         </div>
+      </div>
+   </div>
+</div>
 <div class="modal fade" id="PostReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
    aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered" role="document">
@@ -543,4 +583,6 @@ $diffInYears = $difference->y;
               });
 
 </script>
+@endif
+@endforeach
 @endif

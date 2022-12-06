@@ -174,34 +174,154 @@ var profileImg = document.getElementById('profile-upload-img'),
             $('#copied-success').fadeIn(800);
             $('#copied-success').fadeOut(800);
     }
+   
+     /*
+     model  audio call avail...ajax
+     */
    $(document).ready(function(){
+
+        $(document).on('click','.model-phone-call',function(){
+           var phoneCallTimer= $('.phour').val();
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "{{route('model.audiocalling')}}",
+                data: {
+                    phoneCallTimer: phoneCallTimer,
+                    calling:'1',
+                },
+                success: function(response) 
+                {
+                    if(response.status=='success')
+                    {
+                        $('.success-mgs').html('Status updated');
+                       $('#success-mgs').fadeIn(800).fadeOut(800);
+                        
+                       $('.posttime1').val(response.endTime);
+                        $("#phone").removeClass("d-none");
+                        $("#pprice").addClass("d-none"); 
+                            setInterval(function() {
+                                makeTimer2();
+                            }, 1000);
+                       
+                    }
+                }
+                   });
+
+            });
+    
+            $("#phone-call-ajax").click(function(e) {
+            
+            if (!$("#phone-call-ajax").prop("checked")) {
+            
+            $(".calling").val(0);
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "{{route('model.audiocalling')}}",
+                data: {
+                    phoneCallTimer: '1',
+                    calling:'0',
+                },
+                success: function(response) {
+                    if(response.status=='success'){
+                        $('.success-mgs').html('Status updated');
+                       $('#success-mgs').fadeIn(800).fadeOut(800);
+                       $('.posttime1').val("0000-00-00 00:00:00");
+                       $("#hours1").html('');
+                        $("#minutes1").html("");
+                        $("#seconds1").html("");
+                   
+                    }
+                }
+                });
+            
+            } else {
+                $("#phone").addClass("d-none");
+                $("#pprice").removeClass("d-none");
+            }
+    
+    });
+    /*
+     model  video call avail...ajax--end
+     */
+
+ /*
+     model  audio call avail...ajax
+     */
+    $(document).on('click','.model-video-call',function(){
+
+           var phoneCallTimer= $('.vhour').val();
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "{{url('model/videocalling')}}",
+                data: {
+                    phoneCallTimer: phoneCallTimer,
+                    calling:'1',
+                },
+                success: function(response) 
+                {
+                    if(response.status=='success')
+                    {
+                        $('.success-mgs').html('Status updated');
+                       $('#success-mgs').fadeIn(800).fadeOut(800);
+                        
+                       $('.posttime11').val(response.endTime);
+
+                        $("#video").removeClass("d-none");
+                        $("#vprice").addClass("d-none"); 
+                            setInterval(function() {
+                                makeTimer1();
+                            }, 1000);
+                       
+                    }
+                }
+                   });
+
+            });
+
+
+   $("#video-call-ajax").click(function(e) {
    
-   
-   
-   $("#c2").click(function(e) {
-   
-   if (!$("#c2").prop("checked")) {
-   
-   $(".calling").val(0);
-   $("#callable").submit();
-   } else {
-    $("#phone").addClass("d-none");
-    $("#pprice").removeClass("d-none");
-   }
+   if (!$("#video-call-ajax").prop("checked"))
+        {
+        $(".calling").val(0);
+        $.ajax({
+
+                    type: 'GET',
+                    dataType: 'json',
+                    url: "{{url('model/videocalling')}}",
+                    data: {
+                        phoneCallTimer: '1',
+                        calling:'0',
+                    },
+                    success: function(response) {
+                        if(response.status=='success'){
+                            $('.success-mgs').html('Status updated');
+                        $('#success-mgs').fadeIn(800).fadeOut(800);
+                        $('.posttime11').val("0000-00-00 00:00:00");
+                        $("#hours2").html('');
+                        $("#minutes2").html("");
+                        $("#seconds2").html("");
+                        }
+                    }
+                    });
+
+            } else {
+                $("#video").addClass("d-none");
+                $("#vprice").removeClass("d-none");
+            }
    
    });
-   $("#c3").click(function(e) {
-   
-   if (!$("#c3").prop("checked")) {
-    $(".calling").val(0);
-    $("#videoable").submit();
-   } else {
-    $("#video").addClass("d-none");
-    $("#vprice").removeClass("d-none");
-   }
-   
-   });
-   
+    /*
+     model  audio call avail...ajax--end
+     */
+
+
     $(".Category-form").on('change', function() {
         var parentForm = $(this).closest("form");
      if (parentForm && parentForm.length > 0)
@@ -660,22 +780,7 @@ $(document).on('change','.sleep-mode-btn',function(){
             $('.SleepCheckbox').prop('checked', false); 
             $(".SleepCheckbox").attr("disabled", true);
     }
-        
-        
-    
-
-  
-
-   
-    
-
-
-
-
 });
-
-
-
 
 //model sleep mode end
 
@@ -1256,6 +1361,7 @@ $(document).on('change','.sleep-mode-btn',function(){
    
    function makeTimer2() {
         var postime = $('.posttime1').val();
+      if(postime!='0000-00-00 00:00:00'){
         var endTime = new Date(postime);
         endTime = (Date.parse(endTime) / 1000);
         
@@ -1277,12 +1383,15 @@ $(document).on('change','.sleep-mode-btn',function(){
         }
 
         if (hours1 == '00' && minutes1 == '00' && seconds1 == '00') {
-            location.reload();
+           $('.posttime1').val('0000-00-00 00:00:00');
         } else {
             $("#hours1").html(hours1);
             $("#minutes1").html("<span>:</span>" + minutes1);
             $("#seconds1").html("<span>:</span>" + seconds1);
         }
+      }
+      
+     
     }
     setInterval(function() {
         makeTimer2();
@@ -1290,6 +1399,7 @@ $(document).on('change','.sleep-mode-btn',function(){
 
     function makeTimer1() {
         var postime = $('.posttime11').val();
+      if(postime!='0000-00-00 00:00:00'){
         var endTime = new Date(postime);
         endTime = (Date.parse(endTime) / 1000);
         var now = new Date();
@@ -1309,12 +1419,13 @@ $(document).on('change','.sleep-mode-btn',function(){
             seconds2 = "0" + seconds2;
         }
         if (hours2 == '00' && minutes2 == '00' && seconds2 == '00') {
-            location.reload();
+            $('.posttime11').val('0000-00-00 00:00:00');
         } else {
             $("#hours2").html(hours2);
             $("#minutes2").html("<span>:</span>" + minutes2);
             $("#seconds2").html("<span>:</span>" + seconds2);
         }
+      }
     }
     setInterval(function() {
         makeTimer1();

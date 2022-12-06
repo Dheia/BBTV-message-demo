@@ -231,13 +231,13 @@
                      <div class="d-flex">
                         <small class="mode_dwitch">Phone Calls</small>
                         <div class="switch">
-                           <input type="checkbox"  id="c2" @if( isset($model->phone) && $model->phone =="1")  checked @endif>
-                           <label for="c2"><span></span></label>
+                           <input type="checkbox"  id="phone-call-ajax" @if( isset($model->phone) && $model->phone =="1")  checked @endif>
+                           <label for="phone-call-ajax"><span></span></label>
                         </div>
                      </div>
                      <br>
                      <small class="text-muted1 home-page-call-timer" >
-                        @if($model->phone == '1')
+                       
                         <div class="d-flex pr-2" id="timer" style="float: right;" >
                            <div id="days1">
                            </div>
@@ -246,13 +246,13 @@
                            <div id="minutes1"></div>
                            <div id="seconds1"></div>
                         </div>
-                        @endif
+                       
                      </small>
                   </div>
                </div>
                <div class="col-6 col-sm-6  col-md-6 col-lg-3 mt-3 d-none" id="pprice">
                   <div class="pricing">
-                     <form action="{{route('model.audiocalling')}}" method="post" id="callable">
+                     <form action="" method="post" id="callable">
                         @csrf
                         <input type="hidden" class="phour" name="hour" value="1">
                         <input type="hidden" class="calling" name="calling" value="1">
@@ -265,7 +265,7 @@
                               <span class="quantity2" >1</span>
                               Hour
                            </p>
-                           <button type="submit" class="feel-btn text-white mt-1">Add</button>
+                           <button type="button" class="feel-btn text-white mt-1 model-phone-call">Add</button>
                         </div>
                      </form>
                   </div>
@@ -284,26 +284,26 @@
                      <div class="d-flex">
                         <small class="mode_dwitch">Video Calls</small>
                         <div class="switch">
-                           <input type="checkbox" id="c3" @if( isset($model->video) && $model->video =="1")  checked @endif>
-                           <label for="c3"><span></span></label>
+                           <input type="checkbox" id="video-call-ajax" @if( isset($model->video) && $model->video =="1")  checked @endif>
+                           <label for="video-call-ajax"><span></span></label>
                         </div>
                      </div>
                      <br>
                      <small class="text-muted1 home-page-call-timer">
-                        @if($model->video == '1')
+                      
                         <div class="d-flex pr-2" id="timer1" style="float: right;" >
                            <div id="days2"></div>
                            <div id="hours2"></div>
                            <div id="minutes2"></div>
                            <div id="seconds2"></div>
                         </div>
-                        @endif
+                      
                      </small>
                   </div>
                </div>
                <div class="col-6 col-sm-6  col-md-6 col-lg-3 mt-3 d-none" id="vprice">
                   <div class="pricing">
-                     <form action="{{route('model.videocalling')}}" method="post" id="videoable">
+                     <form action="" method="post" id="videoable">
                         @csrf
                         <input type="hidden" class="vhour" name="hour" value="1">
                         <input type="hidden" class="calling" name="calling" value="1">  
@@ -316,7 +316,7 @@
                               <span class="quantity1">1</span>
                               Hour
                            </p>
-                           <button type="submit" class=" feel-btn text-white mt-1">Add</button>
+                           <button type="button" class="model-video-call feel-btn text-white mt-1">Add</button>
                         </div>
                      </form>
                   </div>
