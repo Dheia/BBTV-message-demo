@@ -491,179 +491,135 @@ class MessagesController extends Controller
             // send to database
             $messageID = mt_rand(9, 999999999) + time();
             $Get_fanid = Auth::user()->id;
-            $Get_feed=Models::where('user_id',$request['id'])->first();
+            $Get_feed = Models::where('user_id', $request['id'])->first();
+            $user = Auth::user();
             if (Auth::user()->roles->first()->title == 'Fan') {
-             if(!empty($request->message)){
-                
-              if (Auth::user()->wallet >= $Get_feed->cost_msg) {
-                Chatify::newMessage([
-                    'id' => $messageID,
-                    'type' => $request['type'],
-                    'from_id' => Auth::user()->id,
-                    'to_id' => $request['id'],
-                    'attachment_price' => $request->price,
-                    'mass_status' => '0',
-                    'seen' => '0',
-                    'attachment_type' => $type,
-                    'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
-                    'attachment' => ($attachment) ? json_encode((object)[
-                        'new_name' => $attachment,
-                        'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
-                    ]) : null,
-                ]);
-                        $commission = Setting::pluck("value", "name");
-                        $admin_comi=($Get_feed->cost_msg*$commission['commission'])/100;
-                        $model_comi=$Get_feed->cost_msg-$admin_comi;
-                        $fan_charge=User::where('id',Auth::user()->id)->first();
-                        $fan_charge->wallet=$fan_charge->wallet-$Get_feed->cost_msg;
-                        $fan_charge->save();
+                if(!empty($request->message)){
+                    // 
+                    if ($user->wallet >= $Get_feed->cost_msg) {
+                        Chatify::newMessage([
+                            'id' => $messageID,
+                            'type' => $request['type'],
+                            'from_id' => $user->id,
+                            'to_id' => $request['id'],
+                            'attachment_price' => $request->price,
+                            'mass_status' => '0',
+                            'seen' => '0',
+                            'attachment_type' => $type,
+                            'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
+                            'attachment' => ($attachment) ? json_encode((object)[
+                                'new_name' => $attachment,
+                                'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
+                            ]) : null,
+                        ]);
+                        $fan_charge=User::where('id',$user->id)->first();
                         $model_earning=User::where('id',$request['id'])->first();
-                        $model_earning->wallet=$model_earning->wallet + $model_comi;
-                        $model_earning->save();
-                        $User_logs= new User_logs;
-                        $User_logs->method='message';
-                        $User_logs->from=Auth::user()->id;
-                        $User_logs->to=$request['id'];
-                        $User_logs->fan_balance=$fan_charge->wallet;
-                        $User_logs->price=$Get_feed->cost_msg;
-                        $User_logs->model_earning=$model_comi;
-                        $User_logs->earnings    =$admin_comi;
-                        $User_logs->save();   
+                        $msg_from = $user->id;
+                        $msg_to = $request['id']; 
+                        $method = 'message';
+                        $walletAmount = $this->ChargeAmountOnSendMessage($Get_feed, $fan_charge, $model_earning, $msg_from, $msg_to, $method); 
+
                     }else{
                         return Response::json([
-                                        'status' => 'insufficentcredit',
-                                        'message' => 'Insufficient Credit',
-                                    ]);
+                            'status' => 'insufficentcredit',
+                            'message' => 'Insufficient Credit',
+                        ]);
                     }
-            }
-            if($type == 'image'){
-                if (Auth::user()->wallet >= $Get_feed->cost_pic) {
-                    Chatify::newMessage([
-                        'id' => $messageID,
-                        'type' => $request['type'],
-                        'from_id' => Auth::user()->id,
-                        'to_id' => $request['id'],
-                        'mass_status' => '0',
-                        'attachment_price' => $request->price,
-                        'attachment_type' => $type,
-                        'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
-                        'attachment' => ($attachment) ? json_encode((object)[
-                            'new_name' => $attachment,
-                            'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
-                        ]) : null,
-                    ]);
-                            $commission = Setting::pluck("value", "name");
-                            $admin_comi=($Get_feed->cost_pic*$commission['commission'])/100;
-                            $model_comi=$Get_feed->cost_pic-$admin_comi;
-                            $fan_charge=User::where('id',Auth::user()->id)->first();
-                            $fan_charge->wallet=$fan_charge->wallet-$Get_feed->cost_pic;
-                            $fan_charge->save();
-                            $model_earning=User::where('id',$request['id'])->first();
-                            $model_earning->wallet=$model_earning->wallet + $model_comi;
-                            $model_earning->save();
-                            $User_logs= new User_logs;
-                            $User_logs->method='image';
-                            $User_logs->from=Auth::user()->id;
-                            $User_logs->to=$request['id'];
-                            $User_logs->fan_balance=$fan_charge->wallet;
-                            $User_logs->price=$Get_feed->cost_pic;
-                            $User_logs->model_earning=$model_comi;
-                            $User_logs->earnings    =$admin_comi;
-                            $User_logs->save();   
-                        }else{
-                            return Response::json([
-                                            'status' => 'insufficentcredit',
-                                            'message' => 'Insufficient Credit',
-                                        ]);
-                        }
+                }
+                if($type == 'image'){
+                    if ($user->wallet >= $Get_feed->cost_pic) {
+                        Chatify::newMessage([
+                            'id' => $messageID,
+                            'type' => $request['type'],
+                            'from_id' => $user->id,
+                            'to_id' => $request['id'],
+                            'mass_status' => '0',
+                            'attachment_price' => $request->price,
+                            'attachment_type' => $type,
+                            'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
+                            'attachment' => ($attachment) ? json_encode((object)[
+                                'new_name' => $attachment,
+                                'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
+                            ]) : null,
+                        ]);
 
-            }
-            if($type == 'audio'){
-                if (Auth::user()->wallet >= $Get_feed->cost_audiomsg) {
-                    Chatify::newMessage([
-                        'id' => $messageID,
-                        'type' => $request['type'],
-                        'from_id' => Auth::user()->id,
-                        'mass_status' => '0',
-                        'to_id' => $request['id'],
-                        'attachment_price' => $request->price,
-                        'attachment_type' => $type,
-                        'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
-                        'attachment' => ($attachment) ? json_encode((object)[
-                            'new_name' => $attachment,
-                            'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
-                        ]) : null,
-                    ]);
-                            $commission = Setting::pluck("value", "name");
-                            $admin_comi=($Get_feed->cost_audiomsg*$commission['commission'])/100;
-                            $model_comi=$Get_feed->cost_audiomsg-$admin_comi;
-                            $fan_charge=User::where('id',Auth::user()->id)->first();
-                            $fan_charge->wallet=$fan_charge->wallet-$Get_feed->cost_audiomsg;
-                            $fan_charge->save();
-                            $model_earning=User::where('id',$request['id'])->first();
-                            $model_earning->wallet=$model_earning->wallet + $model_comi;
-                            $model_earning->save();
-                            $User_logs= new User_logs;
-                            $User_logs->method='Audio message';
-                            $User_logs->from=Auth::user()->id;
-                            $User_logs->to=$request['id'];
-                            $User_logs->fan_balance=$fan_charge->wallet;
-                            $User_logs->price=$Get_feed->cost_audiomsg;
-                            $User_logs->model_earning=$model_comi;
-                            $User_logs->earnings    =$admin_comi;
-                            $User_logs->save();   
-                        }else{
-                            return Response::json([
-                                            'status' => 'insufficentcredit',
-                                            'message' => 'Insufficient Credit',
-                                        ]);
-                        }
+                        $fan_charge=User::where('id',$user->id)->first();
+                        $model_earning=User::where('id',$request['id'])->first();
+                        $msg_from = $user->id;
+                        $msg_to = $request['id']; 
+                        $method ='image';
+                        $walletAmount = $this->ChargeAmountOnSendMessage($Get_feed, $fan_charge, $model_earning, $msg_from, $msg_to, $method);
+ 
+                    }else{
+                        return Response::json([
+                            'status' => 'insufficentcredit',
+                            'message' => 'Insufficient Credit',
+                        ]);
+                    }
+                }
+                if($type == 'audio'){
+                    if ($user->wallet >= $Get_feed->cost_audiomsg) {
+                        Chatify::newMessage([
+                            'id' => $messageID,
+                            'type' => $request['type'],
+                            'from_id' => $user->id,
+                            'mass_status' => '0',
+                            'to_id' => $request['id'],
+                            'attachment_price' => $request->price,
+                            'attachment_type' => $type,
+                            'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
+                            'attachment' => ($attachment) ? json_encode((object)[
+                                'new_name' => $attachment,
+                                'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
+                            ]) : null,
+                        ]);
 
-            }
-            if($type == 'video'){
-                if (Auth::user()->wallet >= $Get_feed->cost_videomsg) {
-                    Chatify::newMessage([
-                        'id' => $messageID,
-                        'type' => $request['type'],
-                        'mass_status' => '0',
-                        'from_id' => Auth::user()->id,
-                        'to_id' => $request['id'],
-                        'attachment_price' => $request->price,
-                        'attachment_type' => $type,
-                        'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
-                        'attachment' => ($attachment) ? json_encode((object)[
-                            'new_name' => $attachment,
-                            'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
-                        ]) : null,
-                    ]);
-                            $commission = Setting::pluck("value", "name");
-                            $admin_comi=($Get_feed->cost_videomsg*$commission['commission'])/100;
-                            $model_comi=$Get_feed->cost_videomsg-$admin_comi;
-                            $fan_charge=User::where('id',Auth::user()->id)->first();
-                            $fan_charge->wallet=$fan_charge->wallet-$Get_feed->cost_videomsg;
-                            $fan_charge->save();
-                            $model_earning=User::where('id',$request['id'])->first();
-                            $model_earning->wallet=$model_earning->wallet + $model_comi;
-                            $model_earning->save();
-                            $User_logs= new User_logs;
-                            $User_logs->method='video';
-                            $User_logs->from=Auth::user()->id;
-                            $User_logs->to=$request['id'];
-                            $User_logs->fan_balance=$fan_charge->wallet;
-                            $User_logs->price=$Get_feed->cost_videomsg;
-                            $User_logs->model_earning=$model_comi;
-                            $User_logs->earnings    =$admin_comi;
-                            $User_logs->save();   
-                        }else{
-                            return Response::json([
-                                            'status' => 'insufficentcredit',
-                                            'message' => 'Insufficient Credit',
-                                        ]);
-                        }
+                        $fan_charge=User::where('id',$user->id)->first();
+                        $model_earning=User::where('id',$request['id'])->first();
+                        $msg_from = $user->id;
+                        $msg_to = $request['id']; 
+                        $method ='Audio message';
+                        $walletAmount = $this->ChargeAmountOnSendMessage($Get_feed, $fan_charge, $model_earning, $msg_from, $msg_to, $method);
+                    }else{
+                        return Response::json([
+                            'status' => 'insufficentcredit',
+                            'message' => 'Insufficient Credit',
+                        ]);
+                    }
 
-            }
+                }
+                if($type == 'video'){
+                    if ($user->wallet >= $Get_feed->cost_videomsg) {
+                        Chatify::newMessage([
+                            'id' => $messageID,
+                            'type' => $request['type'],
+                            'mass_status' => '0',
+                            'from_id' => $user->id,
+                            'to_id' => $request['id'],
+                            'attachment_price' => $request->price,
+                            'attachment_type' => $type,
+                            'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
+                            'attachment' => ($attachment) ? json_encode((object)[
+                                'new_name' => $attachment,
+                                'old_name' => htmlentities(trim($attachment_title), ENT_QUOTES, 'UTF-8'),
+                            ]) : null,
+                        ]);
 
-                
+                        $fan_charge=User::where('id',$user->id)->first();
+                        $model_earning = User::where('id',$request['id'])->first();
+                        $msg_from = $user->id;
+                        $msg_to = $request['id']; 
+                        $method = 'video';
+                        $walletAmount = $this->ChargeAmountOnSendMessage($Get_feed, $fan_charge, $model_earning, $msg_from, $msg_to, $method); 
+
+                    }else{
+                        return Response::json([
+                            'status' => 'insufficentcredit',
+                            'message' => 'Insufficient Credit',
+                        ]);
+                    }
+
+                }
             }else{
                 Chatify::newMessage([
                     'id' => $messageID,
@@ -686,9 +642,9 @@ class MessagesController extends Controller
             
             // send to user using pusher
             Chatify::push('private-chatify', 'messaging', [
-                'from_id' => Auth::user()->id,
+                'from_id' => $user->id,
                 'to_id' => $request['id'],
-                'message' => Chatify::messageCard($messageData, 'default')
+                'message' => Chatify::messageCard($messageData, 'default'), 
             ]);
           
         }
@@ -699,8 +655,50 @@ class MessagesController extends Controller
             'error' => $error,
             'message' => Chatify::messageCard(@$messageData),
             'tempID' => $request['temporaryMsgId'],
+            'fwallet' => isset($walletAmount)?$walletAmount:''
         ]);
     }
+
+    public function ChargeAmountOnSendMessage($Get_feed, $fan_charge, $model_earning, $msg_from, $msg_to, $method)
+    {
+        # code...
+        DB::beginTransaction();
+        try {
+            //code...
+            $commission = Setting::pluck("value", "name");
+            $admin_comi=($Get_feed->cost_msg * $commission['commission'])/100;
+            $model_comi = $Get_feed->cost_msg - $admin_comi;
+
+            // $fan_charge=User::where('id', Auth::user()->id)->first();
+            $fan_charge->wallet = $fan_charge->wallet - $Get_feed->cost_msg;
+            $fan_charge->save();
+
+            $model_earning->wallet=$model_earning->wallet + $model_comi;
+            $model_earning->save();
+
+            $User_logs= new User_logs;
+            $User_logs->method = $method;
+            $User_logs->from = $msg_from;
+            $User_logs->to = $msg_to;
+            $User_logs->fan_balance = $fan_charge->wallet;
+            $User_logs->price = $Get_feed->cost_msg;
+            $User_logs->model_earning = $model_comi;
+            $User_logs->earnings = $admin_comi;
+            $User_logs->save();   
+            DB::commit();
+
+            return $fan_charge->wallet; 
+            // [
+            //     'model' => $model_earning->wallet,
+            //     'fan' => $fan_charge->wallet,
+            // ];
+        } catch (\Throwable $th) {
+            //throw $th;
+            // dd($th);
+            DB::rollBack();
+        }
+    }
+
     /**
      * fetch [user/group] messages from database
      *

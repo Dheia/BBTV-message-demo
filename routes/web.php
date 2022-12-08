@@ -153,14 +153,18 @@ Route::group(['prefix' => '', 'as' => '.', 'middleware' => ['DashboardMiddleware
   Route::redirect('/home', '/');
   Route::get('/',[App\Http\Controllers\frontend\FrontendController::class, 'index'])->name('main');
 });
+
+Route::post('/credit-call', [App\Http\Controllers\VoiceController::class, 'creditCall'])->name('credit-call');
+Route::post('/end-call', [App\Http\Controllers\VoiceController::class, 'endCall'])->name('end-call');
+Route::post('/check-call-ballance', [App\Http\Controllers\VoiceController::class, 'checkCallBallance'])->name('check-call-ballance');
+
 Route::POST('model-online-notify', [fandashboardController::class, 'model_online_notify']);
 Route::group(['prefix' => 'fan', 'as' => 'fan.', 'middleware' => ['auth','FanMiddleware']], function () { 
   Route::GET('feed_impressions',[FeedsController::class,'feed_impressions']);
   Route::get('dismiss-notifications',[ModeldashboardController::class, 'dismiss_notifications']);
   
   Route::get('/call', [App\Http\Controllers\VoiceController::class, 'initiateCall'])->name('initiate_call');
-  Route::get('/creditcall', [App\Http\Controllers\VoiceController::class, 'creditcall'])->name('creditcall');
-   Route::get('/call', [App\Http\Controllers\VoiceController::class, 'initiateCall'])->name('initiate_call');
+  
   Route::get('sendSMS', [fandashboardController::class, 'sendsms']);
   Route::get('add-contact-ajax',[ModeldashboardController::class, 'add_contact_ajax']);
   Route::get('feeds-render',[ModeldashboardController::class, 'feeds_render']);

@@ -518,6 +518,7 @@ function sendMessage() {
     formData.append("type", getMessengerType());
     formData.append("temporaryMsgId", tempID);
     formData.append("_token", access_token);
+    
     $.ajax({
       url: $("#message-form").attr("action"),
       method: "POST",
@@ -559,6 +560,9 @@ function sendMessage() {
         } else {
           if (data.status == "insufficentcredit") {
             toastr.error("Insufficient Credits.");
+          }
+          if(data.fwallet) {
+            $('.wallet-credit').html(data.fwallet + ' Cr');
           }
           // update contact item
           updateContactItem(getMessengerId());

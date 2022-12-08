@@ -420,7 +420,6 @@
 
                     if(recorder && recorderTimeoutID) {
                         recorder.stop();
-
                     }
 
                     app.currentSession.stop({});
@@ -543,7 +542,7 @@
         /** ACCEPT */
         $(document).on('click', '.j-accept', function() {
             isAudio = app.currentSession.callType === QB.webrtc.CallType.AUDIO;
-
+            var callType = '';
             var $videoSourceFilter = $(ui.videoSourceFilter),
                 $audioSourceFilter = $(ui.audioSourceFilter),
                 mediaParams;
@@ -554,7 +553,9 @@
                     video: false
                 };
                 document.querySelector('.j-actions[data-call="video"]').setAttribute('hidden', true);
+                callType = 'audio_call';
             } else {
+                callType = 'video_call';
                 mediaParams = {
                     audio: {
                         deviceId: $audioSourceFilter.val() ? $audioSourceFilter.val() : undefined
@@ -607,10 +608,11 @@
                         }
                     });
                     console.log("-====opponents",opponents)
-                    console.log("-userID---")
+                    console.log("-userID---"+userID)
                     
-
-                    callAPIForCredit(4);
+                    // if(userRole == 'Model') {
+                    //     callAPIForCredit(app.currentSession.initiatorID, userID, callType);
+                    // }
 
                     opponents.forEach(function(userID, i, arr) {
 
@@ -841,16 +843,50 @@
                 console.log('stats: ', stats);
             console.groupEnd();
 
+            checkCallBallance();
+            var status = localStorage['canCall'];
+            
+            console.log(status);
+            if(!status){
+                console.log('hangup');
+                if(!_.isEmpty(app.currentSession)) {
+
+                    if(recorder && recorderTimeoutID) {
+                        recorder.stop();
+                    }
+                    app.currentSession.stop({});
+                    app.currentSession = {};
+                    app.helpers.stateBoard.update({
+                        'title': '',
+                        'property': {
+                            'name':  app.caller.full_name,
+                        }
+                    });
+                    app.helpers.setFooterPosition();
+                    return false;
+                }
+            }
             if (stats.remote.video.bitrate) {
                 $('#bitrate_' + userId).text('video bitrate: ' + stats.remote.video.bitrate);
             } else if (stats.remote.audio.bitrate) {
                 $('#bitrate_' + userId).text('audio bitrate: ' + stats.remote.audio.bitrate);
             }
+
         };
 
         QB.webrtc.onSessionCloseListener = function onSessionCloseListener(session){
             console.log('onSessionCloseListener: ', session);
-
+            
+            isAudio = app.currentSession.callType === QB.webrtc.CallType.AUDIO;
+            var callType = '';
+            if(isAudio) {
+                callType = 'audio_call';
+            } else {
+                callType = 'video_call';
+            }
+            // CallEnd(Fan_ID, Model_ID, Type);
+            CallEnd(userID, app.currentSession.opponentsIDs[0], callType);
+            
             document.getElementById(sounds.call).pause();
             document.getElementById(sounds.end).play();
 
@@ -924,8 +960,8 @@
 
         QB.webrtc.onCallListener = function onCallListener(session, extension) {
             console.group('onCallListener.');
-            console.log('Session: ', session);
-            console.log('Extension: ', extension);
+                console.log('Session: ', session);
+                console.log('Extension: ', extension);
             console.groupEnd();
 
             app.currentSession = session;
@@ -1003,6 +1039,19 @@
                 console.log('Session: ', session);
                 console.log('Extension: ', extension);
             console.groupEnd();
+
+            isAudio = app.currentSession.callType === QB.webrtc.CallType.AUDIO;
+            var callType = '';
+            if(isAudio) {
+                callType = 'audio_call';
+            } else {
+                callType = 'video_call';
+            }
+            
+            if(userRole == 'Fan') {
+                // callAPIForCredit(fanId, model_id, callType)
+                callAPIForCredit(userID, app.currentSession.opponentsIDs[0], callType);
+            }
 
             var userInfo = _.findWhere(app.users, {'id': +userId}),
                 filterName = $.trim( $(ui.filterSelect).val() );
@@ -1322,21 +1371,84 @@
             });
         }
 
-        function callAPIForCredit(userid) {
-            console.log("-userid----------------")
-            console.log("-userid",userid)
+
+        function checkCallBallance() {
+            // 
+            if(localStorage['canCall']) {
+                var time = localStorage['time'];
+                if(time){
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/check-call-ballance',  
+                        data: {
+                            time:time,
+                            user_id:userID
+                        },
+                        success: function(response) {
+                            localStorage['canCall'] = response.status;
+                        }
+                    });
+                } else {
+                    localStorage['canCall'] = false;
+                    localStorage.removeItem('time');
+                    localStorage.removeItem('totalMins');
+                    localStorage.removeItem('canCallContinue');
+                }
+            } else {
+                localStorage['canCall'] = false;
+                localStorage.removeItem('time');
+                localStorage.removeItem('totalMins');
+                localStorage.removeItem('canCallContinue');
+            }
+        }
+
+        function CallEnd(fanId, modelId, callType) {
+            console.log('fanId'+ fanId);
+            console.log('modelId'+ modelId);
+
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/creditcall',  
+                url: '/end-call',  
                 data: {
-                   userid:1
+                   fan_id:fanId,
+                   model_id:modelId,
+                   callType:callType
                 },
                 success: function(response) {
-                        console.log("-response", response)     
-                    }
+                    console.log("Call End", response)   
+
+                    localStorage.removeItem('time');
+                    localStorage.removeItem('totalMins');
+                    localStorage.removeItem('canCallContinue');
+                }
             }); 
-            
+        }
+
+        function callAPIForCredit(fanId, model_id, callType) {
+            console.log("-userid-" +fanId);
+            var callLimit = localStorage['time'];
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/credit-call',  
+                data: {
+                   user_id:fanId,
+                   model_id:model_id,
+                   callType:callType
+                },
+                success: function(response) {
+                    console.log("-response", response)   
+                    
+                    if (!callLimit) {
+                        // open popup
+                        localStorage['time'] = response.time;
+                        localStorage['totalMins'] = response.totalMins;
+                        localStorage['canCallContinue'] = response.canCallContinue;
+                    }  
+                }
+            });  
         }
 
 
