@@ -157,6 +157,9 @@ Route::group(['prefix' => '', 'as' => '.', 'middleware' => ['DashboardMiddleware
 Route::post('/credit-call', [App\Http\Controllers\VoiceController::class, 'creditCall'])->name('credit-call');
 Route::post('/end-call', [App\Http\Controllers\VoiceController::class, 'endCall'])->name('end-call');
 Route::post('/check-call-ballance', [App\Http\Controllers\VoiceController::class, 'checkCallBallance'])->name('check-call-ballance');
+Route::post('/clear-call-records', [App\Http\Controllers\VoiceController::class, 'clearCallRecords'])->name('clear-call-records');
+
+
 
 Route::POST('model-online-notify', [fandashboardController::class, 'model_online_notify']);
 Route::group(['prefix' => 'fan', 'as' => 'fan.', 'middleware' => ['auth','FanMiddleware']], function () { 

@@ -955,8 +955,8 @@ $(document).ready(function() {
     $(document).on("click",".add-collection-ajax",function() {
 
         var feed_value = $(this).attr("value");
-       $this=$(this);
-       $.ajax({
+        $this=$(this);
+        $.ajax({
             type: 'GET',
             dataType: 'json',
             url: "{{ url('fan/add-collection') }}",
@@ -972,16 +972,13 @@ $(document).ready(function() {
                     }, 1500);
                     $this.html('Added to collection')
                     $('#feed-add-collection-success').fadeIn(800);
-        $('#feed-add-collection-success').fadeOut(800);
+                    $('#feed-add-collection-success').fadeOut(800);
                     
                 } else {
 
-                    
                 }
             }
         });
-    
-
     }) 
 });
 

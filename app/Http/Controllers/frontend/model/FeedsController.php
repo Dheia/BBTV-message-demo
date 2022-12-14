@@ -11,6 +11,7 @@ use App\Models\Model_feed_likes;
 use App\Models\Collection;
 use DateTime;
 use Auth;
+Use Image;
 use Carbon\Carbon;
 class FeedsController extends Controller
 {
@@ -201,12 +202,17 @@ class FeedsController extends Controller
                 }else{
                   $explodeImage = explode("image/", $base64Image[0]);
                   $imageType = $explodeImage[1];
-                 
+                  
                   $image_base64 = base64_decode($base64Image[1]);
                   $fileName = uniqid() . '.'.$imageType;
                   $file = $folderPath . $fileName;
                   
                   file_put_contents($file, $image_base64);
+
+                  $ogImage = Image::make($image_base64);
+                  $ogImage->blur();
+                  $ogImage->save($file);
+                  
                 }
                 
 

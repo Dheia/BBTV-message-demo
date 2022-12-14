@@ -844,28 +844,21 @@
             console.groupEnd();
 
             checkCallBallance();
-            var status = localStorage['canCall'];
-            
-            console.log(status);
+            var status = localStorage['canCallContinue'];
+
+            if(!status){
+            console.log('onCallStatsReport --- ', status);
+            }
+            // End Call if any error or Zero Ballance 
             if(!status){
                 console.log('hangup');
-                if(!_.isEmpty(app.currentSession)) {
+                if(userRole == 'Fan') {
 
-                    if(recorder && recorderTimeoutID) {
-                        recorder.stop();
-                    }
-                    app.currentSession.stop({});
-                    app.currentSession = {};
-                    app.helpers.stateBoard.update({
-                        'title': '',
-                        'property': {
-                            'name':  app.caller.full_name,
-                        }
-                    });
-                    app.helpers.setFooterPosition();
-                    return false;
+                    cancelTheCall();
                 }
+                
             }
+
             if (stats.remote.video.bitrate) {
                 $('#bitrate_' + userId).text('video bitrate: ' + stats.remote.video.bitrate);
             } else if (stats.remote.audio.bitrate) {
@@ -1374,32 +1367,63 @@
 
         function checkCallBallance() {
             // 
-            if(localStorage['canCall']) {
-                var time = localStorage['time'];
-                if(time){
+            var canCallContinue = localStorage['canCallContinue'];
+            console.log(canCallContinue);
+            if(canCallContinue) {
+                var NextChargeTime = localStorage['NextChargeTime'];
+                isAudio = app.currentSession.callType === QB.webrtc.CallType.AUDIO;
+                var callType = '';
+                if(isAudio) {
+                    callType = 'audio_call';
+                } else {
+                    callType = 'video_call';
+                }
+                // var callType = localStorage['callType'];
+                // if(timeNextChargeTime){
                     $.ajax({
                         type: 'POST',
                         dataType: 'json',
                         url: '/check-call-ballance',  
                         data: {
-                            time:time,
-                            user_id:userID
+                            next_time:NextChargeTime,
+                            user_id:userID,
+                            callType:callType
                         },
                         success: function(response) {
-                            localStorage['canCall'] = response.status;
+                            // 
+                            if(response.update){
+                                if(response.status) {
+                                    localStorage['endTime'] = response.endTime;     // Final Call End Time
+                                    localStorage['NextChargeTime'] = response.NextChargeTime;       // Call Next Charge Time
+                                    localStorage['totalMins'] = response.totalMins;     // Total Mins
+                                    localStorage['canCallContinue'] = response.canCallContinue; //(response.canCallContinue == 'yes')?true:false;
+                                    localStorage['callType'] = response.callType; 
+                                } else {
+                                    localStorage['canCallContinue'] = false;
+                                    localStorage.removeItem('time');
+                                    localStorage.removeItem('totalMins');
+                                    localStorage.removeItem('canCallContinue');
+                                    localStorage.removeItem('callType');
+                                }
+                            }
                         }
                     });
-                } else {
-                    localStorage['canCall'] = false;
-                    localStorage.removeItem('time');
-                    localStorage.removeItem('totalMins');
-                    localStorage.removeItem('canCallContinue');
-                }
-            } else {
-                localStorage['canCall'] = false;
-                localStorage.removeItem('time');
+                // } else {
+                //     localStorage['canCallContinue'] = false;
+                //     localStorage.removeItem('NextChargeTime');
+                //     localStorage.removeItem('totalMins');
+                //     localStorage.removeItem('canCallContinue');
+                //     localStorage.removeItem('endTime');
+                //     localStorage.removeItem('callType');
+                // }
+            } 
+            else {
+                localStorage['canCallContinue'] = false;
+                localStorage.removeItem('NextChargeTime');
                 localStorage.removeItem('totalMins');
                 localStorage.removeItem('canCallContinue');
+                localStorage.removeItem('endTime');
+                localStorage.removeItem('callType');
             }
         }
 
@@ -1419,16 +1443,18 @@
                 success: function(response) {
                     console.log("Call End", response)   
 
-                    localStorage.removeItem('time');
+                    localStorage.removeItem('NextChargeTime');
                     localStorage.removeItem('totalMins');
                     localStorage.removeItem('canCallContinue');
+                    localStorage.removeItem('endTime');
+                    localStorage.removeItem('callType');
                 }
             }); 
         }
 
         function callAPIForCredit(fanId, model_id, callType) {
-            console.log("-userid-" +fanId);
-            var callLimit = localStorage['time'];
+            console.log("On Accept Actions");
+            // var callLimit = localStorage['time'];
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -1439,18 +1465,40 @@
                    callType:callType
                 },
                 success: function(response) {
-                    console.log("-response", response)   
+                    console.log("First Time Payment", response)   
                     
-                    if (!callLimit) {
+                    if (response.status) {
                         // open popup
-                        localStorage['time'] = response.time;
-                        localStorage['totalMins'] = response.totalMins;
-                        localStorage['canCallContinue'] = response.canCallContinue;
+                        localStorage['endTime'] = response.endTime;     // Final Call End Time
+                        localStorage['NextChargeTime'] = response.NextChargeTime;       // Call Next Charge Time
+                        localStorage['totalMins'] = response.totalMins;     // Total Mins
+                        localStorage['canCall'] = response.canCallContinue;     // Can Call Continue -- Optional
+                        localStorage['callType'] = response.callType;     // Can Call Continue -- Optional
+                        localStorage['canCallContinue'] = response.canCallContinue; ;//(response.canCallContinue == 'yes')?true:false;     // Can Call Continue
                     }  
                 }
             });  
         }
 
+        function cancelTheCall() {
+
+            if(!_.isEmpty(app.currentSession)) {
+
+                if(recorder && recorderTimeoutID) {
+                    recorder.stop();
+                }
+                app.currentSession.stop({});
+                app.currentSession = {};
+                app.helpers.stateBoard.update({
+                    'title': '',
+                    'property': {
+                        'name':  app.caller.full_name,
+                    }
+                });
+                app.helpers.setFooterPosition();
+                return false;
+            }
+        }
 
         function updateUserCallId(callURL,user_id,call_id) {
 
@@ -1475,6 +1523,27 @@
             
         }
 
+        $( window ).load(function() {
+            // CallEnd
+            // CallEnd(userID, 0, '');
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }});
+            console.log('CallEnd', userID);
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/clear-call-records',  
+                data: {
+                   user_id:userID,
+                },
+                success: function(response) {
+                    localStorage.removeItem('NextChargeTime');
+                    localStorage.removeItem('totalMins');
+                    localStorage.removeItem('canCallContinue');
+                    localStorage.removeItem('endTime');
+                    localStorage.removeItem('callType');
+                }
+            }); 
+        });
          
     }); 
 }(window, window.QB, window.app, window.CONFIG,  jQuery, Backbone));
