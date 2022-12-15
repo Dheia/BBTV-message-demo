@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Exceptions;
-
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        'Symfony\Component\HttpKernel\Exception\HttpException'
     ];
 
     /**
@@ -37,5 +37,22 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    
+    public function report(Throwable $e)
+    {
+        // return parent::report($e);
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($this->isHttpException($e)) {
+            return $this->renderHttpException($e);
+        } else {
+            $error = 'Error Is: '.$e->getMessage();
+            return $error; //parent::render($request, $e);
+            // dd($e);
+            // return response()->view('errors.500');
+        }
     }
 }

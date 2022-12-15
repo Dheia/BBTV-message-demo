@@ -716,10 +716,6 @@ span.plus.price_pluse {
 
 {{-- modal for calling --}}
 
-<div>
-  <div class="hellobro">Test call me another windw</div>
-</div>
-
 <!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary " id="openmodallll" data-toggle="modal" style="padding:50px; height:100px; width:200px;" data-target="#hellomodal">
   Launch demo

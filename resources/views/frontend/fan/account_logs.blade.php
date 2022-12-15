@@ -11,14 +11,19 @@
 </tr>
 @foreach($User_logs as $item)
 <tr>
-<td>@if($item->method=='Post unlock')
-Opened picture from {{$item->model->first_name ?? ''}} @endif
-@if($item->method=='Tip')
-Send Tip Amount To {{$item->model->first_name ?? ''}} @endif
-@if($item->method=='message')
-Send Message  To {{$item->model->first_name ?? ''}} @endif
-@if($item->method=='image')
-Send Image To {{$item->model->first_name ?? ''}} @endif </td>
+<td>
+    @php
+    $methods = [
+        'Post unlock' => 'Opened picture from',
+        'Tip' => 'Send Tip Amount To',
+        'message' => 'Send Message  To',
+        'image' => 'Send Image To',
+        'video_call' => 'Video Call with',
+        'audio_call' => 'Audio Call with',
+    ];
+    @endphp
+    {{$methods[$item->method].' '}} {{$item->model->first_name ?? ''}} 
+</td>
 <td>{{$item->created_at}}</td>
 <td>${{$item->price}}</td>
 <td>@if($item->fan_balance) ${{$item->fan_balance}} @else - @endif</td>
@@ -28,12 +33,19 @@ Send Image To {{$item->model->first_name ?? ''}} @endif </td>
 <div class="mobile_account_logs">
     @foreach($User_logs as $item)
 <div class="mobile_card card text-white">
-    <h6 class="mt-2 mb-2">@if($item->method=='Post unlock')
-        Opened picture from {{$item->model->first_name ?? ''}} @endif
-        @if($item->method=='Tip')
-        Send Tip Amaount To {{$item->model->first_name ?? ''}} @endif
-        @if($item->method=='message')
-Send Message  To {{$item->model->first_name ?? ''}} @endif </h6>
+    <h6 class="mt-2 mb-2">
+        @php
+        $methods = [
+            'Post unlock' => 'Opened picture from',
+            'Tip' => 'Send Tip Amount To',
+            'message' => 'Send Message  To',
+            'image' => 'Send Image To',
+            'video_call' => 'Video Call with',
+            'audio_call' => 'Audio Call with',
+        ];
+        @endphp
+        {{$methods[$item->method].' '}} {{$item->model->first_name ?? ''}} 
+    </h6>
     <div class="row pb-2 account_log_border">
         <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">{{date('d.m.Y H:i:s', strtotime($item->created_at)) }}</div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-4 " >{{$item->price}}$</div>
@@ -43,8 +55,8 @@ Send Message  To {{$item->model->first_name ?? ''}} @endif </h6>
 @endforeach
 </div>
 <div id="pagination">
-        {{ $User_logs->withQueryString()->links('paginate.paginate') }}
-      </div>
+    {{ $User_logs->withQueryString()->links('paginate.paginate') }}
+</div>
 </div>
 </div>
 </div>
