@@ -300,259 +300,277 @@ class ModeldashboardController extends Controller
         $user_id= Auth::user()->id;
         $yearcurrent =Carbon::now()->format('Y');
         $d= $this->earningsshow($request);
-            $totaldata= [];
-            $texts = [];
-            for ($i=1; $i<=12; $i++){
-                $monthcurrent =$i;
-                for($j=1; $j<=2; $j++) {
-                    if($j =='1'){
-                        // 
-                        $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+        $totaldata= [];
+        $texts = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
-                        $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                            ->where('method','Message')    
-                            ->whereMonth('created_at', $i)
-                            ->whereBetween('created_at',[$startDate, $endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $texts[] = $totaldata[$i]['01-15'];
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','Message')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $texts[] = $totaldata[$i]['01-15'];
 
-                    } else {
-                        // 
-                        $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
-                            ->whereMonth('created_at', $i)
-                            ->where('method','Message')
-                            ->whereBetween('created_at',[$startDate,$endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $texts[] = $totaldata[$i]['16-31'];
-                    }
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','Message')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $texts[] = $totaldata[$i]['16-31'];
                 }
-               
             }
-            $totaldata= [];
-            $postunlock = [];
-            for ($i=1; $i<=12; $i++){
-                $monthcurrent =$i;
-                for($j=1; $j<=2; $j++) {
-                    if($j =='1'){
-                        // 
-                        $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+            
+        }
+        $totaldata= [];
+        $postunlock = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
-                        $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                            ->where('method','Post unlock')    
-                            ->whereMonth('created_at', $i)
-                            ->whereBetween('created_at',[$startDate, $endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $postunlock[] = $totaldata[$i]['01-15'];
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','Post unlock')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $postunlock[] = $totaldata[$i]['01-15'];
 
-                    } else {
-                        // 
-                        $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
-                            ->whereMonth('created_at', $i)
-                            ->where('method','Post unlock')
-                            ->whereBetween('created_at',[$startDate,$endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $postunlock[] = $totaldata[$i]['16-31'];
-                    }
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','Post unlock')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $postunlock[] = $totaldata[$i]['16-31'];
                 }
-               
             }
-            $totaldata= [];
-            $tip = [];
-            for ($i=1; $i<=12; $i++){
-                $monthcurrent =$i;
-                for($j=1; $j<=2; $j++) {
-                    if($j =='1'){
-                        // 
-                        $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+            
+        }
+        $totaldata= [];
+        $tip = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
-                        $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                            ->where('method','Tip')    
-                            ->whereMonth('created_at', $i)
-                            ->whereBetween('created_at',[$startDate, $endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $tip[] = $totaldata[$i]['01-15'];
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','Tip')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $tip[] = $totaldata[$i]['01-15'];
 
-                    } else {
-                        // 
-                        $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
-                            ->whereMonth('created_at', $i)
-                            ->where('method','Tip')
-                            ->whereBetween('created_at',[$startDate,$endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $tip[] = $totaldata[$i]['16-31'];
-                    }
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','Tip')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $tip[] = $totaldata[$i]['16-31'];
                 }
-               
             }
-            $totaldata= [];
-            $audiocall = [];
-            for ($i=1; $i<=12; $i++){
-                $monthcurrent =$i;
-                for($j=1; $j<=2; $j++) {
-                    if($j =='1'){
-                        // 
-                        $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+            
+        }
+        $totaldata= [];
+        $audiocall = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
-                        $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                            ->where('method','Phone Call')    
-                            ->whereMonth('created_at', $i)
-                            ->whereBetween('created_at',[$startDate, $endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $audiocall[] = $totaldata[$i]['01-15'];
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','audio_call')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $audiocall[] = $totaldata[$i]['01-15'];
 
-                    } else {
-                        // 
-                        $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
-                            ->whereMonth('created_at', $i)
-                            ->where('method','Phone Call')
-                            ->whereBetween('created_at',[$startDate,$endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $audiocall[] = $totaldata[$i]['16-31'];
-                    }
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','audio_call')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $audiocall[] = $totaldata[$i]['16-31'];
                 }
-               
             }
-            $totaldata= [];
-            $videocall = [];
-            for ($i=1; $i<=12; $i++){
-                $monthcurrent =$i;
-                for($j=1; $j<=2; $j++) {
-                    if($j =='1'){
-                        // 
-                        $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+            
+        }
+        $totaldata= [];
+        $videocall = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
-                        $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                            ->where('method','Video Call')    
-                            ->whereMonth('created_at', $i)
-                            ->whereBetween('created_at',[$startDate, $endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $videocall[] = $totaldata[$i]['01-15'];
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','video_call')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $videocall[] = $totaldata[$i]['01-15'];
 
-                    } else {
-                        // 
-                        $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
-                            ->whereMonth('created_at', $i)
-                            ->where('method','Video Call')
-                            ->whereBetween('created_at',[$startDate,$endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $videocall[] = $totaldata[$i]['16-31'];
-                    }
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','video_call')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $videocall[] = $totaldata[$i]['16-31'];
                 }
-               
             }
-            $totaldata= [];
-            $mmspic = [];
-            for ($i=1; $i<=12; $i++){
-                $monthcurrent =$i;
-                for($j=1; $j<=2; $j++) {
-                    if($j =='1'){
-                        // 
-                        $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+            
+        }
+        $totaldata= [];
+        $mmspic = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
-                        $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                            ->where('method','Mms Audio')    
-                            ->whereMonth('created_at', $i)
-                            ->whereBetween('created_at',[$startDate, $endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $mmspic[] = $totaldata[$i]['01-15'];
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','Mms Audio')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $mmspic[] = $totaldata[$i]['01-15'];
 
-                    } else {
-                        // 
-                        $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
-                            ->whereMonth('created_at', $i)
-                            ->where('method','Mms Audio')
-                            ->whereBetween('created_at',[$startDate,$endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $mmspic[] = $totaldata[$i]['16-31'];
-                    }
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','Mms Audio')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $mmspic[] = $totaldata[$i]['16-31'];
                 }
-               
             }
-            $totaldata= [];
-            $mmsvideo = [];
-            for ($i=1; $i<=12; $i++){
-                $monthcurrent =$i;
-                for($j=1; $j<=2; $j++) {
-                    if($j =='1'){
-                        // 
-                        $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+            
+        }
+        $totaldata= [];
+        $mmsvideo = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
-                        $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                            ->where('method','Mms Video')    
-                            ->whereMonth('created_at', $i)
-                            ->whereBetween('created_at',[$startDate, $endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $mmsvideo[] = $totaldata[$i]['01-15'];
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','Mms Video')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $mmsvideo[] = $totaldata[$i]['01-15'];
 
-                    } else {
-                        // 
-                        $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
-                        $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
-                            ->whereMonth('created_at', $i)
-                            ->where('method','Mms Video')
-                            ->whereBetween('created_at',[$startDate,$endDate])
-                            ->groupBy('to')
-                            ->sum('model_earning');
-                        $mmsvideo[] = $totaldata[$i]['16-31'];
-                    }
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','Mms Video')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $mmsvideo[] = $totaldata[$i]['16-31'];
                 }
-               
             }
-            ;
+        }
 
             
-        $datecurrent1 =Carbon::now()->format('d');
-        $monthcurrent =Carbon::now()->format('m');
-        $yearcurrent =Carbon::now()->format('Y');
-        $q=User_logs::where('to',$user_id)->groupBy('from')->selectRaw('user_logs.*, sum(model_earning) as sum');
-        if($request->timing == 'currentyear'){
-            $q->whereYear('created_at',$yearcurrent);
+        // $datecurrent1 =Carbon::now()->format('d');
+        // $monthcurrent =Carbon::now()->format('m');
+        // $yearcurrent =Carbon::now()->format('Y');
+        $q = User_logs::where('to', $user_id)->groupBy('from');
+        $earningData = [];
+        // if($request->timing == 'currentyear'){
+        //     $q->whereYear('created_at',$yearcurrent);
+        // }
+        if($request->timing == 'yearly') {
+            for($month=1; $month <= 12; $month++) {
+                $start = Carbon::create()->month($month)->year(2022)->startOfMonth()->format('Y-m-d 00:00:00');
+                $end = Carbon::create()->month($month)->year(2022)->endOfMonth()->format('Y-m-d 23:59:59');
+                $monthName = Carbon::create()->month($month)->year(2022)->startOfMonth()->format('M');
+
+                $userLogs = User_logs::where('to', $user_id)->whereBetween('created_at', [$start, $end])->get();
+                if(count($userLogs)> 0)
+                foreach ($userLogs as $key => $userLog) {
+                    # code...
+                    if(isset($earningData[$monthName][$userLog->method]))
+                        $earningData[$monthName][$userLog->method] = $earningData[$monthName][$userLog->method] + $userLog->model_earning;
+                    else
+                        $earningData[$monthName][$userLog->method] = $userLog->model_earning;
+                }
+                else {
+                    $earningData[$monthName] = [];
+                }
+            }
         }
-        if($request->timing == 'lastmonth'){
-            $q->whereMonth('created_at',$monthcurrent);
-        }
-        if($request->timing == 'all'){
+
+        // dd($earningData);
+        // if($request->timing == 'all'){
            
-        }
-        if($request->timing == 'today'){
-            $q->whereDay('created_at',$datecurrent1);
-        }
+        // }
+        // if($request->timing == 'today'){
+        //     $q->whereDay('created_at',$datecurrent1);
+        // }
        
       
-        $d['spenders']=$q->paginate(10)->withQueryString();
+        // $d['spenders']=$q->paginate(10)->withQueryString();
         $d['texts']=implode(',', $texts);
         $d['postunlock']=implode(',', $postunlock);
         $d['tip']=implode(',', $tip);
@@ -561,7 +579,8 @@ class ModeldashboardController extends Controller
         $d['mmspic']=implode(',', $mmspic);
         $d['mmsvideo']=implode(',', $mmsvideo);
 
-        return view('frontend.model.earnings',$d);
+        return view('frontend.model.earnings', $d);
+
     }
     public function tips(Request $request)
     {
@@ -594,19 +613,18 @@ class ModeldashboardController extends Controller
         if($request->year){
             $d['calls']=UserCalls::where('call_to',$user_id)->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
             ->paginate(10)->withQueryString();
-            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
+            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio_call')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
             ->paginate(10)->withQueryString();
-            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
+            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video_call')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
             ->paginate(10)->withQueryString();
         }else{
             $d['calls']=UserCalls::where('call_to',$user_id)->orderBy('created_at','Desc')
             ->paginate(10)->withQueryString();
-            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio')->orderBy('created_at','Desc')
+            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio_call')->orderBy('created_at','Desc')
             ->paginate(10)->withQueryString();
-            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video')->orderBy('created_at','Desc')
+            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video_call')->orderBy('created_at','Desc')
             ->paginate(10)->withQueryString();
         }
-      
        
         return view('frontend.model.calls',$d);
     }

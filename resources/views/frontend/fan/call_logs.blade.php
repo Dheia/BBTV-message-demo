@@ -1,69 +1,59 @@
 @extends('frontend.fan.main')
 @section('content')
 <div class="col-sm-12 col-md-8 col-xl-9 mt-5">
-    <h3 class="text-white mt-4">Account Logs</h3>
+    <h3 class="text-white mt-4">{{$title}}</h3>
     <table class="text-white p-5 desktop_account_logs">
         <tr class="t_head">
             <th>Description</th>
-            <th>Date</th>
+            <th>Dutration</th>
             <th>Change</th>
             <th>Balence</th>
         </tr>
-        @foreach($User_logs as $item)
+        @foreach($callLogs as $item)
         <tr>
             <td>
                 @php
                 $methods = [
-                    'Post unlock' => 'Opened picture from',
-                    'Tip' => 'Send Tip Amount To',
-                    'message' => 'Send Message  To',
-                    'image' => 'Send Image To',
                     'video_call' => 'Video Call with',
                     'audio_call' => 'Audio Call with',
                 ];
                 @endphp
-                {{$methods[$item->method].' '}} {{$item->model->first_name ?? ''}} 
+                {{$methods[$item->call_type].' '}} {{$item->model->first_name ?? ''}} 
             </td>
-            <td>{{$item->created_at}}</td>
-            <td>${{$item->price}}</td>
-            <td>@if($item->fan_balance) ${{$item->fan_balance}} @else - @endif</td>
+            <td>{{$item->total_mint}}</td>
+            <td>${{($item->total_earning + $item->admin_earning)}}</td>
+            <td>@if($item->user_earning) ${{$item->user_earning}} @else - @endif</td>
         </tr>
         @endforeach
     </table>
-<div class="mobile_account_logs">
-    @foreach($User_logs as $item)
-<div class="mobile_card card text-white">
-    <h6 class="mt-2 mb-2">
-        @php
-            $methods = [
-                'Post unlock' => 'Opened picture from',
-                'Tip' => 'Send Tip Amount To',
-                'message' => 'Send Message  To',
-                'image' => 'Send Image To',
-                'video_call' => 'Video Call with',
-                'audio_call' => 'Audio Call with',
-            ];
-        @endphp
-        {{$methods[$item->method].' '}} {{$item->model->first_name ?? ''}} 
-    </h6>
-    <div class="row pb-2 account_log_border">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">{{date('d.m.Y H:i:s', strtotime($item->created_at)) }}</div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-4 " >{{$item->price}}$</div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">@if($item->fan_balance) ${{$item->fan_balance}} @else - @endif</div>
+    <div class="mobile_account_logs">
+        @foreach($callLogs as $item)
+        <div class="mobile_card card text-white">
+            <h6 class="mt-2 mb-2">
+                @php
+                $methods = [
+                    'video_call' => 'Video Call with',
+                    'audio_call' => 'Audio Call with',
+                ];
+                @endphp
+                {{$methods[$item->call_type].' '}} {{$item->model->first_name ?? ''}} 
+            </h6>
+            <div class="row pb-2 account_log_border">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">{{date('d.m.Y H:i:s', strtotime($item->created_at)) }}</div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-4 " >{{($item->total_earning + $item->admin_earning)}}$</div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-4 ">@if($item->user_earning) ${{$item->user_earning}} @else - @endif</div>
+            </div>
+        </div>
+        @endforeach
     </div>
-</div>
-@endforeach
-</div>
-<div id="pagination">
-        {{ $User_logs->withQueryString()->links('paginate.paginate') }}
-      </div>
+    <div id="pagination">{{ $callLogs->withQueryString()->links('paginate.paginate') }}</div>
 </div>
 </div>
 </div>
 </div>
 @endsection
 @section('scripts')
-    @parent
+@parent
 @endsection
 
 <script>
@@ -103,24 +93,22 @@
                 // slideBy: slidesPerPage, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
                 responsiveRefreshRate: 100,
                 responsiveClass:true,
-    responsive:{
-        320:{
-            items:2,
-            nav:true
-        },
-        600:{
-            items:2,
-            nav:true
-        },
-        1000:{
-            items:3,
-            nav:true,
-            loop:false
-        }
+                responsive:{
+                    320:{
+                        items:2,
+                        nav:true
+                    },
+                    600:{
+                        items:2,
+                        nav:true
+                    },
+                    1000:{
+                        items:3,
+                        nav:true,
+                        loop:false
+                    }
 
-    }
-
-                
+                }
             })
             .on("changed.owl.carousel", syncPosition2);
 

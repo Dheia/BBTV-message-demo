@@ -103,11 +103,9 @@
               </div>
               @else
               <div class="up_text">
-                <i class="bi m-0 bi-arrow-up-short"></i
-                ><small class="text-success"
-                  >${{ $calcuthirty ?? "" }}(
-                  {{ number_format($perthirty ?? "", 2, ".", ",") }}% )</small
-                >
+                <i class="bi m-0 bi-arrow-up-short"></i>
+                <small class="text-success">${{ $calcuthirty ?? "" }}(
+                  {{ number_format($perthirty ?? "", 2, ".", ",") }}% )</small>
               </div>
 
               @endif
@@ -192,17 +190,13 @@
             <form action="" method="get">
               <select
                 class="ml-auto form-select earn_select Earn-form" name="timing" id="topspent">
-                <option class="earning-filter-option" value="all" @if(request()->
-                  get('timing') == 'all') selected @endif>All Time
+                <option class="earning-filter-option" value="all" @if(request()->get('timing') == 'all') selected @endif>All Time
                 </option>
-                <option class="earning-filter-option" value="currentyear" @if(request()->
-                  get('timing') == 'currentyear') selected @endif>This Year
+                <option class="earning-filter-option" value="yearly" @if(request()->get('timing') == 'yearly') selected @endif>Yearly
                 </option>
-                <option class="earning-filter-option" value="lastmonth" @if(request()->
-                  get('timing') == 'lastmonth') selected @endif>This month
+                <option class="earning-filter-option" value="monthly" @if(request()->get('timing') == 'monthly') selected @endif>Monthly
                 </option>
-                <option class="earning-filter-option" value="today" @if(request()->
-                  get('timing') == 'today') selected @endif>Today
+                <option class="earning-filter-option" value="today" @if(request()->get('timing') == 'today') selected @endif>Today
                 </option>
               </select>
             </form>
@@ -226,40 +220,40 @@
               <th>Tips</th>
               <th>Total</th>
             </tr>
-            @foreach($spenders as $item) @php
-            $audio=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Audio message')
-            ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-            $video=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Video message')
-            ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-            $tips=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Tip')
-            ->selectRaw('user_logs.*, sum(model_earning) as tip') ->first();
-            $videocall=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Video call')
-            ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-            $phonecall=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Phone call')
-            ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-            $message=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Post unlock')
-            ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-            $text=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Message')
-            ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
+            {{-- @foreach($spenders as $item)  --}}
+            @php
+              // $audio=App\Models\User_logs::where('to',Auth::user()->id)
+              //   ->where('from',$item->from) ->where('method','Audio message')
+              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
+              // $video=App\Models\User_logs::where('to',Auth::user()->id)
+              //   ->where('from',$item->from) ->where('method','Video message')
+              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
+              // $tips=App\Models\User_logs::where('to',Auth::user()->id)
+              //   ->where('from',$item->from) ->where('method','Tip')
+              //   ->selectRaw('user_logs.*, sum(model_earning) as tip') ->first();
+              // $videocall=App\Models\User_logs::where('to',Auth::user()->id)
+              //   ->where('from',$item->from) ->where('method','video_call')
+              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
+              // $phonecall=App\Models\User_logs::where('to',Auth::user()->id)
+              //   ->where('from',$item->from) ->where('method','audio_call')
+              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
+              // $message=App\Models\User_logs::where('to',Auth::user()->id)
+              //   ->where('from',$item->from) ->where('method','Post unlock')
+              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
+              // $text=App\Models\User_logs::where('to',Auth::user()->id)
+              //   ->where('from',$item->from) ->where('method','Message')
+              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
             @endphp
 
             <tr class="Details_row">
               <td>
-                {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y ') }}
+                {{-- {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y ') }} --}}
               </td>
               <td>
                 @if(!empty($text->total) ){{$text->total}}$ @else 00.00$ @endif
               </td>
               <td>
-                @if(!empty($message->total) ){{$message->total}}$ @else 00.00$
-                @endif
+                @if(!empty($message->total) ){{$message->total}}$ @else 00.00$@endif
               </td>
               <td>
                 @if(!empty($video->total) ){{$video->total}}$ @else 00.00$ @endif
@@ -268,17 +262,15 @@
                 @if(!empty($audio->total) ){{$audio->total}}$ @else 00.00$ @endif
               </td>
               <td>
-                @if(!empty($phonecall->total) ){{$phonecall->total}}$ @else 00.00$
-                @endif
+                @if(!empty($phonecall->total) ){{$phonecall->total}}$ @else 00.00$@endif
               </td>
               <td>
-                @if(!empty($videocall->total) ){{$videocall->total}}$ @else 00.00$
-                @endif
+                @if(!empty($videocall->total) ){{$videocall->total}}$ @else 00.00$@endif
               </td>
               <td>@if(!empty($tips->tip) ){{$tips->tip}}$ @else 00.00$ @endif</td>
-              <td>{{$item->sum}}</td>
+              {{-- <td>{{$item->sum}}</td> --}}
             </tr>
-            @endforeach
+            {{-- @endforeach --}}
           </table>
 
 
@@ -287,7 +279,7 @@
         <div></div>
         <div class="mobile_table">
 
-          @foreach($spenders as $item) @php
+          {{-- @foreach($spenders as $item) @php
             $audio=App\Models\User_logs::where('to',Auth::user()->id)
             ->where('from',$item->from) ->where('method','Audio message')
             ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
@@ -298,10 +290,10 @@
             ->where('from',$item->from) ->where('method','Tip')
             ->selectRaw('user_logs.*, sum(model_earning) as tip') ->first();
             $videocall=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Video call')
+            ->where('from',$item->from) ->where('method','video_call')
             ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
             $phonecall=App\Models\User_logs::where('to',Auth::user()->id)
-            ->where('from',$item->from) ->where('method','Phone call')
+            ->where('from',$item->from) ->where('method','audio_call')
             ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
             $message=App\Models\User_logs::where('to',Auth::user()->id)
             ->where('from',$item->from) ->where('method','Post unlock')
@@ -309,63 +301,63 @@
             $text=App\Models\User_logs::where('to',Auth::user()->id)
             ->where('from',$item->from) ->where('method','Message')
             ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-            @endphp
-   <div class="mobile_table_card mt-2">
-  <table>
-    <tbody>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Date: Time:</th>
-        <td style="border-bottom: none !important">
-        {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y ') }}
-        </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Texts:</th>
-        <td style="border-bottom: none !important"> @if(!empty($text->total) ){{$text->total}}$ @else 00.00$ @endif</td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Pictures:</th>
-        <td style="border-bottom: none !important">   @if(!empty($message->total) ){{$message->total}}$ @else 00.00$
-                @endif 
-                </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Videos:</th>
-       
-        <td style="border-bottom: none !important">@if(!empty($video->total) ){{$video->total}}$ @else 00.00$ @endif </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Videos:</th>
-        <td style="border-bottom: none !important">  @if(!empty($audio->total) ){{$audio->total}}$ @else 00.00$ @endif </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Audio:</th>
-        <td style="border-bottom: none !important">@if(!empty($phonecall->total) ){{$phonecall->total}}$ @else 00.00$
-                @endif </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Phone Calls:</th>
-        <td style="border-bottom: none !important"> @if(!empty($videocall->total) ){{$videocall->total}}$ @else 00.00$
-                @endif </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Video Calls:</th>
-        <td style="border-bottom: none !important">@if(!empty($tips->tip) ){{$tips->tip}}$ @else 00.00$ @endif </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Tips:</th>
-        <td style="border-bottom: none !important"> 00.00$ </td>
-      </tr>
-      <tr>
-        <th scope="row" style="border-bottom: none !important">Total:</th>
-        <td style="border-bottom: none !important">${{$item->sum??''}}</td>
-      </tr>
-    </tbody>
-  </table>
- </div>
-@endforeach
+            @endphp --}}
+          <div class="mobile_table_card mt-2">
+            <table>
+              <tbody>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Date: Time:</th>
+                  <td style="border-bottom: none !important">
+                  {{-- {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y ') }} --}}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Texts:</th>
+                  <td style="border-bottom: none !important"> @if(!empty($text->total) ){{$text->total}}$ @else 00.00$ @endif</td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Pictures:</th>
+                  <td style="border-bottom: none !important">   
+                    @if(!empty($message->total) ){{$message->total}}$ @else 00.00$ @endif 
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Videos:</th>
+                
+                  <td style="border-bottom: none !important">@if(!empty($video->total) ){{$video->total}}$ @else 00.00$ @endif </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Videos:</th>
+                  <td style="border-bottom: none !important">  @if(!empty($audio->total) ){{$audio->total}}$ @else 00.00$ @endif </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Audio:</th>
+                  <td style="border-bottom: none !important">@if(!empty($phonecall->total) ){{$phonecall->total}}$ @else 00.00$
+                          @endif </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Phone Calls:</th>
+                  <td style="border-bottom: none !important"> @if(!empty($videocall->total) ){{$videocall->total}}$ @else 00.00$
+                          @endif </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Video Calls:</th>
+                  <td style="border-bottom: none !important">@if(!empty($tips->tip) ){{$tips->tip}}$ @else 00.00$ @endif </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Tips:</th>
+                  <td style="border-bottom: none !important"> 00.00$ </td>
+                </tr>
+                <tr>
+                  <th scope="row" style="border-bottom: none !important">Total:</th>
+                  {{-- <td style="border-bottom: none !important">${{$item->sum??''}}</td> --}}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          {{-- @endforeach --}}
 
-</div>
+        </div>
       </div>
     </div>
   </div>

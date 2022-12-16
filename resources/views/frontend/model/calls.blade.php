@@ -338,16 +338,14 @@
             <li class="nav-item chat_nav">
                <a class="nav-link nav_tab" id="pills-Phone-tab" data-toggle="pill" href="#pills-Phone" role="tab" aria-controls="pills-Phone" aria-selected="false">
                   <div>
-                     <small>Phone
-                     </small>
+                     <small>Phone</small>
                   </div>
                </a>
             </li>
             <li class="nav-item chat_nav">
                <a class="nav-link nav_tab" id="pills-Video-tab" data-toggle="pill" href="#pills-Video" role="tab" aria-controls="pills-Video" aria-selected="false">
                   <div>
-                     <small>Video
-                     </small>
+                     <small>Video</small>
                   </div>
                </a>
             </li>
@@ -385,17 +383,17 @@
             
             @foreach($calls as $item)
             @php
-            $dt = new DateTime();
-            $date1 = new DateTime($item->end_time);
-            $date2 = new DateTime($item->start_time);
-            $difference = $date1->diff($date2);
-            $diffInSeconds = $difference->s;
-            $diffInMinutes = $difference->i; 
-            $diffInHours = $difference->h; 
+            // $dt = new DateTime();
+            // $date1 = new DateTime($item->end_time);
+            // $date2 = new DateTime($item->start_time);
+            // $difference = $date1->diff($date2);
+            // $diffInSeconds = $difference->s;
+            // $diffInMinutes = $difference->i; 
+            // $diffInHours = $difference->h; 
             @endphp
             <tr class="border-bottom-1 mobile_table_row">
                <td>
-                  @if($item->call_type == 'video') 
+                  @if($item->call_type == 'video_call') 
                   <i class="bi bi-camera-video"></i>
                   @else
                   <i class="bi bi-telephone"></i>
@@ -403,8 +401,8 @@
                   {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y  m:s A') }}
                </td>
                <td>{{$item->user->first_name ?? ''}}</td>
-               <td>{{$diffInMinutes.'min'.$diffInSeconds }}sec</td>
-               <td>$ {{$item->user_earning}}</td>
+               <td>{{$item->total_mint}}</td>
+               <td>${{($item->total_earning)}}</td>
             </tr>
             @endforeach
          </table>
@@ -412,13 +410,13 @@
 
           @foreach($calls as $item)
           @php
-          $dt = new DateTime();
-          $date1 = new DateTime($item->end_time);
-          $date2 = new DateTime($item->start_time);
-          $difference = $date1->diff($date2);
-          $diffInSeconds = $difference->s;
-          $diffInMinutes = $difference->i; 
-          $diffInHours = $difference->h; 
+         //  $dt = new DateTime();
+         //  $date1 = new DateTime($item->end_time);
+         //  $date2 = new DateTime($item->start_time);
+         //  $difference = $date1->diff($date2);
+         //  $diffInSeconds = $difference->s;
+         //  $diffInMinutes = $difference->i; 
+         //  $diffInHours = $difference->h; 
           @endphp
           <div class="mobile_table_card">
             <table>
@@ -426,7 +424,7 @@
                 <tr class="mobile_table_row">
                   <th scope="row">Date: Time:</th>
                   <td>
-                    @if($item->call_type == 'video') 
+                    @if($item->call_type == 'video_call') 
                     <i class="bi bi-camera-video"></i>
                     @else
                     <i class="bi bi-telephone"></i>
@@ -440,11 +438,11 @@
                 </tr>
                 <tr class="mobile_table_row">
                   <th scope="row">Call Duration:</th>
-                  <td>{{$diffInMinutes.' min'.$diffInSeconds }} sec </td>
+                  <td>{{$item->total_mint}}</td>
                 </tr>
                 <tr class="mobile_table_row">
                   <th scope="row">Earnings:</th>
-                  <td>$ {{$item->user_earning}} </td>
+                  <td>${{($item->total_earning)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -461,15 +459,16 @@
                <th>Call Duration</th>
                <th>Earnings</th>
             </tr>
+            
             @foreach($audiocalls as $item)
             @php
-            $dt = new DateTime();
-            $date1 = new DateTime($item->end_time);
-            $date2 = new DateTime($item->start_time);
-            $difference = $date1->diff($date2);
-            $diffInSeconds = $difference->s;
-            $diffInMinutes = $difference->i; 
-            $diffInHours = $difference->h; 
+            // $dt = new DateTime();
+            // $date1 = new DateTime($item->end_time);
+            // $date2 = new DateTime($item->start_time);
+            // $difference = $date1->diff($date2);
+            // $diffInSeconds = $difference->s;
+            // $diffInMinutes = $difference->i; 
+            // $diffInHours = $difference->h; 
             @endphp
             <tr class="mobile_table_row">
                <td>
@@ -477,8 +476,8 @@
                   {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y  m:s A') }}
                </td>
                <td>{{$item->user->first_name ?? ''}}</td>
-               <td>{{$diffInMinutes.'min'.$diffInSeconds }}sec</td>
-               <td>{{$item->user_earning}}</td>
+               <td>{{$item->total_mint}}</td>
+               <td>${{($item->total_earning)}}</td>
             </tr>
             @endforeach
          </table>
@@ -486,13 +485,13 @@
          <div class="mobile_table">
          @foreach($audiocalls as $item)
          @php
-         $dt = new DateTime();
-         $date1 = new DateTime($item->end_time);
-         $date2 = new DateTime($item->start_time);
-         $difference = $date1->diff($date2);
-         $diffInSeconds = $difference->s;
-         $diffInMinutes = $difference->i; 
-         $diffInHours = $difference->h; 
+         // $dt = new DateTime();
+         // $date1 = new DateTime($item->end_time);
+         // $date2 = new DateTime($item->start_time);
+         // $difference = $date1->diff($date2);
+         // $diffInSeconds = $difference->s;
+         // $diffInMinutes = $difference->i; 
+         // $diffInHours = $difference->h; 
          @endphp
          <div class="mobile_table_card">
            <table>
@@ -500,7 +499,7 @@
                <tr class="mobile_table_row">
                  <th scope="row">Date: Time:</th>
                  <td>
-                   @if($item->call_type == 'video') 
+                   @if($item->call_type == 'video_call') 
                    <i class="bi bi-camera-video"></i>
                    @else
                    <i class="bi bi-telephone"></i>
@@ -514,11 +513,11 @@
                </tr>
                <tr class="mobile_table_row">
                  <th scope="row">Call Duration:</th>
-                 <td>{{$diffInMinutes.' min'.$diffInSeconds }} sec </td>
+                 <td>{{$item->total_mint}} </td>
                </tr>
                <tr class="mobile_table_row">
                  <th scope="row">Earnings:</th>
-                 <td>$ {{$item->user_earning}} </td>
+                 <td>${{($item->total_earning)}}</td>
                </tr>
              </tbody>
            </table>
@@ -537,13 +536,13 @@
             </tr>
             @foreach($videocalls as $item)
             @php
-            $dt = new DateTime();
-            $date1 = new DateTime($item->end_time);
-            $date2 = new DateTime($item->start_time);
-            $difference = $date1->diff($date2);
-            $diffInSeconds = $difference->s;
-            $diffInMinutes = $difference->i; 
-            $diffInHours = $difference->h; 
+            // $dt = new DateTime();
+            // $date1 = new DateTime($item->end_time);
+            // $date2 = new DateTime($item->start_time);
+            // $difference = $date1->diff($date2);
+            // $diffInSeconds = $difference->s;
+            // $diffInMinutes = $difference->i; 
+            // $diffInHours = $difference->h; 
             @endphp
             <tr class="mobile_table_row">
                <td>
@@ -551,8 +550,8 @@
                   {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y  m:s A') }}
                </td>
                <td>{{$item->user->first_name ?? ''}}</td>
-               <td>{{$diffInMinutes.'min'.$diffInSeconds }}sec</td>
-               <td>{{$item->user_earning}}</td>
+               <td>{{$item->total_mint}}</td>
+               <td>${{($item->total_earning)}}</td>
             </tr>
             @endforeach
          </table>
@@ -575,7 +574,7 @@
                 <tr class="mobile_table_row">
                   <th scope="row">Date: Time:</th>
                   <td>
-                    @if($item->call_type == 'video') 
+                    @if($item->call_type == 'video_call') 
                     <i class="bi bi-camera-video"></i>
                     @else
                     <i class="bi bi-telephone"></i>
@@ -589,11 +588,11 @@
                 </tr>
                 <tr class="mobile_table_row">
                   <th scope="row">Call Duration:</th>
-                  <td>{{$diffInMinutes.' min'.$diffInSeconds }} sec </td>
+                  <td>{{$item->total_mint}} </td>
                 </tr>
                 <tr class="mobile_table_row">
                   <th scope="row">Earnings:</th>
-                  <td>$ {{$item->user_earning}} </td>
+                  <td>${{($item->total_earning)}}</td>
                 </tr>
               </tbody>
             </table>

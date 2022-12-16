@@ -851,10 +851,10 @@
             }
             // End Call if any error or Zero Ballance 
             if(!status){
-                console.log('hangup');
+                
                 if(userRole == 'Fan') {
-
                     cancelTheCall();
+                    console.log('hangup');
                 }
                 
             }
@@ -877,8 +877,8 @@
             } else {
                 callType = 'video_call';
             }
-            // CallEnd(Fan_ID, Model_ID, Type);
-            CallEnd(userID, app.currentSession.opponentsIDs[0], callType);
+            // CallEnd(Fan_ID, Model_ID, Type, callID);
+            CallEnd(userID, app.currentSession.opponentsIDs[0], callType, app.currentSession.ID);
             
             document.getElementById(sounds.call).pause();
             document.getElementById(sounds.end).play();
@@ -1042,9 +1042,12 @@
             }
             
             if(userRole == 'Fan') {
-                // callAPIForCredit(fanId, model_id, callType)
-                callAPIForCredit(userID, app.currentSession.opponentsIDs[0], callType);
+                // callAPIForCredit(fanId, model_id, callType, CallID)
+                callAPIForCredit(userID, app.currentSession.opponentsIDs[0], callType, app.currentSession.ID);
+                // app.currentSession.callLogId = localStorage['call_log_id'];
             }
+            
+            console.log('CurrentSession: ', app.currentSession);
 
             var userInfo = _.findWhere(app.users, {'id': +userId}),
                 filterName = $.trim( $(ui.filterSelect).val() );
@@ -1372,6 +1375,7 @@
             if(canCallContinue) {
                 var NextChargeTime = localStorage['NextChargeTime'];
                 isAudio = app.currentSession.callType === QB.webrtc.CallType.AUDIO;
+                var call_id = app.currentSession.ID;
                 var callType = '';
                 if(isAudio) {
                     callType = 'audio_call';
@@ -1387,7 +1391,8 @@
                         data: {
                             next_time:NextChargeTime,
                             user_id:userID,
-                            callType:callType
+                            callType:callType,
+                            call_id:call_id
                         },
                         success: function(response) {
                             // 
@@ -1427,7 +1432,7 @@
             }
         }
 
-        function CallEnd(fanId, modelId, callType) {
+        function CallEnd(fanId, modelId, callType, call_id) {
             console.log('fanId'+ fanId);
             console.log('modelId'+ modelId);
 
@@ -1438,7 +1443,8 @@
                 data: {
                    fan_id:fanId,
                    model_id:modelId,
-                   callType:callType
+                   callType:callType,
+                   call_id:call_id
                 },
                 success: function(response) {
                     console.log("Call End", response)   
@@ -1452,7 +1458,7 @@
             }); 
         }
 
-        function callAPIForCredit(fanId, model_id, callType) {
+        function callAPIForCredit(fanId, model_id, callType, callId) {
             console.log("On Accept Actions");
             // var callLimit = localStorage['time'];
             $.ajax({
@@ -1462,7 +1468,8 @@
                 data: {
                    user_id:fanId,
                    model_id:model_id,
-                   callType:callType
+                   callType:callType,
+                   call_id:callId
                 },
                 success: function(response) {
                     console.log("First Time Payment", response)   
@@ -1474,7 +1481,9 @@
                         localStorage['totalMins'] = response.totalMins;     // Total Mins
                         localStorage['canCall'] = response.canCallContinue;     // Can Call Continue -- Optional
                         localStorage['callType'] = response.callType;     // Can Call Continue -- Optional
-                        localStorage['canCallContinue'] = response.canCallContinue; ;//(response.canCallContinue == 'yes')?true:false;     // Can Call Continue
+                        localStorage['canCallContinue'] = response.canCallContinue; //(response.canCallContinue == 'yes')?true:false;     // Can Call Continue
+                        localStorage['call_id'] = response.call_id;
+                        
                     }  
                 }
             });  

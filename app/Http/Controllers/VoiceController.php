@@ -12,6 +12,7 @@ use App\Models\Setting;
 use App\Models\User_logs;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\UserCalls;
 
 class VoiceController extends Controller
 {
@@ -63,7 +64,22 @@ class VoiceController extends Controller
   {
     $fan_id = $request->fan_id;
     // $model_call_id = $request->model_id;
-    DB::table('current_call')->where(['fan_id' => $fan_id, 'status' => 'OnCall'])->delete();
+    $model = User::where('call_id', $request->model_id)->first();
+    DB::table('current_call')->where(['model_id' => $model->id, 'status' => 'OnCall'])->delete();
+    
+    $earnings = User_logs::where('call_id', $request->call_id)->get( array(
+      DB::raw('SUM(model_earning) as models_earning'),
+      DB::raw('SUM(earnings) as admin_earning'),
+    ));
+
+    $lastBalance = User_logs::where('call_id', $request->call_id)->orderBy('id', 'DESC')->first();
+
+    UserCalls::where('call_id', $request->call_id)->update([
+      'end_time' => Carbon::now()->format('Y-m-d H:i:s'),
+      'total_earning' => $earnings[0]['models_earning'],
+      'admin_earning' => $earnings[0]['admin_earning'],
+      'user_earning' => $lastBalance->fan_balance,
+    ]);
     // $modelUser = Models::join('users', 'users.id', 'models.user_id')
     //     ->where('users.call_id', $model_call_id)
     //     ->select('users.id', 'users.wallet', 'models.cost_videocall', 'models.cost_audiocall')
@@ -123,6 +139,7 @@ class VoiceController extends Controller
   {
     # code...
     $nextChargeTime = $request->next_time;
+    $call_id = $request->call_id;
     $currentTime = Carbon::now()->format('Y-m-d H:i:s');
     $currentTime = Carbon::parse($currentTime)->timestamp;
     
@@ -183,6 +200,7 @@ class VoiceController extends Controller
       $User_logs->to              = $modelUser->model_id;
       $User_logs->fan_balance     = $fanUser->wallet;
       $User_logs->price           = $call_cost;
+      $User_logs->call_id         = $call_id;
       $User_logs->model_earning   = $model_earning;
       $User_logs->earnings        = $admin_earning;
       $User_logs->save();
@@ -195,7 +213,8 @@ class VoiceController extends Controller
         'NextChargeTime' => Carbon::parse($NextTime)->timestamp,    // Call Next Charge Time
         'totalMins' => $totalTime,    // Total Mins
         'canCallContinue' => ($fanUser->wallet > $call_cost)?true:false,     // Can Call Continue
-        'callType' => $request->callType
+        'callType' => $request->callType,
+        'call_id'   => $call_id,
       ]);
     } else return response()->json(['status' => false]);
 
@@ -205,7 +224,7 @@ class VoiceController extends Controller
     // Fan & Model ID
     $fan_id = $request->user_id;
     $modelId = $request->model_id;
-
+    $call_id = $request->call_id;
     // Model Account
     $modelUser = Models::join('users', 'users.id', 'models.user_id')
       ->where('users.call_id', $modelId)
@@ -228,16 +247,18 @@ class VoiceController extends Controller
     $totalTime = (int)($fanUser->wallet / $call_cost);    // Available total time based on Fan wallet amount 
     $time = Carbon::now()->addMinutes($totalTime)->format('Y-m-d H:i:s');
     $NextTime = Carbon::now()->addMinutes($minCall)->format('Y-m-d H:i:s');   // Next payment charge time
-    
+
     // Data to save in DB
     DB::table('current_call')->insert([
+      'call_id' => $call_id,
       'fan_id' => $fanUser->id,
       'model_id' => $modelUser->id,
       'start_time' => Carbon::now()->format('Y-m-d H:i:s'),
       'estimated_end_time' => Carbon::now()->addMinutes($totalTime)->format('Y-m-d H:i:s'),
       'end_time' => $NextTime,
       'estimated_total_time' => $totalTime,
-      'status' => 'OnCall'
+      'status' => 'OnCall',
+      'call_log_id' => $call_id,
     ]);
 
     // =============================== Do First Payment On Call Init ============================== //
@@ -252,6 +273,16 @@ class VoiceController extends Controller
     
     // Update model wallet
     User::where('id', $modelUser->id)->update(['wallet' => $modelUser->wallet + $model_earning]);
+
+    $userCalls = new UserCalls;
+    $userCalls->call_from     = $fanUser->id;
+    $userCalls->call_to       = $modelUser->id;
+    $userCalls->start_time    = Carbon::now()->format('Y-m-d H:i:s');
+    $userCalls->call_type     = $request->callType;
+    $userCalls->call_id        = $call_id;
+    $userCalls->cost_per_min  = $modelUser->cost_videocall;
+    $userCalls->amin_commission = $commission['commission'];
+    $userCalls->save();
     
     // Save record in user log
     $User_logs                  = new User_logs;
@@ -262,6 +293,7 @@ class VoiceController extends Controller
     $User_logs->price           = $firstCharge;
     $User_logs->model_earning   = $model_earning;
     $User_logs->earnings        = $admin_earning;
+    $User_logs->call_id          = $call_id;
     $User_logs->save();
 
     // ============================================================= //
@@ -273,7 +305,8 @@ class VoiceController extends Controller
       'NextChargeTime' => Carbon::parse($NextTime)->timestamp,    // Call Next Charge Time
       'totalMins' => $totalTime,    // Total Mins
       'canCallContinue' => ($fanUser->wallet > $call_cost)?true:false,     // Can Call Continue
-      'callType' => $request->callType
+      'callType' => $request->callType,
+      'call_id' => $call_id,
     ]);
   }
 }

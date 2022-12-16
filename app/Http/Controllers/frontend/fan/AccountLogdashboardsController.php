@@ -4,7 +4,10 @@ namespace App\Http\Controllers\frontend\fan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User_logs;
+use App\Models\UserCalls;   
 use Auth;
+use Illuminate\Support\Facades\DB;
+
 class AccountLogdashboardsController extends Controller
 {
     /**
@@ -83,5 +86,14 @@ class AccountLogdashboardsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function CallLogs(Request $request)
+    {
+        # code...
+        $data['title'] = 'Call Logs';
+        $data['callLogs'] = UserCalls::where('call_from', Auth::user()->id)->orderby('id','desc')->paginate(20);  
+        
+        return view('frontend.fan.call_logs', $data);
     }
 }

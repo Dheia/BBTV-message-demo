@@ -95,48 +95,48 @@ Route::get('earning-user-filter',[App\Http\Controllers\HomeController::class, 'e
 Route::group([ 'middleware' => ['DashboardMiddleware']], function () { 
  //online page
 
-Route::get('online-now',[App\Http\Controllers\frontend\FrontendController::class, 'online'])->name('online-now');
+  Route::get('online-now',[App\Http\Controllers\frontend\FrontendController::class, 'online'])->name('online-now');
 
-//phonesex page
-Route::get('phone-sex',[App\Http\Controllers\frontend\FrontendController::class, 'phonesex'])->name('phone-sex');
+  //phonesex page
+  Route::get('phone-sex',[App\Http\Controllers\frontend\FrontendController::class, 'phonesex'])->name('phone-sex');
 
-//Trems page
-Route::get('/terms-conditions',[App\Http\Controllers\frontend\FrontendController::class, 'terms_conditions'])->name('terms-conditions');
+  //Trems page
+  Route::get('/terms-conditions',[App\Http\Controllers\frontend\FrontendController::class, 'terms_conditions'])->name('terms-conditions');
 
-//videosex page
-Route::get('video-calls',[App\Http\Controllers\frontend\FrontendController::class, 'videocalls'])->name('video-calls');
+  //videosex page
+  Route::get('video-calls',[App\Http\Controllers\frontend\FrontendController::class, 'videocalls'])->name('video-calls');
 
-//top model page
-Route::get('top-models',[App\Http\Controllers\frontend\FrontendController::class, 'topmodel'])->name('top-models');
+  //top model page
+  Route::get('top-models',[App\Http\Controllers\frontend\FrontendController::class, 'topmodel'])->name('top-models');
 
-//trending model page
-Route::get('trending',[App\Http\Controllers\frontend\FrontendController::class, 'trending'])->name('trending');
+  //trending model page
+  Route::get('trending',[App\Http\Controllers\frontend\FrontendController::class, 'trending'])->name('trending');
 
-//billing page
-Route::get('billing',[App\Http\Controllers\frontend\FrontendController::class, 'billing'])->name('billing');
+  //billing page
+  Route::get('billing',[App\Http\Controllers\frontend\FrontendController::class, 'billing'])->name('billing');
 
-//faq page
-Route::get('faq',[App\Http\Controllers\frontend\FrontendController::class, 'faq'])->name('faq');
+  //faq page
+  Route::get('faq',[App\Http\Controllers\frontend\FrontendController::class, 'faq'])->name('faq');
 
-//contact page
-Route::get('contact',[App\Http\Controllers\frontend\FrontendController::class, 'contact'])->name('contact');
+  //contact page
+  Route::get('contact',[App\Http\Controllers\frontend\FrontendController::class, 'contact'])->name('contact');
 
-//contact page
-Route::get('billing',[App\Http\Controllers\frontend\FrontendController::class, 'contact'])->name('billing');
-//contact page
-Route::get('tags/{id}',[App\Http\Controllers\frontend\FrontendController::class, 'tags'])->name('tags');
-//new model page
-Route::get('new-models',[App\Http\Controllers\frontend\FrontendController::class, 'newmodel'])->name('new-models');
+  //contact page
+  Route::get('billing',[App\Http\Controllers\frontend\FrontendController::class, 'contact'])->name('billing');
+  //contact page
+  Route::get('tags/{id}',[App\Http\Controllers\frontend\FrontendController::class, 'tags'])->name('tags');
+  //new model page
+  Route::get('new-models',[App\Http\Controllers\frontend\FrontendController::class, 'newmodel'])->name('new-models');
 
-//explore model page
-Route::get('explore',[App\Http\Controllers\frontend\FrontendController::class, 'explore'])->name('explore');
+  //explore model page
+  Route::get('explore',[App\Http\Controllers\frontend\FrontendController::class, 'explore'])->name('explore');
 });
 
 
 //user_support
 Route::get('model-register', function () {
        return view('frontend.success-model-regi');
-     })->name('model-register');
+     })->name('model-register');  
 
 //model feed likes
 Route::post('/addlike',[App\Http\Controllers\frontend\FrontendController::class, 'addlike'])->name('addlike');
@@ -183,11 +183,13 @@ Route::group(['prefix' => 'fan', 'as' => 'fan.', 'middleware' => ['auth','FanMid
   Route::GET('model-tip',[fandashboardController::class, 'model_tip']);
   Route::get('send-message-feed',[fandashboardController::class, 'send_message']);
   Route::POST('feed-unlock',[fandashboardController::class, 'feed_lock']);
+  Route::POST('feed-unlock-ajax',[fandashboardController::class, 'feedLockAjax']);
   Route::GET('add-collection',[fandashboardController::class,'add_collection'])->name('add-collection');
   Route::resource('dashboard',fandashboardController::class);
   Route::post('/add-credit',[fandashboardController::class, 'add_credit']);
   Route::get('/add-contact/{id}',[fandashboardController::class, 'add_contact']);
   Route::resource('account-logs',AccountLogdashboardsController::class);
+  Route::get('call-logs',[AccountLogdashboardsController::class, 'CallLogs'])->name('call-logs');
   Route::resource('collection',CollectiondashboardController::class);
   Route::get('contacts',[fandashboardController::class, 'contacts'])->name('contacts');
   Route::resource('feeds',FeedsdashboardController::class);
