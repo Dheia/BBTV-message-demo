@@ -37,6 +37,7 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Arr;
 use Exception; 
 use DateTime;
+use RTippin\Messenger\Models\Call;
 
 class ModeldashboardController extends Controller
 {
@@ -226,6 +227,7 @@ class ModeldashboardController extends Controller
         $d['gethistory']=PayHistory::where('user_id',$user_id)->get();
         return view('frontend.model.payhistory',$d);
     }
+
     public function earningsshow( $request){
         try {
     
@@ -299,9 +301,10 @@ class ModeldashboardController extends Controller
     {
         $user_id= Auth::user()->id;
         $yearcurrent =Carbon::now()->format('Y');
-        $d= $this->earningsshow($request);
+        $d = $this->earningsshow($request);
+        
         $totaldata= [];
-        $texts = [];
+        $message = [];
         for ($i=1; $i<=12; $i++){
             $monthcurrent =$i;
             for($j=1; $j<=2; $j++) {
@@ -311,12 +314,12 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
                     $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                        ->where('method','Message')    
+                        ->where('method', 'message')    
                         ->whereMonth('created_at', $i)
                         ->whereBetween('created_at',[$startDate, $endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
-                    $texts[] = $totaldata[$i]['01-15'];
+                    $message[] = $totaldata[$i]['01-15'];
 
                 } else {
                     // 
@@ -324,17 +327,18 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
                     $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
                         ->whereMonth('created_at', $i)
-                        ->where('method','Message')
+                        ->where('method', 'message')
                         ->whereBetween('created_at',[$startDate,$endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
-                    $texts[] = $totaldata[$i]['16-31'];
+                    $message[] = $totaldata[$i]['16-31'];
                 }
             }
             
         }
+
         $totaldata= [];
-        $postunlock = [];
+        $feeds = [];
         for ($i=1; $i<=12; $i++){
             $monthcurrent =$i;
             for($j=1; $j<=2; $j++) {
@@ -344,12 +348,12 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
                     $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                        ->where('method','Post unlock')    
+                        ->where('method','feeds')    
                         ->whereMonth('created_at', $i)
                         ->whereBetween('created_at',[$startDate, $endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
-                    $postunlock[] = $totaldata[$i]['01-15'];
+                    $feeds[] = $totaldata[$i]['01-15'];
 
                 } else {
                     // 
@@ -357,15 +361,16 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
                     $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
                         ->whereMonth('created_at', $i)
-                        ->where('method','Post unlock')
+                        ->where('method','feeds')
                         ->whereBetween('created_at',[$startDate,$endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
-                    $postunlock[] = $totaldata[$i]['16-31'];
+                    $feeds[] = $totaldata[$i]['16-31'];
                 }
             }
             
         }
+
         $totaldata= [];
         $tip = [];
         for ($i=1; $i<=12; $i++){
@@ -377,7 +382,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
                     $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                        ->where('method','Tip')    
+                        ->where('method','tips')    
                         ->whereMonth('created_at', $i)
                         ->whereBetween('created_at',[$startDate, $endDate])
                         ->groupBy('to')
@@ -390,7 +395,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
                     $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
                         ->whereMonth('created_at', $i)
-                        ->where('method','Tip')
+                        ->where('method','tips')
                         ->whereBetween('created_at',[$startDate,$endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
@@ -399,6 +404,7 @@ class ModeldashboardController extends Controller
             }
             
         }
+
         $totaldata= [];
         $audiocall = [];
         for ($i=1; $i<=12; $i++){
@@ -410,7 +416,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
                     $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                        ->where('method','audio_call')    
+                        ->where('method','picture-call')    
                         ->whereMonth('created_at', $i)
                         ->whereBetween('created_at',[$startDate, $endDate])
                         ->groupBy('to')
@@ -423,7 +429,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
                     $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
                         ->whereMonth('created_at', $i)
-                        ->where('method','audio_call')
+                        ->where('method','picture-call')
                         ->whereBetween('created_at',[$startDate,$endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
@@ -432,6 +438,7 @@ class ModeldashboardController extends Controller
             }
             
         }
+        
         $totaldata= [];
         $videocall = [];
         for ($i=1; $i<=12; $i++){
@@ -443,7 +450,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
                     $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                        ->where('method','video_call')    
+                        ->where('method','video-call')    
                         ->whereMonth('created_at', $i)
                         ->whereBetween('created_at',[$startDate, $endDate])
                         ->groupBy('to')
@@ -456,7 +463,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
                     $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
                         ->whereMonth('created_at', $i)
-                        ->where('method','video_call')
+                        ->where('method','video-call')
                         ->whereBetween('created_at',[$startDate,$endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
@@ -465,6 +472,7 @@ class ModeldashboardController extends Controller
             }
             
         }
+
         $totaldata= [];
         $mmspic = [];
         for ($i=1; $i<=12; $i++){
@@ -476,7 +484,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
                     $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                        ->where('method','Mms Audio')    
+                        ->where('method','picture')    
                         ->whereMonth('created_at', $i)
                         ->whereBetween('created_at',[$startDate, $endDate])
                         ->groupBy('to')
@@ -489,7 +497,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
                     $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
                         ->whereMonth('created_at', $i)
-                        ->where('method','Mms Audio')
+                        ->where('method','picture')
                         ->whereBetween('created_at',[$startDate,$endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
@@ -498,6 +506,41 @@ class ModeldashboardController extends Controller
             }
             
         }
+
+        $totaldata= [];
+        $mmsaudio = [];
+        for ($i=1; $i<=12; $i++){
+            $monthcurrent =$i;
+            for($j=1; $j<=2; $j++) {
+                if($j =='1'){
+                    // 
+                    $startDate =Carbon::parse('1-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+
+                    $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
+                        ->where('method','audio')    
+                        ->whereMonth('created_at', $i)
+                        ->whereBetween('created_at',[$startDate, $endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $mmsaudio[] = $totaldata[$i]['01-15'];
+
+                } else {
+                    // 
+                    $startDate =Carbon::parse('16-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
+                    $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
+                        ->whereMonth('created_at', $i)
+                        ->where('method','audio')
+                        ->whereBetween('created_at',[$startDate,$endDate])
+                        ->groupBy('to')
+                        ->sum('model_earning');
+                    $mmsaudio[] = $totaldata[$i]['16-31'];
+                }
+            }
+            
+        }
+
         $totaldata= [];
         $mmsvideo = [];
         for ($i=1; $i<=12; $i++){
@@ -509,7 +552,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('15-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
 
                     $totaldata[$i]['01-15'] = User_logs::where('to',$user_id)
-                        ->where('method','Mms Video')    
+                        ->where('method','video')    
                         ->whereMonth('created_at', $i)
                         ->whereBetween('created_at',[$startDate, $endDate])
                         ->groupBy('to')
@@ -522,7 +565,7 @@ class ModeldashboardController extends Controller
                     $endDate =Carbon::parse('31-'.$i.'-'.$yearcurrent,)->format('Y-m-d H:i:s');
                     $totaldata[$i]['16-31'] = User_logs::where('to',$user_id)
                         ->whereMonth('created_at', $i)
-                        ->where('method','Mms Video')
+                        ->where('method','video')
                         ->whereBetween('created_at',[$startDate,$endDate])
                         ->groupBy('to')
                         ->sum('model_earning');
@@ -535,50 +578,104 @@ class ModeldashboardController extends Controller
         // $datecurrent1 =Carbon::now()->format('d');
         // $monthcurrent =Carbon::now()->format('m');
         // $yearcurrent =Carbon::now()->format('Y');
-        $q = User_logs::where('to', $user_id)->groupBy('from');
+        // $q = User_logs::where('to', $user_id)->groupBy('from');
         $earningData = [];
         // if($request->timing == 'currentyear'){
         //     $q->whereYear('created_at',$yearcurrent);
         // }
+
         if($request->timing == 'yearly') {
             for($month=1; $month <= 12; $month++) {
                 $start = Carbon::create()->month($month)->year(2022)->startOfMonth()->format('Y-m-d 00:00:00');
                 $end = Carbon::create()->month($month)->year(2022)->endOfMonth()->format('Y-m-d 23:59:59');
-                $monthName = Carbon::create()->month($month)->year(2022)->startOfMonth()->format('M');
+                $monthName = Carbon::create()->month($month)->year(2022)->startOfMonth()->format('M, Y');
 
                 $userLogs = User_logs::where('to', $user_id)->whereBetween('created_at', [$start, $end])->get();
+                $totalPerRow = 0;
                 if(count($userLogs)> 0)
-                foreach ($userLogs as $key => $userLog) {
-                    # code...
-                    if(isset($earningData[$monthName][$userLog->method]))
-                        $earningData[$monthName][$userLog->method] = $earningData[$monthName][$userLog->method] + $userLog->model_earning;
-                    else
-                        $earningData[$monthName][$userLog->method] = $userLog->model_earning;
-                }
+                    foreach ($userLogs as $key => $userLog) {
+                        # code...
+                        if(isset($earningData[$monthName][$userLog->method])){
+                            $earningData[$monthName][$userLog->method] = (float)$earningData[$monthName][$userLog->method] + (float)$userLog->model_earning;
+                        } else {
+                            $earningData[$monthName][$userLog->method] = (float)$userLog->model_earning;
+                        }
+                        $totalPerRow = $totalPerRow + (float)$userLog->model_earning;
+                    }
                 else {
                     $earningData[$monthName] = [];
                 }
+                $earningData[$monthName]['date'] = $monthName;
+                $earningData[$monthName]['total'] = $totalPerRow;
             }
         }
 
-        // dd($earningData);
-        // if($request->timing == 'all'){
-           
-        // }
-        // if($request->timing == 'today'){
-        //     $q->whereDay('created_at',$datecurrent1);
-        // }
-       
-      
+        if($request->timing == 'monthly') {
+            $month = \Str::lower(isset($request->month)?$request->month: (Carbon::now()->format('M')));
+
+            $months = [ 'jan' => 1, 'feb' => 2, 'mar' => 3, 'apr' => 4, 'may' => 5, 'jun' => 6, 'jul' => 7, 'aug' => 8, 'sep' => 9, 'oct' => 10, 'nov' => 11, 'dec' => 12];
+            
+            $start = Carbon::create()->month($months[$month])->year(2022)->startOfMonth()->format('Y-m-d 00:00:00');
+            $end = Carbon::create()->month($months[$month])->year(2022)->endOfMonth()->format('Y-m-d 23:59:59');
+            $days = Carbon::create()->month($months[$month])->year(2022)->endOfMonth()->format('d'); 
+
+            $userLogs = User_logs::where('to', $user_id)->whereBetween('created_at', [$start, $end])->get();
+
+            for($day=1; $day <= (int)$days; $day++) {
+                // 
+                $monthDay = Carbon::create()->month($months[$month])->day($day)->year(2022)->format('d M, Y');
+
+                $totalPerRow = 0;
+                if(count($userLogs)> 0) {
+                    // 
+                    foreach ($userLogs as $key => $userLog) {
+                        # code...
+                        $logDate = Carbon::parse($userLog->created_at)->format('d M, Y');
+                        if($logDate == $monthDay) {
+                            if(isset($earningData[$monthDay][$userLog->method])) {
+                                $earningData[$monthDay][$userLog->method] = (float)$earningData[$monthDay][$userLog->method] + (float)$userLog->model_earning;
+                            } else {
+                                $earningData[$monthDay][$userLog->method] = (float)$userLog->model_earning;
+                            }
+                            $totalPerRow = $totalPerRow + (float)$userLog->model_earning;
+                        }   
+                    }
+                } else {
+                    $earningData[$monthDay] = [];
+                }
+                $earningData[$monthDay]['date'] = $monthDay;
+                $earningData[$monthDay]['total'] = (float)$totalPerRow;
+            }
+        }
+        
+        if($request->timing == 'today') {
+            // 
+            $date = Carbon::now();
+            $start = $date->startOfDay()->format('Y-m-d H:i:s');
+            $end = $date->endOfDay()->format('Y-m-d H:i:s');
+            $earningData = [];
+            $userLogs = User_logs::where('to', $user_id)->whereBetween('created_at', [$start, $end])->orderBy('id', 'DESC')->get();
+            $totalPerRow = 0;
+
+            if(count($userLogs)> 0)
+                foreach ($userLogs as $key => $userLog) {
+                    # code...
+                    $earningData[$key][$userLog->method] = (float)$userLog->model_earning;
+                    $earningData[$key]['total'] = (float)$userLog->model_earning;
+                    $earningData[$key]['date'] = Carbon::now()->format('h:i A');
+                }
+        }
+
         // $d['spenders']=$q->paginate(10)->withQueryString();
-        $d['texts']=implode(',', $texts);
-        $d['postunlock']=implode(',', $postunlock);
-        $d['tip']=implode(',', $tip);
+        $d['message']=implode(',', $message);
+        $d['feeds']=implode(',', $feeds);
+        $d['tips']=implode(',', $tip);
         $d['audiocall']=implode(',', $audiocall);
         $d['videocall']=implode(',', $videocall);
         $d['mmspic']=implode(',', $mmspic);
         $d['mmsvideo']=implode(',', $mmsvideo);
-
+        $d['mmsaudio']=implode(',', $mmsaudio);
+        $d['earnings'] = $earningData; 
         return view('frontend.model.earnings', $d);
 
     }
@@ -586,11 +683,11 @@ class ModeldashboardController extends Controller
     {
     
         $user_id= Auth::user()->id;
-        $count_tips=User_logs::where('to',$user_id)->where('method','Tip')->orderBy('created_at','Desc');
+        $count_tips=User_logs::where('to',$user_id)->where('method','tips')->orderBy('created_at','Desc');
 
-        $count_completed_tips =User_logs::where('to',$user_id)->where('method','Tip')->where('status','1')->orderBy('created_at','Desc');
+        $count_completed_tips =User_logs::where('to',$user_id)->where('method','tips')->where('status','1')->orderBy('created_at','Desc');
        
-        $count_incompleted_tips=User_logs::where('to',$user_id)->where('method','Tip')->where('status','0')->orderBy('created_at','Desc');
+        $count_incompleted_tips=User_logs::where('to',$user_id)->where('method','tips')->where('status','0')->orderBy('created_at','Desc');
         $d['count_tips']=$count_tips->get();
         $d['tips']=$count_tips->paginate(10)->withQueryString();
        
@@ -600,10 +697,6 @@ class ModeldashboardController extends Controller
         $d['count_incompleted_tips']=$count_incompleted_tips->get();
         $d['incompleted_tips']=$count_incompleted_tips->paginate(10)->withQueryString();
       
-
-
-
-       
         return view('frontend.model.tips',$d);
     }
     public function calls(Request $request)
@@ -613,16 +706,16 @@ class ModeldashboardController extends Controller
         if($request->year){
             $d['calls']=UserCalls::where('call_to',$user_id)->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
             ->paginate(10)->withQueryString();
-            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio_call')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
+            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio-call')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
             ->paginate(10)->withQueryString();
-            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video_call')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
+            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video-call')->orderBy('created_at','Desc')->whereYear('created_at',$request->year)
             ->paginate(10)->withQueryString();
         }else{
             $d['calls']=UserCalls::where('call_to',$user_id)->orderBy('created_at','Desc')
             ->paginate(10)->withQueryString();
-            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio_call')->orderBy('created_at','Desc')
+            $d['audiocalls']=UserCalls::where('call_to',$user_id)->where('call_type','audio-call')->orderBy('created_at','Desc')
             ->paginate(10)->withQueryString();
-            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video_call')->orderBy('created_at','Desc')
+            $d['videocalls']=UserCalls::where('call_to',$user_id)->where('call_type','video-call')->orderBy('created_at','Desc')
             ->paginate(10)->withQueryString();
         }
        
@@ -1837,7 +1930,7 @@ public function verify_new_email(Request $request){
 public function dismiss_notifications(Request $request){
 
     $userDetails=User::where('id',Auth::user()->id)->first();
-    $userUnreadTips=User_logs::where('status','0')->where('method','Tip')->where('to',Auth::user()->id)->get();
+    $userUnreadTips=User_logs::where('status','0')->where('method','tips')->where('to',Auth::user()->id)->get();
     $notification=ChMessage::where('to_id',Auth::user()->id)->where('seen','0')->get();
 
     if(!empty($userDetails)){

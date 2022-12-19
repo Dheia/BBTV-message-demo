@@ -25,7 +25,7 @@
     background-size: 16px 12px !important;
 }
 .earn_select {
-    width: 120px !important;
+    width: 135px !important;
 }
 </style>
 
@@ -186,95 +186,74 @@
           <h5><b>Earnings Details</b></h5>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-          <div class="d-flex justify-content-between">
-            <form action="" method="get">
-              <select
-                class="ml-auto form-select earn_select Earn-form" name="timing" id="topspent">
-                <option class="earning-filter-option" value="all" @if(request()->get('timing') == 'all') selected @endif>All Time
-                </option>
-                <option class="earning-filter-option" value="yearly" @if(request()->get('timing') == 'yearly') selected @endif>Yearly
-                </option>
-                <option class="earning-filter-option" value="monthly" @if(request()->get('timing') == 'monthly') selected @endif>Monthly
-                </option>
-                <option class="earning-filter-option" value="today" @if(request()->get('timing') == 'today') selected @endif>Today
-                </option>
+          <form action="" method="get">
+            <div class="d-flex justify-content-between">
+              <select class="ml-auto form-select earn_select Earn-form" name="timing" id="topspent">
+                <option class="earning-filter-option" value="today" @if(request()->get('timing') == 'today') selected @endif>Today</option>
+                <option class="earning-filter-option" value="monthly" @if(request()->get('timing') == 'monthly') selected @endif>Monthly</option>
+                <option class="earning-filter-option" value="yearly" @if(request()->get('timing') == 'yearly') selected @endif>Yearly</option>
               </select>
-            </form>
-            <div class="mt-1 ml-1 mr-1">
-              <h6>{{ $datecurrent ?? "" }}</h6>
+              <div class="mt-1 ml-0 mr-1">
+                {{-- <h6>{{ $datecurrent ?? "" }}</h6> --}}
+                @if(request()->get('timing') == 'monthly')
+                @php
+                $month = \Str::lower((request()->get('month'))?request()->get('month'): (\Carbon\Carbon::now()->format('M')));
+                @endphp
+                <select class="ml-auto form-select earn_select Earn-form" name="month" id="selectMonth">
+                  <option class="earning-filter-option" value="jan" @if($month == 'jan') selected @endif>January</option>
+                  <option class="earning-filter-option" value="feb" @if($month == 'feb') selected @endif>February</option>
+                  <option class="earning-filter-option" value="mar" @if($month == 'mar') selected @endif>March</option>
+                  <option class="earning-filter-option" value="apr" @if($month == 'apr') selected @endif>April</option>
+                  <option class="earning-filter-option" value="may" @if($month == 'may') selected @endif>May</option>
+                  <option class="earning-filter-option" value="jun" @if($month == 'jun') selected @endif>June</option>
+                  <option class="earning-filter-option" value="jul" @if($month == 'jul') selected @endif>July</option>
+                  <option class="earning-filter-option" value="aug" @if($month == 'aug') selected @endif>Auguest</option>
+                  <option class="earning-filter-option" value="sep" @if($month == 'sep') selected @endif>September</option>
+                  <option class="earning-filter-option" value="oct" @if($month == 'oct') selected @endif>October</option>
+                  <option class="earning-filter-option" value="nov" @if($month == 'nov') selected @endif>November</option>
+                  <option class="earning-filter-option" value="dec" @if($month == 'dec') selected @endif>December</option>
+                </select>
+                @endif
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <div class="card">
-        <div class="card-body text-white desktop_table" >
+        <div class="card-body text-white desktop_table-not" > 
           <table class="text-white p-5 ">
             <tr class="t_head">
+              {{-- 'message','picture','video','audio','audio-call','video-call','tips','feeds'  --}}
               <th>Date:</th>
-              <th>Texts</th>
+              <th>Message</th>
               <th>Pictures</th>
               <th>Videos</th>
               <th>Audio</th>
-              <th>Phone Calls</th>
+              <th>Audio Calls</th>
               <th>Video Calls</th>
               <th>Tips</th>
+              <th>Feeds</th>
               <th>Total</th>
             </tr>
-            {{-- @foreach($spenders as $item)  --}}
-            @php
-              // $audio=App\Models\User_logs::where('to',Auth::user()->id)
-              //   ->where('from',$item->from) ->where('method','Audio message')
-              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-              // $video=App\Models\User_logs::where('to',Auth::user()->id)
-              //   ->where('from',$item->from) ->where('method','Video message')
-              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-              // $tips=App\Models\User_logs::where('to',Auth::user()->id)
-              //   ->where('from',$item->from) ->where('method','Tip')
-              //   ->selectRaw('user_logs.*, sum(model_earning) as tip') ->first();
-              // $videocall=App\Models\User_logs::where('to',Auth::user()->id)
-              //   ->where('from',$item->from) ->where('method','video_call')
-              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-              // $phonecall=App\Models\User_logs::where('to',Auth::user()->id)
-              //   ->where('from',$item->from) ->where('method','audio_call')
-              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-              // $message=App\Models\User_logs::where('to',Auth::user()->id)
-              //   ->where('from',$item->from) ->where('method','Post unlock')
-              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-              // $text=App\Models\User_logs::where('to',Auth::user()->id)
-              //   ->where('from',$item->from) ->where('method','Message')
-              //   ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
-            @endphp
+            @foreach($earnings as $earning) 
+              @php
 
+              @endphp
+            {{-- 'message','picture','video','audio','audio-call','video-call','tips','feeds'  --}}
             <tr class="Details_row">
-              <td>
-                {{-- {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y ') }} --}}
-              </td>
-              <td>
-                @if(!empty($text->total) ){{$text->total}}$ @else 00.00$ @endif
-              </td>
-              <td>
-                @if(!empty($message->total) ){{$message->total}}$ @else 00.00$@endif
-              </td>
-              <td>
-                @if(!empty($video->total) ){{$video->total}}$ @else 00.00$ @endif
-              </td>
-              <td>
-                @if(!empty($audio->total) ){{$audio->total}}$ @else 00.00$ @endif
-              </td>
-              <td>
-                @if(!empty($phonecall->total) ){{$phonecall->total}}$ @else 00.00$@endif
-              </td>
-              <td>
-                @if(!empty($videocall->total) ){{$videocall->total}}$ @else 00.00$@endif
-              </td>
-              <td>@if(!empty($tips->tip) ){{$tips->tip}}$ @else 00.00$ @endif</td>
-              {{-- <td>{{$item->sum}}</td> --}}
+              <td>{{ $earning['date'] }}</td>
+              <td class="text-center">{{ ($earning['message'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['picture'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['video'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['audio'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['audio-call'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['video-call'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['tips'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['feeds'])??'00.00' }}$</td>
+              <td class="text-center">{{ ($earning['total'])??'00.00' }}$</td>
             </tr>
-            {{-- @endforeach --}}
+            @endforeach
           </table>
-
-
-
         </div>
         <div></div>
         <div class="mobile_table">
@@ -302,13 +281,13 @@
             ->where('from',$item->from) ->where('method','Message')
             ->selectRaw('user_logs.*, sum(model_earning) as total') ->first();
             @endphp --}}
-          <div class="mobile_table_card mt-2">
+          {{-- <div class="mobile_table_card mt-2">
             <table>
               <tbody>
                 <tr>
                   <th scope="row" style="border-bottom: none !important">Date: Time:</th>
                   <td style="border-bottom: none !important">
-                  {{-- {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y ') }} --}}
+
                   </td>
                 </tr>
                 <tr>
@@ -350,11 +329,11 @@
                 </tr>
                 <tr>
                   <th scope="row" style="border-bottom: none !important">Total:</th>
-                  {{-- <td style="border-bottom: none !important">${{$item->sum??''}}</td> --}}
+
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> --}}
           {{-- @endforeach --}}
 
         </div>
@@ -366,10 +345,7 @@
 </div>
 </div>
 </div>
-<script
-  type="text/javascript"
-  src="http://code.jquery.com/jquery-latest.js"
-></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
   var ctx = document.getElementById("myChart4").getContext('2d');
@@ -378,38 +354,47 @@
   	data: {
   		labels: ["jan 1-15","jan 16-31","Feb 1-15","Feb 16-28","Mar 1-15","Mar 16-31","Apr 1-15","Apr 16-30","may 1-15","may 16-31","June 1-15","June 16-30","July 1-15","July 16-31","Aug 1-15","Aug 16-31","Sep 1-15","Sep 16-30","Oct 1-15","Oct 16-31","Nov 1-15","Nov 16-30","Dec 1-15","Dec 16-31"],
   		datasets: [{
-  			label: 'SMS Messages',
+  			label: 'Messages',
   			backgroundColor: "#fb002c",
-              data: [<?php echo $texts ?>],
-  		}, {
+        data: [<?php echo $message; ?>],
+  		}, 
+      {
   			label: 'MMS Pictures',
   			backgroundColor: "#f30070",
-              data: [<?php echo $mmspic?>],
+        data: [<?php echo $mmspic; ?>],
   		},
-          {
+      {
+  			label: 'MMS Audio',
+  			backgroundColor: "#f30071",
+        data: [<?php echo $mmsvideo; ?>],
+  		}, 
+      {
   			label: 'MMS Video',
   			backgroundColor: "#f30071",
-              data: [<?php echo $mmsvideo?>],
-  		}, {
-  			label: 'Phone Calls',
+        data: [<?php echo $mmsvideo; ?>],
+  		}, 
+      {
+  			label: 'Audio Calls',
   			backgroundColor: "#eb687f",
-              data: [<?php echo $audiocall?>],
-  		}, {
+        data: [<?php echo $audiocall; ?>],
+  		}, 
+      {
   			label: 'Video Calls',
   			backgroundColor: "#eb687f",
-              data: [<?php echo $videocall?>],
+        data: [<?php echo $videocall; ?>],
   		},
-           {
+      {
   			label: 'Tips',
   			backgroundColor: "#efabb7",
-              data: [<?php echo $tip?>],
-  		}, {
-  			label: 'Feed',
+        data: [<?php echo $tips; ?>],
+  		}, 
+      {
+  			label: 'Feeds',
   			backgroundColor: "#efc9cf",
-              data: [<?php echo $postunlock?>],
+        data: [<?php echo $feeds; ?>],
   		}],
   	},
-  options: {
+    options: {
       tooltips: {
         displayColors: true,
         callbacks:{
@@ -441,6 +426,16 @@
   $(".year").on("change", function () {
     $("#yearfilter").submit();
   });
-</script>
 
+  $("#selectMonth").on('change', function() {
+    var parentForm = $(this).closest("form");
+    if (parentForm && parentForm.length > 0)
+    parentForm.submit();
+});
+</script>
+<style>
+  .desktop_table-not {
+    overflow-x: scroll;
+  }
+  </style>
 @endsection @section('scripts') @parent @endsection

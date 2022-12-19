@@ -329,9 +329,9 @@ var profileImg = document.getElementById('profile-upload-img'),
         });
    
         $("#topspent").on('change', function() {
-        var parentForm = $(this).closest("form");
-     if (parentForm && parentForm.length > 0)
-       parentForm.submit();
+            var parentForm = $(this).closest("form");
+            if (parentForm && parentForm.length > 0)
+            parentForm.submit();
         });
     $('input[type="checkbox"]').change(function() {
         if ($(this).is(":checked")) {

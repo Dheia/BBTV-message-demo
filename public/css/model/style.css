@@ -2256,3 +2256,7 @@ border: 1px solid #c73ca9; */
 a.list-group-item.dropdown-item {
     padding: 8px 15px !important;
 }
+
+#premium_cost{
+    color: #000;
+}

@@ -195,7 +195,7 @@ class VoiceController extends Controller
     
       // Save record in user log
       $User_logs                  = new User_logs;
-      $User_logs->method          = $request->callType;
+      $User_logs->method          = ($request->callType == 'audio_call')?'audio-call':'video-call';
       $User_logs->from            = $fanUser->id;
       $User_logs->to              = $modelUser->model_id;
       $User_logs->fan_balance     = $fanUser->wallet;
@@ -286,7 +286,7 @@ class VoiceController extends Controller
     
     // Save record in user log
     $User_logs                  = new User_logs;
-    $User_logs->method          = $request->callType;
+    $User_logs->method          = ($request->callType == 'audio_call')?'audio-call':'video-call';
     $User_logs->from            = $fanUser->id;
     $User_logs->to              = $modelUser->id;
     $User_logs->fan_balance     = $fanUser->wallet;

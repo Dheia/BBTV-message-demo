@@ -14,12 +14,14 @@
             <td>
                 @php
                 $methods = [
-                    'Post unlock' => 'Opened picture from',
-                    'Tip' => 'Send Tip Amount To',
+                    'feeds' => 'Opened picture from',
+                    'tips' => 'Send Tip Amount To',
                     'message' => 'Send Message  To',
-                    'image' => 'Send Image To',
-                    'video_call' => 'Video Call with',
-                    'audio_call' => 'Audio Call with',
+                    'picture' => 'Send Image To',
+                    'video-call' => 'Video Call with',
+                    'audio-call' => 'Audio Call with',
+                    'video' => 'Send video to',
+                    'audio' => 'Send audio to',
                 ];
                 @endphp
                 {{$methods[$item->method].' '}} {{$item->model->first_name ?? ''}} 
@@ -36,12 +38,14 @@
     <h6 class="mt-2 mb-2">
         @php
             $methods = [
-                'Post unlock' => 'Opened picture from',
-                'Tip' => 'Send Tip Amount To',
+                'feeds' => 'Opened picture from',
+                'tips' => 'Send Tip Amount To',
                 'message' => 'Send Message  To',
-                'image' => 'Send Image To',
-                'video_call' => 'Video Call with',
-                'audio_call' => 'Audio Call with',
+                'picture' => 'Send Image To',
+                'video-call' => 'Video Call with',
+                'audio-call' => 'Audio Call with',
+                'video' => 'Send video to',
+                'audio' => 'Send audio to',
             ];
         @endphp
         {{$methods[$item->method].' '}} {{$item->model->first_name ?? ''}} 

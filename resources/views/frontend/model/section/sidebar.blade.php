@@ -39,7 +39,7 @@
           ><li
             class="list-group-item li_type {{ url('/model/tips') == url(request()->path()) ? 'active' : '' }}"
           >
-          @php $tip_amount=App\Models\User_logs::where('to',Auth::user()->id)->where('method','Tip')->where('status','0')->count(); @endphp
+          @php $tip_amount=App\Models\User_logs::where('to',Auth::user()->id)->where('method','tips')->where('status','0')->count(); @endphp
             <span class="item"><i class="bi bi-heart-fill"></i>Tips @if(Auth::user()->is_sleep_mode==false) @if(isset($tip_amount)) @if($tip_amount>'0')  <p class="tipending">{{$tip_amount}} </p> @endif @endif @endif </span>
           </li></a
         >

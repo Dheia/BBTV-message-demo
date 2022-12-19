@@ -34,7 +34,7 @@
                                         <input type="hidden" name="messageid" value="{{ $id }}">
                                         <input type="hidden" name="price" value="{{ $attachment_price }}">
                                         <input type="hidden" name="to" value="{{ $from_id }}">
-                                        <input type="hidden" name="type" value="image">
+                                        <input type="hidden" name="type" value="picture">
                                         <input type="submit" class="unlock-btn" data-target="#exampleModalCenter3"
                                             value="Unlock">
                                     </form>
@@ -89,7 +89,7 @@
                                         <input type="hidden" name="messageid" value="{{ $id }}">
                                         <input type="hidden" name="price" value="{{ $attachment_price }}">
                                         <input type="hidden" name="to" value="{{ $from_id }}">
-                                        <input type="hidden" name="type" value="Video message">
+                                        <input type="hidden" name="type" value="video">
                                         <input type="submit" class="unlock-btn" data-target="#exampleModalCenter3"
                                             value="Unlock">
                                     </form>
@@ -140,17 +140,14 @@
                                         <input type="hidden" name="messageid" value="{{ $id }}">
                                         <input type="hidden" name="price" value="{{ $attachment_price }}">
                                         <input type="hidden" name="to" value="{{ $from_id }}">
-                                        <input type="hidden" name="type" value="Audio message">
-                                        <input type="submit" class="unlock-btn" data-target="#exampleModalCenter3"
-                                            value="Unlock">
+                                        <input type="hidden" name="type" value="audio">
+                                        <input type="submit" class="unlock-btn" data-target="#exampleModalCenter3" value="Unlock">
                                     </form>
                                 </h5>
                             </div>
                             <div class="unlock-btn-wrapepr locked-text">
                                 <i class="fa-solid fa-lock"></i>
-                                <button class="unlock-btn unlock_feed" data="10">
-                                    Audio Unlock for ${{ $attachment_price }}
-                                </button>
+                                <button class="unlock-btn unlock_feed" data="10">Audio Unlock for ${{ $attachment_price }}</button>
                             </div>
                         </div>
                         <img width="100%" height="153px"

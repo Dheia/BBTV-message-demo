@@ -547,7 +547,7 @@ class MessagesController extends Controller
                         $model_earning=User::where('id',$request['id'])->first();
                         $msg_from = $user->id;
                         $msg_to = $request['id']; 
-                        $method ='image';
+                        $method ='picture';
                         $walletAmount = $this->ChargeAmountOnSendMessage($Get_feed, $fan_charge, $model_earning, $msg_from, $msg_to, $method);
  
                     }else{
@@ -578,7 +578,7 @@ class MessagesController extends Controller
                         $model_earning=User::where('id',$request['id'])->first();
                         $msg_from = $user->id;
                         $msg_to = $request['id']; 
-                        $method ='Audio message';
+                        $method ='audio';
                         $walletAmount = $this->ChargeAmountOnSendMessage($Get_feed, $fan_charge, $model_earning, $msg_from, $msg_to, $method);
                     }else{
                         return Response::json([

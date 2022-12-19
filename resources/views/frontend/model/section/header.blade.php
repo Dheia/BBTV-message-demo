@@ -74,7 +74,7 @@
                     </div>
 
 
-                    @php $tip_amount=App\Models\User_logs::where('to',Auth::user()->id)->where('method','Tip')->where('status','0')->count(); @endphp
+                    @php $tip_amount=App\Models\User_logs::where('to',Auth::user()->id)->where('method','tips')->where('status','0')->count(); @endphp
 
                         <div class="sidelinks-wrapper " id="mySidenav" >
                             <div class="sidebar-wrapper">

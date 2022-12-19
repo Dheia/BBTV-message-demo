@@ -1505,6 +1505,8 @@
                     }
                 });
                 app.helpers.setFooterPosition();
+
+                $('#hellomodal').modal('hide');
                 return false;
             }
         }
@@ -1553,6 +1555,16 @@
                 }
             }); 
         });
-         
+        
+
+        $(document).on("click",".close_calling",function() {
+            if(confirm("Are you sure you want to cancel this call?")){
+                cancelTheCall();
+            }
+            else{
+                return false;
+            }
+            
+        });
     }); 
 }(window, window.QB, window.app, window.CONFIG,  jQuery, Backbone));

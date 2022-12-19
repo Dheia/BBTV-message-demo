@@ -48,32 +48,32 @@
                           ->first();
                           $video=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Video message')
+                          ->where('method','video')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $tips=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Tip')
+                          ->where('method','tips')
                           ->selectRaw('user_logs.*, sum(model_earning) as tip')
                           ->first();
                           $videocall=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Video call')
+                          ->where('method','video-call')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $phonecall=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Phone call')
+                          ->where('method','audio-call')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $message=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Post unlock')
+                          ->where('method','feeds')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $text=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Message')
+                          ->where('method','message')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                          
@@ -102,37 +102,37 @@
                           $username=App\Models\User::where('id',$item->from)->first();
                           $audio=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Audio message')
+                          ->where('method','audio')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $video=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Video message')
+                          ->where('method','video')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $tips=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Tip')
+                          ->where('method','tips')
                           ->selectRaw('user_logs.*, sum(model_earning) as tip')
                           ->first();
                           $videocall=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Video call')
+                          ->where('method','video-call')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $phonecall=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Phone call')
+                          ->where('method','audio-call')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $message=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Post unlock')
+                          ->where('method','feeds')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                           $text=App\Models\User_logs::where('to',Auth::user()->id)
                           ->where('from',$item->from)
-                          ->where('method','Message')
+                          ->where('method','message')
                           ->selectRaw('user_logs.*, sum(model_earning) as total')
                           ->first();
                          
@@ -194,12 +194,12 @@
               </div>
               <style>
                 select#topspent {
-    /* background-image: url(https://toppng.com/uploads/preview/white-drop-down-arrow-11562884289ujhzrp5rwy.png) !important; */
-    background-image: url('{{ url('/images/down_arrow.png')  }}');
-    background-repeat: no-repeat !important;
-    background-position: right 0.50rem center !important;
-    background-size: 16px 12px !important;
-}
+                  /* background-image: url(https://toppng.com/uploads/preview/white-drop-down-arrow-11562884289ujhzrp5rwy.png) !important; */
+                  background-image: url('{{ url('/images/down_arrow.png')  }}');
+                  background-repeat: no-repeat !important;
+                  background-position: right 0.50rem center !important;
+                  background-size: 16px 12px !important;
+                }
               </style>
      
 @endsection

@@ -716,6 +716,10 @@ span.plus.price_pluse {
 
 {{-- modal for calling --}}
 
+{{-- <div>
+  <div class="hellobro">Test call me another windw</div>
+</div> --}}
+
 <!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary " id="openmodallll" data-toggle="modal" style="padding:50px; height:100px; width:200px;" data-target="#hellomodal">
   Launch demo
@@ -724,8 +728,9 @@ span.plus.price_pluse {
 <!-- Modal -->
 <div class="modal fade" id="hellomodal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="hellomodalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <span class="close_calling">X</span>
+    
     <div class="modal-content">
+      <span class="close_calling">X</span>
       <div class="modal-body"> 
         @include('vendor.Chatify.pages.calling')
       </div> 
@@ -1012,6 +1017,7 @@ span.plus.price_pluse {
   var host = "quickblox.github.io";
   if ((host == window.location.host) && (window.location.protocol != "https:"))
       window.location.protocol = "https";
+      
 </script>
 </body>
 

@@ -516,9 +516,10 @@ class fandashboardController extends Controller
     }
     public function feed_lock(Request $request){
 
-         $Get_feed = ModelFeed::where('id',$request->media_id)->first();
+        // return $request->media_id; 
+        $Get_feed = ModelFeed::where('id',$request->media_id)->first();
       
-          if (Auth::user()->wallet>=$Get_feed->price) {
+        if (Auth::user()->wallet>=$Get_feed->price) {
             $commission = Setting::pluck("value", "name");
 
             $admin_comi=($Get_feed->price*$commission['commission'])/100;
@@ -533,7 +534,7 @@ class fandashboardController extends Controller
             $model_earning->wallet=$model_earning->wallet + $model_comi;
             $model_earning->save();
             $User_logs= new User_logs;
-            $User_logs->method='Post unlock';
+            $User_logs->method='feeds';
             $User_logs->from=Auth::user()->id;
             $User_logs->to=$request->Model_id;
             $User_logs->price=$Get_feed->price;
@@ -552,10 +553,67 @@ class fandashboardController extends Controller
             $Coll->fan_id=Auth::user()->id;
             $Coll->feed_id=$Get_feed->id;
             $Coll->save();
-             return redirect()->back();
-            }else{
-                return redirect()->back()->with('error', 'Insufficient Credit');
-            }
+
+            return redirect()->back();
+        }else{
+            return redirect()->back()->with('error', 'Insufficient Credit');
+        }
+     
+    }
+
+    public function feedLockAjax(Request $request){
+
+        // return $request->media_id; 
+        $Get_feed = ModelFeed::where('id', $request->id)->first();
+        // $Feed_unlock = Feed_unlock::where('fan_id', Auth::user()->id)->where('media_id', $request->media_id)->first();
+
+        if (Auth::user()->wallet >= $Get_feed->price) {
+            // 
+            $commission = Setting::pluck("value", "name");
+
+            $admin_comi = ($Get_feed->price*$commission['commission'])/100;
+            $model_comi = $Get_feed->price-$admin_comi;
+
+            $fan_charge = User::where('id',Auth::user()->id)->first();
+            $fan_charge->wallet = $fan_charge->wallet-$Get_feed->price;
+            $fan_charge->save();
+
+            // return $Get_feed->model_id; 
+            $modelUser = User::where('id', $Get_feed->model_id)->first();
+            // return $modelUser; 
+            $modelUser->wallet = $modelUser->wallet + $model_comi;
+            $modelUser->save();
+            
+            $User_logs= new User_logs;
+            $User_logs->method = 'feeds';
+            $User_logs->from = Auth::user()->id;
+            $User_logs->to = $Get_feed->model_id;
+            $User_logs->price = $Get_feed->price;
+            $User_logs->fan_balance = $fan_charge->wallet;
+            $User_logs->model_earning = $model_comi;
+            $User_logs->earnings = $admin_comi;
+            $User_logs->save();
+            
+            $Feed_unlock= new Feed_unlock;
+            $Feed_unlock->fan_id = Auth::user()->id;
+            $Feed_unlock->model_id = $Get_feed->model_id;
+            $Feed_unlock->feed_id = $request->id;
+            $Feed_unlock->media_id = $request->media_id;
+            $Feed_unlock->amount = $Get_feed->price;
+            $Feed_unlock->save();
+
+            $Coll = new Collection;
+            $Coll->fan_id = Auth::user()->id;
+            $Coll->feed_id = $request->id;
+            $Coll->save();
+
+            $media = Feed_media::where('id', $request->media_id)->first();
+            return response()->json(['status' => true, 'image'=>url('images/Feed_media/'.$media->medai)]);
+
+        }else{
+            // return redirect()->back()->with('error', 'Insufficient Credit');
+            return response()->json(['status' => false]);
+        }
      
     }
     public function model_tip(Request $request){
@@ -576,7 +634,7 @@ class fandashboardController extends Controller
             $model_earning->save();
 
             $User_logs= new User_logs;
-            $User_logs->method='Tip';
+            $User_logs->method='tips';
             $User_logs->tips_type='feed';
             $User_logs->fan_balance=$fan_charge->wallet;
             $User_logs->message=$request->tipMessage;
@@ -874,7 +932,7 @@ class fandashboardController extends Controller
                 $model_earning->save();
 
                 $User_logs= new User_logs;
-                $User_logs->method='image';
+                $User_logs->method='picture';
                 $User_logs->from=Auth::user()->id;
                 $User_logs->to=$request->modelId;
                 $User_logs->fan_balance=$fan_charge->wallet;
