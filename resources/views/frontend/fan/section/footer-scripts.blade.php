@@ -12,6 +12,7 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@3.0.3/dist/index.min.js"></script>
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
@@ -27,59 +28,110 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script type="text/javascript">
 
-$(document).ready(function() {
+    $(document).ready(function() {
         $(".backdrop").fadeOut();
+
+        $(".loadMoreBtn").on("click",function() {
+
+            var footerHeight = $('.footer-bg-wrapper').height();
+            var positionFooter = $(".footer-bg-wrapper").position();
+            $(this).hide();
+            loadMore();
+        });
     });
-
-    $(window).scroll(function() {
-        
-        var footerHeight = $('.footer-bg-wrapper').height();
-        var positionFooter = $(".footer-bg-wrapper").position();
     
-      if($(window).scrollTop() == $(document).height() - $(window).height()) {
+    // $(window).scroll(function() {
+        
+        
+    
+    //     // if((($(window).scrollTop() + 5) >= $(document).height() - $(window).height())) {
+            
+            
+    //         // if(activeFeed == 'feeds') {
+    //         //     console.log(activeFeed);
+    //         // } 
+    //         // // if(activeFeed == 'popular-feeds')
+    //             // console.log(loadMore);
+            
+            
+    //     // }
+                
+    // });
 
+    function loadMore( parent ) {
+        $('.load-more-loader').show();
         var take=$('.render-data-takes').val();
         var takeFeedPage=$('.render-data-takes-page').val();
         var takeFeedPagePopular=$('.render-data-takes-page-popular').val();
-       
-        $.ajax({
-            type: 'get',
-            url: "{{ url('fan/feeds-render') }}",
-            data: {
-                take:take,
-                takeFeedPage:takeFeedPage,
-                takeFeedPagePopular:takeFeedPagePopular,
-            },
-            success: function(response) {
+        var activeFeed = $('.active-feeds.active').data('active');
+        
+        var loadMore = $('.loadMore').data('status');
+        if(loadMore)
+        {
+            $(".loadMore").data('status', 'false');
+            var feed = $('.active-feed.active').data('feed');
+            $.ajax({
+                type: 'get',
+                url: "{{ url('fan/feeds-render') }}",
+                data: {
+                    take:take,
+                    takeFeedPage:takeFeedPage,
+                    takeFeedPagePopular:takeFeedPagePopular,
+                },
+                success: function(response) {
+                    $(".render-append").append(response.dataRender);
+                    $('.render-data-takes').val(response.newTake);
 
-                   if ($(".feeds-all-section").hasClass("active")) {
+                    $('.load-more-loader').hide();
+                    // if ($(".feeds-all-section").hasClass("active")) {
+                    if(feed == 'feed') {
                         $('.render-data-takes-page').val(response.newTakePage);
                         $('.first-render-data').append(response.feedData);
                         $('.second-render-data').append(response.feedDataSecond);
+
+                        if(response.dataRender=='' || response.feedData=='' || response.feedDataSecond=='') {
+                            $(".loadMore").data('status', 'false');
+                            if(feed == 'feed')
+                                $(".normal .no-post").show();
+                            if(feed == 'popular')
+                                $(".popular .no-post").show();
+                                
+                        } else {
+                            $(".loadMoreBtn").show();
+                            $(".loadMore").data('status', 'true');
+                        }
                     }
                     
-                    if ($(".feeds-pupular-section").hasClass("active")) {
+                    // if ($(".feeds-pupular-section").hasClass("active")) 
+                    if(feed == 'popular'){
                         $('.render-data-takes-page-popular').val(response.takePopular);
                         $('.render-popular-first-section').append(response.puplarData);
                         $('.render-popular-second-section').append(response.puplarDataSecond);
 
+                        if(response.puplarDataSecond =='' || response.puplarData =='') {
+                            $(".loadMore").data('status', 'false');
+                            if(feed == 'feed')
+                                $(".normal .no-post").show();
+                            if(feed == 'popular')
+                                $(".popular .no-post").show();
+                                
+                        } else {
+                            $(".loadMoreBtn").show();
+                            $(".loadMore").data('status', 'true');
+                        }
                     }
-                        $(".render-append").append(response.dataRender);
-                        $('.render-data-takes').val(response.newTake);
-                   
 
-
-                    if(response.dataRender=='' || response.feedData=='' || response.feedDataSecond==''){
-                        $('.load-more-loader').hide();
-                    }
-            }
-        });
+                    
+                    
+                    
+                }
+            });
         }
-    });
+    }
 
 
 
-$(function() {
+    $(function() {
         $('.slide-show').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
@@ -87,11 +139,8 @@ $(function() {
             dots: false,
             fade: true,
             autoplay: false,
-        
-        
+        });
     });
-    
-})
     // var button = document.querySelector('.emoji-btn');
 //     button.addEventListener('click', () => {
 //     picker.togglePicker(button);
@@ -303,15 +352,15 @@ $(document).ready(function() {
     });
 
           
-     $(document).on('click','.feed_impressions',function(e){
+    $(document).on('click','.feed_impressions',function(e){
 
-        var feedID= $(this).attr('value');
-        var idIndex= $(this).attr('data');
+        // var feedID= $(this).attr('value');
+        var feedID= $(this).attr('data');
+        var idIndex = $('.slick-track .slider-item.IndexID'+feedID).data('slick-index');
 
         $('.slide-show').slick('slickGoTo', idIndex);
-       
         $('.Feed-pooup-model').addClass('Z-index');
-        
+
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -321,8 +370,8 @@ $(document).ready(function() {
             },
          
         });
-        
     });
+
     $(document).on('click','.add-to-contact-ajax',function(e){
 
         var ModelID= $(this).attr('value');
@@ -668,13 +717,15 @@ btn.on("click", function(e) {
 });
 $(document).ready(function() {
     $('.recentoption').on('change', function(e) {
-
+        // 
         $('#rati').submit()
     });
+
     $('.fan_mod_filter').on('change', function(e) {
 
         $('#rati').submit()
     });
+
     $('.gender').on('click', function() {
 
         var bla = $(this).val();
@@ -694,9 +745,6 @@ $(document).ready(function() {
         } else {
             var transgender = '';
         }
-
-
-
 
         $.ajax({
             type: 'POST',
@@ -744,57 +792,54 @@ $(document).ready(function() {
                 }
               }
         });
-});
+    });
 
     $(document).on('click','.send-message-to-feed',function(){
-
+        // 
         var model_id = $(this).val();
         var message= $(this).closest(".send-mess").find(".emoji-picker-input").val();
         var $this=$(this);
         if(message!=''){
             $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: "{{ url('fan/send-message-feed') }}",
-                    data: {
-                        modelId:model_id,
-                        message:message,
-                        
-                    },
-                    success: function(response) {
-                            if (response.status=='insufficentcredit') {
-
-                                toastr.options.preventDuplicates = true;
-                                toastr.error('Insufficient Credits.');
-                              }
-                        if (response.status=='succuss') {
-                            
-                            $('.balence-visible').html('Message send successfully');
-                            $('#balence-visible').fadeIn(800).fadeOut(800);
-                            $this.closest(".send-mess").find(".emoji-picker-input").val('');
-                            $('.wallet-credit').html(response.wallet+' Cr');
-                        }
+                type: 'GET',
+                dataType: 'json',
+                url: "{{ url('fan/send-message-feed') }}",
+                data: {
+                    modelId:model_id,
+                    message:message,
                     
-                        }
-                    });
+                },
+                success: function(response) {
+                    if (response.status=='insufficentcredit') {
 
+                        toastr.options.preventDuplicates = true;
+                        toastr.error('Insufficient Credits.');
+                    }
+                    if (response.status=='succuss') {
+                        
+                        $('.balence-visible').html('Message send successfully');
+                        $('#balence-visible').fadeIn(800).fadeOut(800);
+                        $this.closest(".send-mess").find(".emoji-picker-input").val('');
+                        $('.wallet-credit').html(response.wallet+' Cr');
+                    }
+                
+                }
+            });
         }
     });
 
-var imgUpload1 = document.getElementById('profile-upload-img'),
+    var imgUpload1 = document.getElementById('profile-upload-img'), totalFiles1, previewTitle, previewTitleText, img;
 
-   totalFiles1, previewTitle, previewTitleText, img;
-
-imgUpload1.addEventListener('change', previewImgs, true);
+    imgUpload1.addEventListener('change', previewImgs, true);
 
 function previewImgs(event) {
     
     totalFiles1 = imgUpload1.files.length;
-    console.log(imgUpload1.files);
+    // console.log(imgUpload1.files);
   
     for (var i = 0; i < totalFiles1; i++) {
         
-        console.log(event.target.files[i].name);
+        // console.log(event.target.files[i].name);
         var file_name_string = event.target.files[i].name;
             var file_name_array = file_name_string.split(".");
             var file_extension = file_name_array[file_name_array.length - 1];
@@ -872,7 +917,6 @@ $(document).ready(function() {
 
     $(document).on('click','.addLike',function(e){
     
-
         var feed_id = $(this).attr("feed_id");
         $this = $(this);
 
@@ -989,7 +1033,6 @@ function openfilter() {
     } else {
         document.getElementById("Filter-wrapp").style.width = "360px";
     }
-
 }
 //   $(document).click(function(event){
 //     document.getElementById("Filter-wrapp").style.width = "0";            

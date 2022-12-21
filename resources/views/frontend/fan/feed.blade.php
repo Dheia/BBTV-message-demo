@@ -6,166 +6,171 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
    .post-img-wrapper {
-   padding: 5px;
-   width: 100%;
-   border-radius: 12px;
-   position: relative;
-   min-height: 100%;
+      padding: 5px;
+      width: 100%;
+      border-radius: 12px;
+      position: relative;
+      min-height: 100%;
    }
    ul.mydropdown-menu {
-   display: none;
-   z-index: 5;
-   right: 37px;
-   list-style-type: none;
-   background: #232528 !important;
-   box-shadow: 0 3px 5px 0 rgb(0 0 0 / 24%);
-   visibility: visible;
-   opacity: 1;
-   pointer-events: auto;
-   position: absolute;
-   padding: 10px 30px 10px 9px;
+      display: none;
+      z-index: 5;
+      right: 37px;
+      list-style-type: none;
+      background: #232528 !important;
+      box-shadow: 0 3px 5px 0 rgb(0 0 0 / 24%);
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      position: absolute;
+      padding: 10px 30px 10px 9px;
    }
-</style>
-<style>
+
    ol.carousel-indicators {
-   display: none;
+      display: none;
    }
    .explore-post-wraper {
-   width: 100% !important;
+      width: 100% !important;
    }
    li.nav-item.active {
-   border: 0px !important;
+      border: 0px !important;
    }
    li.list-group-item {
-   border: 0px !important;
+      border: 0px !important;
    }
    .Explore-bg {
-   background-color: unset;
+      background-color: unset;
    }
    a.addwish {
-   flex-direction: column;
+      flex-direction: column;
    }
    i.fa.fa-heart.add-to-wishlist {
-   margin: -1px -3px;
+      margin: -1px -3px;
    }
    .modal-content {
-   position: relative;
-   display: -webkit-box;
-   display: -ms-flexbox;
-   display: flex;
-   -webkit-box-orient: vertical;
-   -webkit-box-direction: normal;
-   -ms-flex-direction: column;
-   flex-direction: column;
-   width: 100%;
-   pointer-events: auto;
-   /* background-color: #fff; */
-   background-clip: padding-box;
-   border: 1pxsolidrgba(0, 0, 0, .2);
-   border-radius: 0.3rem;
-   outline: 0;
-   background: linear-gradient(to left, #0f1e2e 0%, #0f1e2e 100%) !important;
-   border: none;
+      position: relative;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      width: 100%;
+      pointer-events: auto;
+      /* background-color: #fff; */
+      background-clip: padding-box;
+      border: 1pxsolidrgba(0, 0, 0, .2);
+      border-radius: 0.3rem;
+      outline: 0;
+      background: linear-gradient(to left, #0f1e2e 0%, #0f1e2e 100%) !important;
+      border: none;
    }
-   /*.tipoption {
-   cursor: pointer;
-   border: 1px solid;
-   height: 40PX;
-   width: 40PX;
-   text-align: center;
-   border-radius: 21px;*/
-   /* padding: 9px 4px; */
- /*  padding-top: 9px;
-   margin-top: 6px;
-   margin-right: 16px;
-   }*/
+   
    .credit-error {
-   left: 135px;
+      left: 135px;
    }
    .modal-header {
-   display: -webkit-box;
-   display: -ms-flexbox;
-   display: flex;
-   -webkit-box-align: start;
-   -ms-flex-align: start;
-   align-items: flex-start;
-   -webkit-box-pack: justify;
-   -ms-flex-pack: justify;
-   color: white !important;
-   justify-content: space-between;
-   padding: 1rem;
-   border-bottom: 1px solid #e9ecef;
-   border-top-left-radius: 0.3rem;
-   border-top-right-radius: 0.3rem;
-   color: #000;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      color: white !important;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid #e9ecef;
+      border-top-left-radius: 0.3rem;
+      border-top-right-radius: 0.3rem;
+      color: #000;
    }
 
    /*new add*/
    .modal-header {
-    overflow: hidden;
-}
-input.form-control.tip_amount {
-    position: relative;
-}
-span.send_msgbox {
-   background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%) !important;
-   padding: 7px 21px;
-   /*margin-left: 14px;*/
-   border-radius: 3px;
+      overflow: hidden;
    }
-.tipoption {
-    cursor: pointer;
-    border: 1px solid;
-    height: 35px !important;
-    width: 35px !important;
-    text-align: center;
-    border-radius: 50% !important;
-    padding-top: 5px !important;
-    margin-top: 6px !important;
-    margin-right: 1.15rem !important;
-}
-.tipoption small{
-    color: #ffff !important;
-}
-.tip_btn{
-       background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
-}
-.tip_btn:hover{
-       color: #bf00b0 !important;
-       background: 0;
-       border: 1px solid #bf00b0;
-}
+   input.form-control.tip_amount {
+      position: relative;
+   }
+   span.send_msgbox {
+      background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%) !important;
+      padding: 7px 21px;
+      /*margin-left: 14px;*/
+      border-radius: 3px;
+   }
+   .tipoption {
+      cursor: pointer;
+      border: 1px solid;
+      height: 35px !important;
+      width: 35px !important;
+      text-align: center;
+      border-radius: 50% !important;
+      padding-top: 5px !important;
+      margin-top: 6px !important;
+      margin-right: 1.15rem !important;
+   }
+   .tipoption small{
+      color: #ffff !important;
+   }
+   .tip_btn{
+      background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+   }
+   .tip_btn:hover{
+      color: #bf00b0 !important;
+      background: 0;
+      border: 1px solid #bf00b0;
+   }
 
-span.doller_sin {
-    display: none;
-    color: #fff;
-    padding: 10px;
-    position: absolute;
-    top: 12px;
-    left: 8.5px;
-}
+   span.doller_sin {
+      display: none;
+      color: #fff;
+      padding: 10px;
+      position: absolute;
+      top: 12px;
+      left: 8.5px;
+   }
 
-@media only screen and (max-width: 448px) {
- span.send_msgbox {
-    padding: 7px 13px !important;
-}
-}
-.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
-    outline: none !important;
-    opacity: .75;
-}
-input#tips_fild {
-    padding-left: 16px;
-}
+   @media only screen and (max-width: 448px) {
+      span.send_msgbox {
+         padding: 7px 13px !important;
+      }
+   }
+   .close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
+      outline: none !important;
+      opacity: .75;
+   }
+   input#tips_fild {
+      padding-left: 16px;
+   }
+   .loadMoreBtn {
+      background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+      height: 48px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 17px;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1px solid #451c4a;
+      outline: none;
+   }
+   .load-more-loader {
+      display: none;
+   }
+   .no-post {
+      display: none;
+   }
+
+   .feed-page-render {
+      width: 100%;
+   }
 </style>
-<script>
-   jQuery(document).ready(function() {
-       $('#like').click(function() {
-           console.log('liked');
-           alert('dfd');
-       });
-   });
-</script>
+
 <div class="col-sm-12 col-md-8 col-xl-9 pt-0">
    <div id="copied-success" class="copied">
       <span>Copied!</span>
@@ -175,18 +180,17 @@ input#tips_fild {
       <div class="modal-dialog modal-dialog-centered" role="document">
          <div class="modal-content ">
             <div class="modal-header ">
-               <h4 class="modal-title color-white" id="exampleModalLongTitle">Why are you reporting this post?
-               </h4>
+               <h4 class="modal-title color-white" id="exampleModalLongTitle">Why are you reporting this post?</h4>
                <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
-               <span class="modal_close text-white" aria-hidden="true">x</span>
+                  <span class="modal_close text-white" aria-hidden="true">x</span>
                </button>
             </div>
             <div class="modal-body">
                <form action="{{ url('fan/report-post') }}" method="post">
                   @csrf
-                  <textarea name="post_report_reason" class="form-control" id="" cols="5" rows="10"
-                     placeholder="Reason" required></textarea>
+                  <textarea name="post_report_reason" class="form-control" id="" cols="5" rows="10" placeholder="Reason" required></textarea>
                   <input type="hidden" name="feed_id" value="" class="report_feed_id">
+               </form>
             </div>
             <div class="modal-footer">
             <button type="submit" class="send-tip-btn">Submit</button> </form>
@@ -202,67 +206,58 @@ input#tips_fild {
                <h1 class="explore-heading">Feed</h1>
                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                   <li class="nav-item">
-                     <a class="nav-link feeds-all-section active" id="pills-view-tab" data-toggle="pill" href="#pills-view"
-                        role="tab" aria-controls="pills-view" aria-selected="true">View Feed
+                     <a class="nav-link feeds-all-section active-feed active" data-feed="feed" id="pills-view-tab" data-toggle="pill" href="#pills-view" role="tab" aria-controls="pills-view" aria-selected="true">View Feed
                      <small>(+{{ count($explore) }}&nbsp;Posts)</small></a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link feeds-pupular-section" id="pills-Popular-tab" data-toggle="pill" href="#pills-Popular"
-                        role="tab" aria-controls="pills-Popular" aria-selected="false">
-                     View Popular</a>
+                     <a class="nav-link feeds-pupular-section active-feed" data-feed="popular" id="pills-Popular-tab" data-toggle="pill" href="#pills-Popular" role="tab" aria-controls="pills-Popular" aria-selected="false">View Popular</a>
                   </li>
-                  <img src="{{ url('/image/exlpore-img.png') }}" alt="" onclick="openfilter()"
-                     class="filter-modile-viewbtnimg" />
+                  <img src="{{ url('/image/exlpore-img.png') }}" alt="" onclick="openfilter()" class="filter-modile-viewbtnimg" />
                </ul>
-               <img src="{{ url('/image/exlpore-img.png') }}" alt="" class="filterbtn filter_hiden"
-                  onclick="openfilter()" />
+               <img src="{{ url('/image/exlpore-img.png') }}" alt="" class="filterbtn filter_hiden" onclick="openfilter()" />
             </div>
             <div class="explorecontent-wrapper">
                <div class="row">
                   <div class="col-lg-12 col-md-12">
                      <div class="explore-post-wraper">
-                        <div class="tab-content" id="pills-tabContent">
-                           <div class="tab-pane fade show active" id="pills-view" role="tabpanel"
-                              aria-labelledby="pills-view-tab" style="color: #fff">
+                        <div class="tab-content loadMore" data-status="true" id="pills-tabContent">
+                           <div class="tab-pane fade show active"  id="pills-view" role="tabpanel" aria-labelledby="pills-view-tab" style="color: #fff">
                               <div class="explorepost-inner-wrapper">
                                  <div class="row">
                                     @if (count($explore) < 1)
                                     <div class="empty_state">
                                        <img src="{{ url('image/sad_icon.png') }}" alt="">
                                        <h3 class="text-light">No Feeds </h3>
-                                       <p class="text-light">There have been no Feeds in this section
-                                          according the filter
-                                       </p>
+                                       <p class="text-light">There have been no Feeds in this section according the filter</p>
                                     </div>
                                     @else
-                                   <div class="feed-page-render"> 
-                                   <input type="hidden" class="render-data-takes-page" value="6">
-                                    <div class="column first-render-data col-lg-10 col-md-10 col-sm-12 col-xl-6">
-                                       @foreach ($explore as $number => $value)
-                                       @if ($number % 2 != 0)
-                                      
-                                       @include('frontend.fan.explore_feeds')
-                                       @endif
-                                       @endforeach
-                                    </div>
-                                    <div class="column second-render-data col-lg-6 col-md-6 col-sm-12">
-                                       @foreach ($explore as $number => $value)
-                                       @if ($number % 2 == 0)
-                                       
-                                       @include('frontend.fan.explore_feeds')
-                                       @endif
-                                       @endforeach
-                                    </div>
-                                 </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center mt-3 pt-5">
-                                          <div class="load-more-loader"></div>
+                                    <div class="feed-page-render"> 
+                                       <input type="hidden" class="render-data-takes-page" value="6">
+                                       <div class="column first-render-data col-lg-6 col-md-6 col-sm-12 col-xl-6">
+                                          @foreach ($explore as $number => $value)
+                                             @if ($number % 2 == 0)
+                                                @include('frontend.fan.explore_feeds')
+                                             @endif
+                                          @endforeach
                                        </div>
+                                       <div class="column second-render-data col-lg-6 col-md-6 col-sm-12 col-xl-6">
+                                          @foreach ($explore as $number => $value)
+                                             @if ($number % 2 != 0)
+                                                @include('frontend.fan.explore_feeds')
+                                             @endif
+                                          @endforeach
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center mt-3 pt-5 normal">
+                                       <div class="load-more-loader"></div>
+                                       <div class="no-post">No More Post Found!</div>
+                                       <button class="btn loadMoreBtn">Load More</button>
+                                    </div>
                                     @endif
                                  </div>
                               </div>
                            </div>
-                           <div style="color: #fff" class="tab-pane fade" id="pills-Popular" role="tabpanel"
-                              aria-labelledby="pills-Popular-tab">
+                           <div style="color: #fff" class="tab-pane fade" id="pills-Popular" role="tabpanel" aria-labelledby="pills-Popular-tab">
                               <div class="explorepost-inner-wrapper">
                                  <div class="row">
                                      <input type="hidden" class="render-data-takes-page-popular" value="6">
@@ -296,16 +291,18 @@ input#tips_fild {
                                           <div class="expolor-post-wraper">
                                              <div class="postprofile-wrapper">
                                                 <div class="profile-img-wrapp mr-1">
+                                                   <a href="{{ url('/', [$pupular->user->slug]) }}">
                                                    <img src="{{ url('profile-image') . '/' . $pupular->user->profile_image ?? '' }}"
                                                       alt="" class="postprofile-img" />
+                                                   </a>
                                                 </div>
                                                 <div class="postname-wrapper ml-3">
-                                                   <span>{{ $pupular->user->first_name }}
-                                                   {{ $pupular->user->last_name }}
-                                                   @if ($pupular->user->user_status == 'verified')
-                                                   <i class="fa fa-check-circle"></i>
-                                                   @endif
-                                                   </span>
+                                                   <a href="{{ url('/', [$pupular->user->slug]) }}">{{ $pupular->user->first_name }}
+                                                      {{ $pupular->user->last_name }}
+                                                      @if ($pupular->user->user_status == 'verified')
+                                                      <i class="fa fa-check-circle"></i>
+                                                      @endif
+                                                   </a>
                                                    <small>
                                                    @if ($diffInYears < 1)
                                                    @if ($diffInMonths < 1)
@@ -364,29 +361,29 @@ input#tips_fild {
                                                 <p>{!! $pupular->description !!}</p>
                                                 <div class="post-img-wrapper">
                                                    @if(count($pupular->feedmedia)<=1)
-                                                   @foreach ($pupular->feedmedia as $item)
-                                                   @if ($item->media_type == 'png' or
-                                                   $item->media_type == 'jpg' or
-                                                   $item->media_type == 'jpeg' or
-                                                   $item->media_type == 'jpeg' or
-                                                   $item->media_type == 'webp')
-                                                   <img src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                      alt="" />
-                                                   @endif
-                                                   @if ($item->media_type == 'mp4')
-                                                   <video width="320" height="240"
-                                                      controls>
-                                                      <source
-                                                         src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                         type="video/mp4">
-                                                      <source
-                                                         src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                         type="video/ogg">
-                                                      Your browser does not support the video
-                                                      tag.
-                                                   </video>
-                                                   @endif
-                                                   @endforeach
+                                                      @foreach ($pupular->feedmedia as $item)
+                                                         {{$item->media_type}}
+                                                         @if ($item->media_type == 'png' or
+                                                            $item->media_type == 'jpg' or
+                                                            $item->media_type == 'jpeg' or
+                                                            $item->media_type == 'jpeg' or
+                                                            $item->media_type == 'webp')
+                                                         <img src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" alt="" />
+                                                         @endif
+                                                         @if ($item->media_type == 'mp4')
+                                                            <video width="320" height="240"
+                                                               controls>
+                                                               <source
+                                                                  src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
+                                                                  type="video/mp4">
+                                                               <source
+                                                                  src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
+                                                                  type="video/ogg">
+                                                               Your browser does not support the video
+                                                               tag.
+                                                            </video>
+                                                         @endif
+                                                      @endforeach
                                                    @else
                                                    <div id="myCarousel1{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
                                                       <!-- Indicators -->
@@ -496,16 +493,17 @@ input#tips_fild {
                                           <div class="expolor-post-wraper">
                                              <div class="postprofile-wrapper">
                                                 <div class="profile-img-wrapp mr-1">
-                                                   <img src="{{ url('profile-image') . '/' . $pupular->user->profile_image ?? '' }}"
-                                                      alt="" class="postprofile-img" />
+                                                   <a href="{{ url('/', [$pupular->user->slug]) }}">
+                                                      <img src="{{ url('profile-image') . '/' . $pupular->user->profile_image ?? '' }}" alt="" class="postprofile-img" />
+                                                   </a>
                                                 </div>
                                                 <div class="postname-wrapper ml-3">
-                                                   <span>{{ $pupular->user->first_name }}
-                                                   {{ $pupular->user->last_name }}
-                                                   @if ($pupular->user->user_status == 'verified')
-                                                   <i class="fa fa-check-circle"></i>
-                                                   @endif
-                                                   </span>
+                                                   <a href="{{ url('/', [$pupular->user->slug]) }}">
+                                                      {{ $pupular->user->first_name }} {{ $pupular->user->last_name }}
+                                                      @if ($pupular->user->user_status == 'verified')
+                                                      <i class="fa fa-check-circle"></i>
+                                                      @endif
+                                                   </a>
                                                    <small>
                                                    @if ($diffInYears < 1)
                                                    @if ($diffInMonths < 1)
@@ -669,9 +667,11 @@ input#tips_fild {
                                        @endif
                                        @endforeach
                                     </div>
-                                     <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center mt-3 pt-5">
-                                          <div class="load-more-loader"></div>
-                                       </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center mt-3 pt-5 popular">
+                                       <div class="load-more-loader"></div>
+                                       <div class="no-post">No More Post Found!</div>
+                                       <button class="btn loadMoreBtn">Load More</button>
+                                    </div>
                                     @if (count($explore) < 1)
                                     <div class="empty_state">
                                        <img src="image/sad_icon.png" alt="">

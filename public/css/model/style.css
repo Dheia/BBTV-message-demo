@@ -952,7 +952,9 @@ margin-left: 13px;
             color: #ffffff;
         }
         
-        
+        .carousel-inner .item:hover {
+            background: none !important;
+        }
         .item:hover {
             background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
         }

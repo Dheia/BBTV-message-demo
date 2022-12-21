@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Models;
 use App\Models\PageMeta;
 use App\Models\Page;
+use App\Models\Feed_unlock;
 use App\Models\ModelOrientation;
 use App\Models\ModelCategory;
 use App\Models\ModelEthnicity;
@@ -15,7 +16,7 @@ use App\Models\ModelFetishes;
 use App\Models\ModelFeed;
 use App\Models\LogActivity;
 use App\Models\User;
-use App\Models\User_logs;
+use App\Models\Collection;
 use App\Models\Tags;
 use App\Models\Model_feed_likes;
 use DateTime;
@@ -134,11 +135,6 @@ class FeedsdashboardController extends Controller
             $q->orderBY('users.created_at','desc');  
         }
 
-
-
-       
-
-        
         if($request->sort == 'rank'){
             $randstatus=false;
             $datecurrent =Carbon::now()->format('d');
@@ -158,7 +154,6 @@ class FeedsdashboardController extends Controller
             $q->orderBy('model_earning', 'desc');
             $q->whereBetween('user_logs.created_at', [$startDate, $endDate]);
 
-        
         }
         if($randstatus){
             $q->inRandomOrder();
@@ -168,15 +163,16 @@ class FeedsdashboardController extends Controller
     public function index(Request $request)
     {
         $current_time = Carbon::now();
-        $pagination=1000;
-        $q=ModelFeed::leftjoin('users', 'users.id', '=', 'model_feeds.model_id')
-        ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
-        ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
-        ->where('model_feeds.status', '1')
-        ->where('model_feeds.explore', '1')
-        ->where('model_feeds.schedule_date', '<=', $current_time)
-        ->groupBy('model_feeds.id')
-        ->orderBy('model_feeds.schedule_date','DESC')->take(6);
+        $pagination=20;
+
+        $q = ModelFeed::leftjoin('users', 'users.id', '=', 'model_feeds.model_id')
+            ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
+            ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
+            ->where('model_feeds.status', '1')
+            ->where('model_feeds.explore', '1')
+            ->where('model_feeds.schedule_date', '<=', $current_time)
+            ->groupBy('model_feeds.id')
+            ->orderBy('model_feeds.schedule_date','DESC')->take(6);
       
         if($request->post_type == 'video'){
             $q->where('feed_media.media_type', 'mp4');  
@@ -185,10 +181,9 @@ class FeedsdashboardController extends Controller
             $q->where('feed_media.media_type', 'mp3');  
         }
         if($request->post_type == 'picture'){
-            $q->whereIn('feed_media.media_type', ['jpg','png','jpeg','gif']);
+            $q->whereIn('feed_media.media_type', ['jpg','png','jpeg','gif', 'webp']);
         }
         if($request->price == 'free'){
-           
             $q->where('model_feeds.price', '<','0.5');  
         }
         if($request->price == 'premium'){
@@ -203,19 +198,38 @@ class FeedsdashboardController extends Controller
        
         $d=$this->filtersection();
         $q=$this->commonsort($q, $request);
+        $auth_id = Auth::user()->id; 
         $d['explorecount']=$q->count();
         $d['explore']=$q->get();
-         $d['auth_id']=Auth::user()->id;
-//  return$d['explore'];
+        $d['auth_id']=Auth::user()->id;
 
-        $d['likes'] = DB::table('model_feed_like')
+        $popularFeeds = DB::table('model_feed_like')
                  ->select('feed_id', DB::raw('count(*) as number'))
                  ->orderBy('number','desc')
                  ->groupBy('feed_id')
                  ->take(6)
                  ->get();
+        
+        // foreach ($popularFeeds as $key => $feed) {
+        //     # code...
+        //     $popular = ModelFeed::where('id', $feed->feed_id)->first();
+        //     $model_contact = Contacts::where('fan_id', $auth_id)->where('model_id', $popular->model_id)->count();
+        //     $feedCollection = Collection::where('fan_id', $auth_id)->where('feed_id', $feed->feed_id)->count();
+        //     $Auth_feed = Model_feed_likes::where('user_id', $auth_id)->where('feed_id', $feed->feed_id)->count();
+        // }
+        $d['likes'] = $popularFeeds;
+        // if(Auth::check())
+        //     $d['isPaid'] = Feed_unlock::where('model_id', $slug->id)->where('fan_id', Auth::user()->id)->pluck('media_id')->toArray();
+        // else 
+        //     $d['isPaid'] = [];
+        // return $d; 
+        return view('frontend.fan.feed', $d);
+    }
 
-        return view('frontend.fan.feed',$d);
+
+    public function loadMoreFeeds(Request $request)
+    {
+        # code...
     }
 
     /**
