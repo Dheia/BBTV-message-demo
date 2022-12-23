@@ -101,7 +101,7 @@ class fandashboardController extends Controller
 
        
        $d['latestMessage']=ChMessage::where('to_id',Auth::user()->id)->orderby('created_at','desc')->first();
-//    return $d['latestMessage'];
+
         return view('frontend.fan.index',$d);
     }
 
@@ -578,9 +578,9 @@ class fandashboardController extends Controller
             $fan_charge->wallet = $fan_charge->wallet-$Get_feed->price;
             $fan_charge->save();
 
-            // return $Get_feed->model_id; 
+            // 
             $modelUser = User::where('id', $Get_feed->model_id)->first();
-            // return $modelUser; 
+            // 
             $modelUser->wallet = $modelUser->wallet + $model_comi;
             $modelUser->save();
             

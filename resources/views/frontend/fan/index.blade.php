@@ -293,6 +293,27 @@ use App\Http\Controllers\Controller;
 input#tips_fild {
     padding-left: 16px;
 }
+
+   .loadMoreBtn {
+      background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+      height: 48px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: "Montserrat";
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 17px;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1px solid #451c4a;
+      outline: none;
+   }
+   .no-post {
+      display: none;
+   }
+   .load-more-loader {
+      display: none;
+   }
 </style>
 <div class="col-sm-12 col-md-8 col-lg-9 mt-5 col-xl-9 ">
    <div class="sidebar-wrapper1 mt-4" >
@@ -647,28 +668,31 @@ input#tips_fild {
                                        @else
                                        <div class="column  col-lg-12 col-md-12 col-sm-12" id="results">  
                                           @if(count($explore)>0)
-                                          @foreach ($explore as $number =>  $value)
-                                          @if($number%2 != 0)  
-                                          @include('frontend.fan.explore_feeds')
-                                          @endif
-                                          @endforeach
+                                             @foreach ($explore as $number =>  $value)
+                                                
+                                                {{-- @if($number%2 != 0)  
+                                                   @include('frontend.fan.explore_feeds')
+                                                @endif --}}
+                                                @include('frontend.fan.explore_feeds')
+                                             @endforeach
                                           @endif
                                        </div>
                                        <!-- <div class="ajax-loading"><img src="{{ asset('images/loading.gif') }}" /></div> -->
                                        <div class="column col-lg-12 render-append col-md-12 col-sm-12"> 
                                           <input type="hidden" class="render-data-takes" value="5">
-                                          @if(count($explore)>0)
-                                          @foreach ($explore as $number =>  $value)
-                                          @if($number%2 == 0)  
-                                          @include('frontend.fan.explore_feeds')
-                                          @endif
-                                          @endforeach
-                                          @endif
+                                          {{-- @if(count($explore)>0)
+                                             @foreach ($explore as $number =>  $value)
+                                                @if($number%2 == 0)  
+                                                   @include('frontend.fan.explore_feeds')
+                                                @endif
+                                             @endforeach
+                                          @endif --}}
                                         
                                        </div>
-                                       <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center">
-                                          <!-- <div class="feed-loader"></div> -->
-                                          <div class="load-more-loader"></div>
+                                       <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center loadMore home-feed" data-status="true">
+                                          <div class="load-more-loader active-feed active" data-feed="home-feed"></div>
+                                          <div class="no-post">No More Post Found!</div>
+                                          <button class="btn loadMoreBtn">Load More</button>
                                        </div>
                                        @endif
                                     </div>

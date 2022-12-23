@@ -221,32 +221,31 @@
             <p>{!! $value->description !!}</p>
             <div class="post-img-wrapper">
                @if ($unlock_feed_check <= 0)
-               @if ($value->price > 0)
-               <div class="unclock-overlay">
-                  <div class="unlock-btn-wrapepr unlock-text text-center " style="display:none;">
-                     <h5>Confirm Unlock for ${{ $value->price }} <span>Once you have unlocked this media,<br>it is available in your Collection.</span></h5>
-                     {{-- <form action="{{ url('fan/feed-unlock') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="media_id" value="{{ $value->feed_id }}">
-                        <input type="hidden" name="Model_id" value="{{ $value->model_id }}">
-                        <input type="submit" class="unlock-btn"
-                           data-target="#exampleModalCenter3" value="Unlock">
-                     </form> --}}
-                     <button data-mediaId="{{ $value->feed_id }}" data-modelId="{{ $value->model_id }}" class="unlock-btn" >Unlock</button>
+                  @if ($value->price > 0)
+                  <div class="unclock-overlay">
+                     <div class="unlock-btn-wrapepr unlock-text text-center " style="display:none;">
+                        <h5>Confirm Unlock for ${{ $value->price }} <span>Once you have unlocked this media,<br>it is available in your Collection.</span></h5>
+                        {{-- <form action="{{ url('fan/feed-unlock') }}" method="post">
+                           @csrf
+                           <input type="hidden" name="media_id" value="{{ $value->feed_id }}">
+                           <input type="hidden" name="Model_id" value="{{ $value->model_id }}">
+                           <input type="submit" class="unlock-btn"
+                              data-target="#exampleModalCenter3" value="Unlock">
+                        </form> --}}
+                        <button data-mediaid="{{ $value->feed_id }}" data-id="{{ $value->feed_id }}" data-modelId="{{ $value->model_id }}" class="unlock-btn">Unlock</button>
+                     </div>
+                     <div class="unlock-btn-wrapepr locked-text">
+                        <i class="fa-solid fa-lock"></i>
+                        <button class="unlock-bt unlock_feed" data="{{ $value->price }}" data-target="#exampleModalCenter3" value="{{ $value->id }}">Unlock for ${{ $value->price }}</button>
+                     </div>
                   </div>
-                  <div class="unlock-btn-wrapepr locked-text">
-                     <i class="fa-solid fa-lock"></i>
-                     <button class="unlock-btn unlock_feed" data="{{ $value->price }}" data-target="#exampleModalCenter3" value="{{ $value->id }}">Unlock for ${{ $value->price }}</button>
-                  </div>
-               </div>
-               @endif
+                  @endif
                @endif
                <div id="myCarousel{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
                   <!-- Indicators -->
                   <ol class="carousel-indicators">
                      @foreach ($feedcount as $valu)
-                     <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}"
-                        class="{{ $loop->first ? 'active' : '' }}"></li>
+                     <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
                      @endforeach
                   </ol>
                   <!-- Wrapper for slides -->
@@ -299,7 +298,7 @@
             <a href="{{ url('fan/add-contact', [$value->model_id]) }}"> <span data-toggle="modal"
                data-target="#exampleModalCenter3"> <i class="fa fa-plus"></i>Add</span></a>
             @endif
-            <span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-phone"></i>Call</span>
+           <a href=""><span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-phone"></i>Call</span></a>
             <span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-video-camera"></i>Video
             </span>
             <span class="Tip_model_id" data-toggle="modal" data-target="#TipPoPup"
@@ -404,7 +403,10 @@
             <div class="post-img-wrapper">
                @if ($unlock_feed_check <= 0)
                   @if ($value->price > 0)
-                  <div class="unclock-overlay">
+                  @php
+                     $currentfeed = App\Models\Feed_media::where('blur_image', $value->blur_image)->first();
+                  @endphp
+                  <div class="unclock-overlay unlock-image-overly-{{ $currentfeed->id }}">
                      <div class="unlock-btn-wrapepr unlock-text text-center " style="display:none;">
                         <h5> Confirm Unlock for ${{ $value->price }} <span>Once you have unlocked this media,<br>it is available in your Collection.</span> </h5>
                         {{-- 
@@ -415,24 +417,24 @@
                            <input type="submit" class="unlock-btn" data-target="#exampleModalCenter3" value="Unlock">
                         </form>
                         --}}
-                        <button data-mediaId="{{ $value->feed_id }}" data-modelId="{{ $value->model_id }}" class="unlock-btn" >Unlock</button>
+                        
+                        <button class="unlock-btn" data-mediaid="{{ $currentfeed->id }}" data-id="{{ $value->feed_id }}" data-modelId="{{ $value->model_id }}">Unlock</button>
                      </div>
                      <div class="unlock-btn-wrapepr locked-text">
                         <i class="fa-solid fa-lock"></i>
-                        <button class="unlock-btn unlock_feed" data="{{ $value->price }}" data-target="#exampleModalCenter3" value="{{ $value->id }}"> Unlock for ${{ $value->price }}</button>
+                        <button class="unlock-bt unlock_feed" data="{{ $value->price }}" data-target="#exampleModalCenter3" value="{{ $value->id }}"> Unlock for ${{ $value->price }}</button>
                      </div>
                   </div>
                   @endif
                   @if(isset($value->blur_image))
-                  @if ($value->media_type == 'jpg' || $value->media_type == 'png' || $value->media_type == 'jpeg' || $value->media_type == 'gif')
-                  <img class="expolor-img" style="min-height: 200px;" src="{{ isset($value->blur_image)? (url('images/Feed_media') . '/' . $value->blur_image ?? ''):'' }}" alt="" />
+                     @if ($value->media_type == 'jpg' || $value->media_type == 'png' || $value->media_type == 'jpeg' || $value->media_type == 'gif')
+                        <img class="expolor-img expolor-img-{{ isset($currentfeed->id)?$currentfeed->id:'00' }}" style="min-height: 200px;" src="{{ isset($value->blur_image)? (url('images/Feed_media') . '/' . $value->blur_image ?? ''):'' }}" alt="" />
+                     @endif
                   @endif
-                  @endif
-                  
                @else 
-               @if ($value->media_type == 'jpg' || $value->media_type == 'png' || $value->media_type == 'jpeg' || $value->media_type == 'gif')
-               <img class="expolor-img" style="min-height: 200px;" src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" alt="" />
-               @endif
+                  @if ($value->media_type == 'jpg' || $value->media_type == 'png' || $value->media_type == 'jpeg' || $value->media_type == 'gif')
+                     <img class="expolor-img" style="min-height: 200px;" src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" alt="" />
+                  @endif
                @endif
                @if ($value->media_type == 'mp4')
                <video width="320" height="240" controls>
@@ -456,8 +458,8 @@
                <span data-toggle="modal" data-target="#exampleModalCenter3"> <i class="fa fa-plus"></i>Add</span>
             </a>
             @endif
-            <span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-phone"></i>Call</span>
-            <span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-video-camera"></i>Video</span>
+           <a href="{{route('chatify',$value->model_id)}}"> <span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-phone"></i>Call</span></a>
+            <a href="{{route('chatify',$value->model_id)}}"><span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-video-camera"></i>Video</span></a>
             <span class="Tip_model_id" data-toggle="modal" data-target="#TipPoPup"
                data="{{ $value->model_id }}"> <i class="fa fa-dollar"></i> Tip</span>
          </div>

@@ -32,7 +32,7 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
         $(".backdrop").fadeOut();
 
         $(".loadMoreBtn").on("click",function() {
-
+            
             var footerHeight = $('.footer-bg-wrapper').height();
             var positionFooter = $(".footer-bg-wrapper").position();
             $(this).hide();
@@ -59,6 +59,7 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
     // });
 
     function loadMore( parent ) {
+        
         $('.load-more-loader').show();
         var take=$('.render-data-takes').val();
         var takeFeedPage=$('.render-data-takes-page').val();
@@ -79,9 +80,19 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
                     takeFeedPagePopular:takeFeedPagePopular,
                 },
                 success: function(response) {
-                    $(".render-append").append(response.dataRender);
-                    $('.render-data-takes').val(response.newTake);
 
+                    if(feed == 'home-feed') {
+                        $(".render-append").append(response.dataRender);
+                        $('.render-data-takes').val(response.newTake);
+
+                        if(response.dataRender=='' || response.newTake=='') {
+                            $(".loadMore").data('status', 'false');
+                            $(".home-feed .no-post").show();    
+                        } else {
+                            $(".loadMoreBtn").show();
+                            $(".loadMore").data('status', 'true');
+                        }
+                    }
                     $('.load-more-loader').hide();
                     // if ($(".feeds-all-section").hasClass("active")) {
                     if(feed == 'feed') {
@@ -89,7 +100,7 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
                         $('.first-render-data').append(response.feedData);
                         $('.second-render-data').append(response.feedDataSecond);
 
-                        if(response.dataRender=='' || response.feedData=='' || response.feedDataSecond=='') {
+                        if(response.dataRender=='' || response.newTakePage=='' || response.feedDataSecond=='' || response.puplarDataSecond =='' || response.puplarData =='') {
                             $(".loadMore").data('status', 'false');
                             if(feed == 'feed')
                                 $(".normal .no-post").show();
@@ -311,17 +322,17 @@ $(function() {
 });
 </script>
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
         $(document).on('click','.send-tip-ajax',function(e){
             var tipAmount= $(this).closest("#TipPoPup").find(".tip_amount").val();
             var modelID= $(this).closest("#TipPoPup").find(".tip_model_id").val();
             var tipMessage= $(this).closest("#TipPoPup").find(".tip_mess").val();
 
             $this=$(this);
-           if(tipAmount>=1 && tipAmount<=999){
+            if(tipAmount>=1 && tipAmount<=999){
 
-            $('.amount-error').html('');
-            $.ajax({
+                $('.amount-error').html('');
+                $.ajax({
                     type: 'GET',
                     dataType: 'json',
                     url: "{{ url('fan/model-tip') }}",
@@ -342,88 +353,122 @@ $(document).ready(function() {
                             $this.closest("#TipPoPup").find(".tip_mess").val('');
                         }
                     }
-             });
-           }else{
-           $('.amount-error').html('Amount must be $1 to $999');
-           }
-           
-          
-
-    });
-
-          
-    $(document).on('click','.feed_impressions',function(e){
-
-        // var feedID= $(this).attr('value');
-        var feedID= $(this).attr('data');
-        var idIndex = $('.slick-track .slider-item.IndexID'+feedID).data('slick-index');
-
-        $('.slide-show').slick('slickGoTo', idIndex);
-        $('.Feed-pooup-model').addClass('Z-index');
-
-        $.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: "{{ url('fan/feed_impressions') }}",
-            data: {
-                feedID:feedID,
-            },
-         
-        });
-    });
-
-    $(document).on('click','.add-to-contact-ajax',function(e){
-
-        var ModelID= $(this).attr('value');
-        $this =$(this);
-      
-
-        $.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: "{{ url('fan/add-contact-ajax') }}",
-            data: {
-                ModelID:ModelID,
-            },
-            success: function(response) {
-                if (response.status=='added') {
-                    $('.add-to-contact-ajax').html('<i class="bi bi-plus-lg   footer_icon"></i><b>Added</b>'); 
-                    
-                } 
+                });
+            }else{
+                $('.amount-error').html('Amount must be $1 to $999');
             }
         });
 
-});
+        $(document).on("click", ".unlock-btn",function() {
+            var _self = $(this);
+            var id = $(this).data('id');
+            var media_id = $(this).data('mediaid');
+            var formData = {
+                id: id,
+                media_id:media_id
+            };
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{{url('fan/feed-unlock-ajax')}}',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    if(response.status) {
+                        _self.closest('.unlock-btn-wrapepr-slider').remove();
+                        $('.unlock-image-overly-'+media_id).remove();
+                        
+                        $('.expolor-img-'+media_id).attr('src', response.image);
+                        $('.unlock-imag-'+media_id).attr('src', response.image);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }); 
 
-    $(document).on('click','.Feed-pooup-model-close',function(e){
-        $('.Feed-pooup-model').removeClass('Z-index');
+
+        $(document).on('click','.feed_impressions',function(e){
+
+            // var feedID= $(this).attr('value');
+            var feedID= $(this).attr('data');
+            var idIndex = $('.slick-track .slider-item.IndexID'+feedID).data('slick-index');
+
+            $('.slide-show').slick('slickGoTo', idIndex);
+            $('.Feed-pooup-model').addClass('Z-index');
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "{{ url('fan/feed_impressions') }}",
+                data: {
+                    feedID:feedID,
+                },
+            
+            });
         });
 
-    $("#success-alert").fadeTo(2000, 500).sliwwdeUp(500, function(){
-   $("#success-alert").slidewwwUp(500);
+        $(document).on('click','.add-to-contact-ajax',function(e){
+
+            var ModelID= $(this).attr('value');
+            $this =$(this);
+        
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "{{ url('fan/add-contact-ajax') }}",
+                data: {
+                    ModelID:ModelID,
+                },
+                success: function(response) {
+                    if (response.status=='added') {
+                        $('.add-to-contact-ajax').html('<i class="bi bi-plus-lg   footer_icon"></i><b>Added</b>'); 
+                        
+                    } 
+                }
+            });
+
         });
-    $('.recentoption').on('change', function() {
 
-        $("#recentoption").val(this.value);
+        $(document).on('click','.Feed-pooup-model-close',function(e){
+            $('.Feed-pooup-model').removeClass('Z-index');
+        });
 
-        $("#serch").submit();
-    });
-    $('.fan_mod_filter').on('change', function() {
+        $("#success-alert").fadeTo(2000, 500).sliwwdeUp(500, function(){
+            $("#success-alert").slidewwwUp(500);
+        });
 
-        $("#fan_mod_filter").val(this.value);
+        $('.recentoption').on('change', function() {
 
-        $("#serch").submit();
-    });
-    $('.filter').on('click', function() {
-        $("#serch").submit();
-    });
+            $("#recentoption").val(this.value);
 
-    $('.av_model').on('change', function() {
+            $("#serch").submit();
+        });
 
-        $("#ar_model").val(this.value);
+        $('.fan_mod_filter').on('change', function() {
 
-        $("#serch").submit();
-    });
+            $("#fan_mod_filter").val(this.value);
+
+            $("#serch").submit();
+        });
+
+        $('.filter').on('click', function() {
+            $("#serch").submit();
+        });
+
+        $('.av_model').on('change', function() {
+
+            $("#ar_model").val(this.value);
+
+            $("#serch").submit();
+        });
 
     var sync1 = $("#sync1");
     var sync2 = $("#sync2");
@@ -1043,5 +1088,4 @@ function closefilter() {
 
 
 
-</script>
 </script>
