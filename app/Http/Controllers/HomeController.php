@@ -114,10 +114,13 @@ class HomeController extends Controller
 
     public function user_logs(Request $request)
     {
-         $year=Carbon::now()->format('Y');
+        // 
+        $year=Carbon::now()->format('Y');
 
         $data['title'] = "Logs";
-        $d['model']=Models::join('users','users.id','=','models.user_id')->select('models.*','users.*')->where('users.status','=','Active')->get();
+        
+        $d['model']=Models::join('users','users.id','=','models.user_id')->select('models.model_name','models.user_id')->where('users.status','=','Active')->get();
+
         $d['today_total_earning'] = user_logs::whereDate('created_at',Carbon::today())->sum('price');
         $d['today_total_admin'] = user_logs::whereDate('created_at',Carbon::today())->sum('earnings');
         $d['month_total_earning'] = user_logs::whereMonth('created_at', Carbon::now()->month)->sum('price');
@@ -125,36 +128,105 @@ class HomeController extends Controller
         $d['year_total_earning'] = user_logs::whereYear('created_at',$year)->sum('price');
         $d['year_total_admin'] = user_logs::whereYear('created_at',$year)->sum('earnings');
         
-        $d['user']=User::where('status','Active')->where('first_name',"!=",['Admin','admin'])->get();
+        // $d['user'] = User::where('status','Active')->where('first_name',"!=",['Admin','admin'])->get();
         
+        if(isset($request->model_sorting)) {
+            $d['currentCycle'] = $d['prevCycle'] = 0;
+            if($request->date_sorting == 'month') {
+                $currentDate = Carbon::now()->format('d');
+                $currentMonth = Carbon::now()->format('m');
+                $currentYear = Carbon::now()->format('Y');
+
+                $d['currentCycle'] = $d['prevCycle'] = 0; //user_logs::whereDate('created_at',Carbon::today())->sum('earnings');
+
+                if($currentDate <= 15){
+
+                    $endDay = Carbon::createFromFormat('m/d/Y', Carbon::now()->subMonth()->formate('m/d/Y'))->endOfMonth()->format('d');
+                    $startDate = Carbon::createFromFormat('d/m/Y', '16/'.$currentMonth.'/'.$currentYear.'');
+                    $endDate = Carbon::createFromFormat('d/m/Y', $endDay.'/'.$currentMonth.'/'.$currentYear.'');
+                    $d['prevCycle'] = [
+                        'total' => user_logs::where('to', $request->model_sorting)->whereBetween('created_at',[$startDate, $endDate])->sum('model_earning'),
+                    ];
+                    $d['prevCycle']['cycle'] = $startDate->formate('d M').' to '.$endDate->formate('d M');
+
+                    $startDate = Carbon::createFromFormat('d/m/Y', '01/'.$currentMonth.'/'.$currentYear.'');
+                    $endDate = Carbon::createFromFormat('d/m/Y', '15/'.$currentMonth.'/'.$currentYear.'');
+                    $d['currentCycle'] = [
+                        'total' => user_logs::where('to', $request->model_sorting)->whereBetween('created_at',[$startDate, $endDate])->sum('model_earning'), 
+                    ];
+                    $d['currentCycle']['cycle'] = $startDate->format('d M').' to '.$endDate->format('d M');
+
+                } else {
+                    // 
+                    $startDate = Carbon::createFromFormat('d/m/Y', '01/'.$currentMonth.'/'.$currentYear.'');
+                    $endDate = Carbon::createFromFormat('d/m/Y', '15/'.$currentMonth.'/'.$currentYear.'');
+                    $d['prevCycle'] = [
+                        'total' => user_logs::where('to', $request->model_sorting)->whereBetween('created_at',[$startDate, $endDate])->sum('model_earning'),
+                    ];
+                    $d['prevCycle']['cycle'] = $startDate->format('d M').' to '.$endDate->format('d M');
+                    
+                    $endDay = Carbon::now()->endOfMonth()->format('d');
+                    $startDate = Carbon::createFromFormat('d/m/Y', '16/'.$currentMonth.'/'.$currentYear.'');
+                    $endDate = Carbon::createFromFormat('d/m/Y', $endDay.'/'.$currentMonth.'/'.$currentYear.'');
+                    $d['currentCycle']= [
+                        'total' => user_logs::where('to', $request->model_sorting)->whereBetween('created_at',[$startDate, $endDate])->sum('model_earning'),
+                    ]; 
+                    $d['currentCycle']['cycle'] = $startDate->format('d M').' to '.$endDate->format('d M');
+                }
+            }
+            if($request->date_sorting == 'today') {
+                $d['currentCycle'] = $d['prevCycle'] = 0;
+                $d['currentCycle'] = [
+                    'total' => user_logs::where('to', $request->model_sorting)->whereDate('created_at', Carbon::today())->sum('model_earning'),
+                    'cycle' => Carbon::now()->format('Y-m-d')
+                ];
+                $d['prevCycle'] = [
+                    'total' => user_logs::where('to', $request->model_sorting)->whereDate('created_at', Carbon::now()->subDay())->sum('model_earning'),
+                    'cycle' => Carbon::now()->subDay()->format('Y-m-d')
+                ];
+            }
+            if($request->date_sorting == 'year') {
+                $d['currentCycle'] = $d['prevCycle'] = 0;
+                $d['currentCycle'] = [
+                    'total' => user_logs::whereYear('created_at',$year)->sum('model_earning'),
+                    'cycle' => Carbon::now()->format('Y-m-d')
+                ];
+                $d['prevCycle'] = [
+                    'total' => user_logs::whereYear('created_at',Carbon::today()->subYear()->format('Y'))->sum('model_earning'),
+                    'cycle' => Carbon::now()->subYear()->format('Y-m-d')
+                ];
+            }
+            
+        }
+
         $logs = user_logs::orderby('id','desc');
 
        if($request->date_sorting){
-        if($request->date_sorting !='all'){
-           
-             if($request->date_sorting=='today'){
-                 $logs->whereDate('created_at',Carbon::today());
-               }
-               if($request->date_sorting=='month'){
-                 $logs->whereMonth('created_at',Carbon::now()->month);
-               }
-               if($request->date_sorting=='year'){
-                 $logs->whereYear('created_at',$year);
-                 }
-       }
-     
+            if($request->date_sorting !='all'){
+            
+                if($request->date_sorting=='today'){
+                    $logs->whereDate('created_at',Carbon::today());
+                }
+                if($request->date_sorting=='month'){
+                    $logs->whereMonth('created_at',Carbon::now()->month);
+                }
+                if($request->date_sorting=='year'){
+                    $logs->whereYear('created_at',$year);
+                }
+            }
         }
+
         if ($request->model_sorting) {
             if($request->model_sorting !='all'){
                 $logs->where('to',$request->model_sorting);
-       }
+            }
         }
-         if ($request->fan_sorting) {
+        
+        if ($request->fan_sorting) {
             if($request->fan_sorting !='all'){
-            
                 $logs->where('from',$request->fan_sorting);
             }
-         }
+        }
 
 
         $d['logs']=$logs->paginate(10)->withQueryString();

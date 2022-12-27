@@ -3,6 +3,7 @@
 max-height: 350px;
 
 }
+
 .item.carousel_media {
     background: none !important;
 }
@@ -54,7 +55,8 @@ max-height: 350px;
     font-size: 2rem;
   }
   .Z-index{
-    z-index: 999999999 !important;
+    z-index: 1050 !important;
+    opacity: 1 !important;
   }
   .opacity-none{
     opacity: 0 !important;
@@ -62,7 +64,7 @@ max-height: 350px;
     .opacity-add{
     opacity: 1 !important;
   }
-  .Feed-pooup-model {
+  .Feed-pooup-model, .Feed-pooup-model-popular {
     font-family: 'Montserrat', sans-serif;
     width:100%;
     background-color: #09162585;
@@ -5193,12 +5195,11 @@ i.fa.fa-check-circle {
 }
 
 button.send-msg {
-    background: #102437;
     height: 40px;
     margin-top: 15px;
     width: 46px;
     color: #fff;
-    border-radius: 0px;
+    border-radius: 3px;
 }
 
 .model-detilsinput {
@@ -6167,4 +6168,16 @@ border: 1px solid; padding: 0px 4px; }*/
         left: 183px;
 }
 
+}
+
+#TipPoPup {
+    z-index: 1051;
+}
+
+.post-img-wrapper img.expolor-img {
+    max-height: 300px !important;
+}
+
+.Z-index .modal-body {
+    max-height: 650px !important;
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Models;
+use App\Models\Feed_unlock;
 use App\Models\ModelFeed;
 use App\Models\Feed_media;
 use App\Models\LogActivity;
@@ -23,12 +24,12 @@ class ProfileController extends Controller
      */
     public function index(Request $request, $slug)
     {
-        $current_time = Carbon::now()->toDateTimeString();
+      $current_time = Carbon::now()->toDateTimeString();
       $slug=User::where('slug',$slug)->where('status','Active')->first();
-       if(!empty($slug)){
+      if(!empty($slug)){
         $LogActivity=LogActivity::where('type','User login')->where('user_id',$slug->id)->orderby('id','desc')->first();
         $logoutmodel=LogActivity::where('type','User Logout')->where('user_id',$slug->id)->orderby('id','desc')->first();
-       }
+      }
      
       if (!empty($LogActivity) && !empty($logoutmodel)) {
      
@@ -42,45 +43,43 @@ class ProfileController extends Controller
             $diffInDays    = $difference->d; //21
             $diffInMonths  = $difference->m; //4
             $diffInYears   = $difference->y;
-           }else{
+        } else {
             $diffInMinutes='-1';
             $diffInHours='-1';
             $diffInDays='-1';
             $diffInMonths='-1';
             $diffInYears='-1';
-            }
+        }
             $d['diffInMinutes']=$diffInMinutes;
             $d['diffInHours']=$diffInHours;
             $d['diffInDays']=$diffInDays;
             $d['diffInMonths']=$diffInMonths;
             $d['diffInYears']=$diffInYears;
-            }
+      }
       $req='1';
       $take='5';
 
-    if(!empty($slug)){
-      $slugdata=Models::where('user_id',$slug->id)->first();
-    }else{
-      return redirect()->back();
-    }
+      if(!empty($slug)){
+        $slugdata=Models::where('user_id',$slug->id)->first();
+      }else{
+        return redirect()->back();
+      }
       if (!empty($slugdata)) {
 
         if($request->feed_id){
-         $d['copy_post']=ModelFeed::where('id',$request->feed_id)->first();
-        
-
-         }   
+          $d['copy_post']=ModelFeed::where('id',$request->feed_id)->first();
+        }   
 
         $profile_user=$slugdata->user_id;
         $DayOfWeek= Carbon::now()->format("l");
         $ModelAvailability=ModelAvailability::where('model_id',$profile_user)->where('week_day',$DayOfWeek)->first();
 
         if(!empty($ModelAvailability)){
-            if($ModelAvailability->availability_type=='limited'){
-              $d['ModelAvail']='1';
-            }else{
-              $d['ModelAvail']='0';
-            }
+          if($ModelAvailability->availability_type=='limited'){
+            $d['ModelAvail']='1';
+          }else{
+            $d['ModelAvail']='0';
+          }
           
         }
 
@@ -98,7 +97,11 @@ class ProfileController extends Controller
         $d['model_feeds']=$model_feeds;
         $d['model_feeds_count']=$model_feeds_count;
         $d['take']=$take;
-       
+        if(Auth::check())
+          $d['isPaid'] = Feed_unlock::where('model_id', $slug->id)->where('fan_id', Auth::user()->id)->pluck('media_id')->toArray();
+        else 
+          $d['isPaid'] = [];
+        // dd($d);
         $datecurrent =Carbon::now()->format('d');
         $monthcurrent =Carbon::now()->format('m');
         $yearcurrent =Carbon::now()->format('Y');
@@ -112,17 +115,17 @@ class ProfileController extends Controller
             $endDate = Carbon::createFromFormat('d/m/Y', '30/'.$monthcurrent.'/'.$yearcurrent.'');
         }
         $d['rank']=User_logs::join('users','users.id','=','user_logs.to')
-        ->groupBy('to')
-        ->selectRaw('user_logs.*, sum(model_earning) as sum')
-        ->select('users.*','user_logs.to')
-        ->orderby('model_earning','desc')
-        ->orderBy('users.created_at','asc')
-        ->where('users.gender','=','female')
-        ->where('users.status','=','Active')
-        ->whereBetween('user_logs.created_at', [$startDate, $endDate])
-        ->get();
+          ->groupBy('to')
+          ->selectRaw('user_logs.*, sum(model_earning) as sum')
+          ->select('users.*','user_logs.to')
+          ->orderby('model_earning','desc')
+          ->orderBy('users.created_at','asc')
+          ->where('users.gender','=','female')
+          ->where('users.status','=','Active')
+          ->whereBetween('user_logs.created_at', [$startDate, $endDate])
+          ->get();
         
-$rank='0';
+        $rank='0';
 
 
         foreach($d['rank'] as $key=> $item){
@@ -130,26 +133,26 @@ $rank='0';
                 $rank=$key+1;
            }
         }
- $d['rank']=$rank;
-       if($d['slugdata']>='1'){
-        $d['online']=Models::join('users','users.id','=','models.user_id')->select('models.cost_msg','users.*')->select('users.profile_image','users.*')->where('users.is_online','=',1)->where('users.status','=','Active')->take(4)->inRandomOrder()->where('users.gender','=','female')->get();
-        if (Auth::check()){
-        if(Auth::user()->roles[0]->title =='Model'){
-          
-          return view('frontend/model/profile',$d);
-        }else{
-           $d['Contact']=Contacts::where('fan_id',Auth::user()->id)->where('model_id',$profile_user)->get();
-          return view('frontend/fan/profile',$d);
-        }
-        }else{
-          return view('frontend/fan/Model-profile',$d);
-        }
+        $d['rank']=$rank;
+        if($d['slugdata']>='1'){
+          $d['online']=Models::join('users','users.id','=','models.user_id')->select('models.cost_msg','users.*')->select('users.profile_image','users.*')->where('users.is_online','=',1)->where('users.status','=','Active')->take(4)->inRandomOrder()->where('users.gender','=','female')->get();
+          if (Auth::check()){
+            if(Auth::user()->roles[0]->title =='Model'){
+              
+              return view('frontend/model/profile',$d);
+            }else{
+              $d['Contact']=Contacts::where('fan_id',Auth::user()->id)->where('model_id',$profile_user)->get();
+              return view('frontend/fan/profile',$d);
+            }
+          }else{
+            return view('frontend/fan/Model-profile',$d);
+          }
 
-       
-      }else{
-        return redirect()->back();
+        
+        }else{
+          return redirect()->back();
+        }
       }
-    }
     }
 
     /**

@@ -42,6 +42,7 @@ class FeedsdashboardController extends Controller
       
        return redirect()->back();
     }
+
     public function filtersection(){
         $date =Carbon::now();
         $date = strtotime($date);
@@ -55,6 +56,7 @@ class FeedsdashboardController extends Controller
         $d['ModelFetishes']=ModelFetishes::all();
         return $d;
     }
+
     public function commonsort($q, $request)
     {
         $randstatus=true;
@@ -160,6 +162,7 @@ class FeedsdashboardController extends Controller
         }
         return $q;
     }
+    
     public function index(Request $request)
     {
         $current_time = Carbon::now();

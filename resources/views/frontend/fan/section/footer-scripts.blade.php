@@ -92,14 +92,17 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
                             $(".loadMoreBtn").show();
                             $(".loadMore").data('status', 'true');
                         }
+
+                        $('.slide-show').slick('slickAdd',response.dataRender);
                     }
                     $('.load-more-loader').hide();
                     // if ($(".feeds-all-section").hasClass("active")) {
                     if(feed == 'feed') {
                         $('.render-data-takes-page').val(response.newTakePage);
                         $('.first-render-data').append(response.feedData);
+                        $('.slide-show').slick('slickAdd',response.feedData);
                         $('.second-render-data').append(response.feedDataSecond);
-
+                        $('.slide-show').slick('slickAdd',response.feedDataSecond);
                         if(response.dataRender=='' || response.newTakePage=='' || response.feedDataSecond=='' || response.puplarDataSecond =='' || response.puplarData =='') {
                             $(".loadMore").data('status', 'false');
                             if(feed == 'feed')
@@ -117,8 +120,9 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
                     if(feed == 'popular'){
                         $('.render-data-takes-page-popular').val(response.takePopular);
                         $('.render-popular-first-section').append(response.puplarData);
+                        $('.slide-show').slick('slickAdd',response.puplarData);
                         $('.render-popular-second-section').append(response.puplarDataSecond);
-
+                        $('.slide-show').slick('slickAdd',response.puplarDataSecond);
                         if(response.puplarDataSecond =='' || response.puplarData =='') {
                             $(".loadMore").data('status', 'false');
                             if(feed == 'feed')
@@ -275,51 +279,51 @@ $('#search1').on('keyup', function() {
 </script>
 <script>
 
-@if(Session::has('message'))
-toastr.options =
-{
-    "closeButton" : true,
-    "progressBar" : true
-}
-    toastr.success("{{ session('message') }}");
-@endif
+    @if(Session::has('message'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+        toastr.success("{{ session('message') }}");
+    @endif
 
-@if(Session::has('error'))
-toastr.options =
-{
-    "closeButton" : true,
-    "progressBar" : true,
-  "iconClass":"toast-custom"
-}
+    @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true,
+            "iconClass":"toast-custom"
+        }
         toastr.error("{{ session('error') }}", {iconClass:"toast-custom"});
-@endif
+    @endif
 
-@if(Session::has('info'))
-toastr.options =
-{
-    "closeButton" : true,
-    "progressBar" : true
-}
+    @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
         toastr.info("{{ session('info') }}");
-@endif
+    @endif
 
-@if(Session::has('warning'))
-toastr.options =
-{
-    "closeButton" : true,
-    "progressBar" : true
-}
+    @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
         toastr.warning("Warning");
-@endif
+    @endif
 
 
-$(function() {
-    $('.toast').toast({})
-    $('.status_wallet').on('change', function() {
+    $(function() {
+        $('.toast').toast({})
+        $('.status_wallet').on('change', function() {
 
-        $('.wallet').submit();
+            $('.wallet').submit();
+        });
     });
-});
 </script>
 <script>
     $(document).ready(function() {
@@ -414,12 +418,30 @@ $(function() {
             });
         });
 
+        $(document).on('click','.feed_impressions_popular',function(e){
+
+            // var feedID= $(this).attr('value');
+            var feedID= $(this).attr('data');
+            var idIndex = $('.slick-track .slider-item.IndexID'+feedID).data('slick-index');
+            // alert(feedID);
+            $('.slide-show').slick('slickGoTo', idIndex);
+            $('.Feed-pooup-model-popular').addClass('Z-index');
+
+            // $.ajax({
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     url: "{{ url('fan/feed_impressions') }}",
+            //     data: {
+            //         feedID:feedID,
+            //     },
+            // });
+        });
+
         $(document).on('click','.add-to-contact-ajax',function(e){
 
             var ModelID= $(this).attr('value');
             $this =$(this);
         
-
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -439,6 +461,7 @@ $(function() {
 
         $(document).on('click','.Feed-pooup-model-close',function(e){
             $('.Feed-pooup-model').removeClass('Z-index');
+            $('.Feed-pooup-model-popular').removeClass('Z-index');
         });
 
         $("#success-alert").fadeTo(2000, 500).sliwwdeUp(500, function(){

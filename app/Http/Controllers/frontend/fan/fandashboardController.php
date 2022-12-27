@@ -60,7 +60,8 @@ class fandashboardController extends Controller
         ->where('contacts.fan_id', Auth::user()->id)
         ->where('model_feeds.schedule_date', '<=', $current_time)
         ->groupBy('model_feeds.id')
-        ->orderBy('model_feeds.schedule_date','DESC')->take(5)->get();
+        ->orderBy('model_feeds.schedule_date','DESC');
+        // dd($q);
       
         if($request->post_type == 'video'){
             $q->where('feed_media.media_type', 'mp4');  
@@ -78,9 +79,9 @@ class fandashboardController extends Controller
         if($request->price == 'premium'){
             $q->where('model_feeds.price', '>=','0.5');  
         }
-       
-        $d['explorecount']=$q->count(); 
-        $d['explore']=$q;
+        $d['explorecount']=$q->take(5)->get()->count(); 
+        // dd($d['explorecount']);
+        $d['explore']=$q->take(5)->get();
         $data = '';
         if ($request->ajax()) {
             

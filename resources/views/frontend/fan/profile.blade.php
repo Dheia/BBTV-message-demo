@@ -1,40 +1,35 @@
-@extends('frontend.fan.main') @section('content')
+@extends('frontend.fan.main') 
+@section('content')
 <div class="col-sm-12 col-md-8 col-lg-9    col-xl-9">
    @php use App\Http\Controllers\Controller; @endphp
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="http://adultx.eoxyslive.com/js/slidediv.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <script src="http://adultx.eoxyslive.com/js/slidediv.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
    <script>
       $(document).ready(function() {
-      //Copy post popup 
-      
-      // new Splide(".first-slider",{
-      //           start:5
-      //       }).mount();
+         //Copy post popup 
+         // new Splide(".first-slider",{
+         //    start:5
+         // }).mount();
         
-        $(document).on('click','.copy_pop_close_btn1', function() {
-          
-           $('#copy_post_model_fan').modal('hide');
-        });
-       });
+         $(document).on('click','.copy_pop_close_btn1', function() {
+            $('#copy_post_model_fan').modal('hide');
+         });
+      });
       
       $(window).on('load', function() {
-      
-      
-      $('#copy_post_model_fan').modal('show');
-      
+         $('#copy_post_model_fan').modal('show');
       }); 
 
       
@@ -83,25 +78,22 @@
                         items: 3,
                         nav: true,
                         loop: false
-                    }
-
-                }
-
-
+                  }
+               }
             })
             .on("changed.owl.carousel", syncPosition2);
 
    </script>
    <style>
       button.model-contect-btn.send-msg.send-message-to-feed {
-    height: 40px !important;
-}
-      i.bi.bi-heart.fa-2x.model_in_icon {
-    FONT-SIZE: 16PX;
-}
-.footer_row.foot_line {
-    font-size: 13px;
-}
+         height: 40px !important;
+      }
+         i.bi.bi-heart.fa-2x.model_in_icon {
+      FONT-SIZE: 16PX;
+      }
+      .footer_row.foot_line {
+         font-size: 13px;
+      }
       i.fa.fa-times.copy_pop_close_btn1 {
       float: right;
       }
@@ -144,18 +136,18 @@
       background: linear-gradient(to left, #0f1e2e 0%, #0f1e2e 100%) !important;
       border: none;
       }
-/*      .tipoption {
-      cursor: pointer;
-      border: 1px solid;
-      height: 50PX;
-      width: 55PX;
-      text-align: center;
-      border-radius: 21px;*/
-      /* padding: 9px 4px; */
-      /*padding-top: 9px;
-      margin-top: 6px;
-      margin-right: 16px;
-      }*/
+      /*      .tipoption {
+            cursor: pointer;
+            border: 1px solid;
+            height: 50PX;
+            width: 55PX;
+            text-align: center;
+            border-radius: 21px;*/
+            /* padding: 9px 4px; */
+            /*padding-top: 9px;
+            margin-top: 6px;
+            margin-right: 16px;
+            }*/
       .credit-error {
       left: 135px;
       }
@@ -179,7 +171,7 @@
       @media (max-width: 1213px) {
       .modellink-wrrap a {
       font-weight: 400;
-      font-size: 13px !important;
+      font-size: 14px !important;
       line-height: 30px;
       text-decoration-line: underline;
       color: #ffffff;
@@ -292,104 +284,122 @@
       }
       /*new-added*/
       .modal.show .modal-dialog {
-    transform: none;
-    width: 405px;
-}
-img.expolor-img {
-    height: 322px !important;
-    width: 383px !important;
-}
+         transform: none;
+         width: 405px;
+      }
+      img.expolor-img {
+         height: 322px !important;
+         width: 383px !important;
+         object-fit: contain;
+      }
     a.badge.badge-primary{
       width: 25%;
-    height: 30px;
-    font-size: 12px;
-    padding-top: 9px;
-    align-items: center;
-    text-align: center;
-    background: #0f1e2e;
-}
-a.badge.badge-primary:hover {
-        background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
-    color: #fff;
-}
-.model_pop_input {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-@media (max-width: 768px) {
-        .profile_image_box {    height: 440px;}}
+         height: 30px;
+         font-size: 12px;
+         padding-top: 9px;
+         align-items: center;
+         text-align: center;
+         background: #0f1e2e;
+      }
+      a.badge.badge-primary:hover {
+            background: linear-gradient(to left, #4C2ACD 0%, #AF2990 100%);
+         color: #fff;
+      }
+      .model_pop_input {
+         text-align: center;
+         justify-content: center;
+         align-items: center;
+      }
+      .vtext{
+         color: red;
+         font-size: 13px;
+         font-weight: 700;
+      }
+      @media (max-width: 768px) {
+            .profile_image_box {    height: 440px;}}
 
-@media (max-width: 992px){
-   .profile_image_box {
-    height: 440px;
-   }
-}
-.emoji-picker-input {
-    font-size: 14px;
-}
-span.send_msgbox {
-   background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%) !important;
-   padding: 7px 21px;
-   /*margin-left: 14px;*/
-   border-radius: 3px;
-   }
-   .profile_msg{
-      font-size: 14px;
-   }
-   @media only screen and (max-width: 448px) {
- span.send_msgbox {
-    padding: 7px 13px !important;
-}
-}
-.tipoption {
-    cursor: pointer;
-    border: 1px solid;
-    height: 35px !important;
-    width: 35px !important;
-    text-align: center;
-    border-radius: 50% !important;
-    padding-top: 5px !important;
-    margin-top: 6px !important;
-    margin-right: 1.15rem !important;
-}
-.tipoption small{
-    color: #ffff !important;
-}
-.modal-header {
-    overflow: hidden !important;}
-.tip_btn{
-       background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
-}
-.tip_btn:hover{
-       color: #bf00b0 !important;
-       background: 0;
-       border: 1px solid #bf00b0;
-}
-span.doller_sin {
-    display: none;
-    color: #fff;
-    padding: 10px;
-    position: absolute;
-    top: 12px;
-    left: 8.5px;
-}
-span.doller_sin.doll_sin {
-    display: none;
-    color: #fff;
-    padding: 10px;
-    position: absolute;
-    top: 6.5px;
-    left: 8.5px;
-    font-size: 14px;
-}
-input#tips_fild {
-    padding-left: 19px;
-}
-li.nav-item.filter-nav.active {
-    border-left: 0px !important;
-}
+      @media (max-width: 992px){
+         .profile_image_box {
+         height: 440px;
+         }
+      }
+      .emoji-picker-input {
+         font-size: 14px;
+      }
+      span.send_msgbox {
+         background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%) !important;
+         padding: 7px 21px;
+         /*margin-left: 14px;*/
+         border-radius: 3px;
+         }
+         .profile_msg{
+            font-size: 14px;
+         }
+         @media only screen and (max-width: 448px) {
+      span.send_msgbox {
+         padding: 7px 13px !important;
+      }
+      }
+      .tipoption {
+         cursor: pointer;
+         border: 1px solid;
+         height: 35px !important;
+         width: 35px !important;
+         text-align: center;
+         border-radius: 50% !important;
+         padding-top: 5px !important;
+         margin-top: 6px !important;
+         margin-right: 1.15rem !important;
+      }
+      .tipoption small{
+         color: #ffff !important;
+      }
+      .modal-header {
+         overflow: hidden !important;}
+      .tip_btn{
+            background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
+      }
+      .tip_btn:hover{
+            color: #bf00b0 !important;
+            background: 0;
+            border: 1px solid #bf00b0;
+      }
+      span.doller_sin {
+         display: none;
+         color: #fff;
+         padding: 10px;
+         position: absolute;
+         top: 12px;
+         left: 8.5px;
+      }
+      span.doller_sin.doll_sin {
+         display: none;
+         color: #fff;
+         padding: 10px;
+         position: absolute;
+         top: 6.5px;
+         left: 8.5px;
+         font-size: 14px;
+      }
+      input#tips_fild {
+         padding-left: 19px;
+      }
+      li.nav-item.filter-nav.active {
+         border-left: 0px !important;
+      }
 
+      .unlock-btn-wrapepr-slider {
+         height: 322px !important;
+      }
+      .item.active:hover {
+         background: none;
+      }
+
+      .unclock-overlay {
+         width: calc(100% - 5px) !important;
+         height: calc(100% - 4px) !important;
+         top: 2px !important;
+      }
    </style>
 <!-- copylink end -->
 <div class="detailspaeg-bg mt-5">
@@ -515,70 +525,65 @@ li.nav-item.filter-nav.active {
                         @endif
                      </div>
                      <div class="col-sm-12 col-md-12 col-xl-6 mt-2"> 
-                        <button type="button" data-toggle="modal"
-                        data-target="#TipPoPups"
-                        data="{{ $slugdata->user->id }}"  class="model-spoil-btn joinfree-btn Tip_model_id" >
-                        Send me a tip to spoil me!
-                        </button>
-                          <!--  <button type="button" class="btn model-spoil-btn joinfree-btn Tip_model_id" data="{{ $slugdata->user->id }}"  data-toggle="modal" data-target="#exampleModal">
+                        <button type="button" data-toggle="modal" data-target="#TipPoPups" data="{{ $slugdata->user->id }}"  class="model-spoil-btn joinfree-btn Tip_model_id" >Send me a tip to spoil me!</button>
+                          {{-- <!--  <button type="button" class="btn model-spoil-btn joinfree-btn Tip_model_id" data="{{ $slugdata->user->id }}"  data-toggle="modal" data-target="#exampleModal">
                               Send me a tip to spoil me!
-                           </button>
- -->
+                           </button> --> --}}
 
 
-<!-- Modal -->
-<div class="modal fade" id="TipPoPups" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-          <h5 class="modal-title color-white" id="exampleModalLongTitle">
-                  Send a tip 
-                  <br>
-                  <div class="tip_option d-flex text-white">
-                     <div class="tipoption text-white"value="1"><small>$1</small></div>
-                     <div class="tipoption text-white" value="5"><small>$5</small></div>
-                     <div class="tipoption text-white" value="10"><small>$10</small></div>
-                     <div class="tipoption text-white" value="20"><small>$20</small></div>
-                     <div class="tipoption text-white" value="50"><small>$50</small></div>
-                     <div class="tipoption text-white" value="100"><small>$100</small></div>
-                  </div>
-               </h5>
-               <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true" class="text-white">x</span>
-               </button>
-      </div>
-      <div class="modal-body">
-               <form action="{{ url('fan/model-tip') }}" method="post">
-                  @csrf
-                  <!-- <label for="">Tip Amount</label> -->
-                   <input type="number" name="tip_amount" class="form-control tip_amount mb-3" value=""
-                     placeholder=" Enter Tip amount $1-999" maxlength="3"oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" id="tips_fild" required min="1" max="999">
-                     <span class="doll_sin doller_sin ">$</span>
-                  <!-- <label for="" class="mt-2">What is this for?</label> -->
-                  <input type="text" class="form-control" name="tip_mess"
-                     placeholder="What is this for?" required>
-                  <input type="hidden" class="tip_model_id" name="model_id" value="" required>
-            </div>
-            <div class="modal-footer">
-            <button type="submit" class="btn btn-secondary tip_btn">Send Tip</button> </form>
-            </div>
-    </div>
-  </div>
-</div>
-<!-- model end -->
+                        <!-- Modal -->
+                        <div class="modal fade" id="TipPoPups" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title color-white" id="exampleModalLongTitle">
+                                       Send a tip 
+                                       <br>
+                                       <div class="tip_option d-flex text-white">
+                                          <div class="tipoption text-white"value="1"><small>$1</small></div>
+                                          <div class="tipoption text-white" value="5"><small>$5</small></div>
+                                          <div class="tipoption text-white" value="10"><small>$10</small></div>
+                                          <div class="tipoption text-white" value="20"><small>$20</small></div>
+                                          <div class="tipoption text-white" value="50"><small>$50</small></div>
+                                          <div class="tipoption text-white" value="100"><small>$100</small></div>
+                                       </div>
+                                    </h5>
+                                    <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="text-white">x</span>
+                                    </button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <form action="{{ url('fan/model-tip') }}" method="post">
+                                       @csrf
+                                       <!-- <label for="">Tip Amount</label> -->
+                                          <input type="number" name="tip_amount" class="form-control tip_amount mb-3" value=""
+                                          placeholder=" Enter Tip amount $1-999" maxlength="3"oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" id="tips_fild" required min="1" max="999">
+                                          <span class="doll_sin doller_sin ">$</span>
+                                       <!-- <label for="" class="mt-2">What is this for?</label> -->
+                                       <input type="text" class="form-control" name="tip_mess"
+                                          placeholder="What is this for?" required>
+                                       <input type="hidden" class="tip_model_id" name="model_id" value="" required>
+                                 
+                                       <div class="modal-footer">
+                                       <button type="submit" class="btn btn-secondary tip_btn">Send Tip</button> 
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- model end -->
                      </div>
                   </div>
                </div>
-               <p class="gurnted-responsi-line">
-                  Guaranteed response and my replies are <b>FREE</b>
-               </p>
+               <p class="gurnted-responsi-line mt-5 mb-0">Guaranteed response and my replies are <b>FREE</b></p>
                <div class="send-mess input-group d-flex">
-                
-                     <input type="text " id="emoji-picker" value="" placeholder="Send a message for @if(!empty($slugdata->cost_msg))${{$slugdata->cost_msg}}@endif"
-                     class="postinput emoji-picker-input" />
-                     <button 
-                     class="model-contect-btn send-msg send-message-to-feed" value="{{$slugdata->user_id}}">
-                  <span class="send_msgbox"><i class="fa fa-paper-plane " aria-hidden="true"></i></span></button>
+                     <input type="text " id="validform" placeholder="Send a message for @if(!empty($slugdata->cost_msg))${{$slugdata->cost_msg}}@endif"
+                     class="postinput emoji-picker-input m-0" required/>
+                     
+                     <button onclick="btn()" type="button" 
+                     class="model-contect-btn send-msg send-message-to-feed m-0" value="{{$slugdata->user_id}}">
+                  <span class="send_msgbox "><i class="fa fa-paper-plane " aria-hidden="true"></i></span></button>
+                  <p class="vtext" id="demo"></p>
                    
                </div>
             </div>
@@ -707,37 +712,33 @@ li.nav-item.filter-nav.active {
       @endif
       <div class="details-tab-wrapper">
          <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-view" role="tabpanel" aria-labelledby="pills-view-tab"
-               style="color: #fff">
+            <div class="tab-pane fade show active" id="pills-view" role="tabpanel" aria-labelledby="pills-view-tab" style="color: #fff">
                <div class="pictab-wrapper">
                   <div class="row" id="feed_data">
                      @if(!empty($model_feeds)) 
                      @foreach($model_feeds as $key=> $val)
-                
-                    
-                     <div class="col-lg-3 col-md-6 p-0 open-active feed_impressions" data="{{$key}}" value="{{$val->org_id}}" >
+                     <div class="col-lg-3 col-md-6 p-0 open-active feed_impressions" data="{{$val->id}}" value="{{$val->id}}" >
                         <div class="media p-1">
-                           @if($val->price>0)
-                           <div class="unclock-overlay">
-                              <div class="unlock-btn-wrapepr">
-                                 <i class="fa-solid fa-lock"></i>
-                              </div>
+                        @if($val->price > 0 && !in_array($val->id, $isPaid))
+                        <div class="unclock-overlay unlock-image-overly-{{$val->id}}">
+                           <div class="unlock-btn-wrapepr">
+                              <i class="fa-solid fa-lock"></i>
                            </div>
+                        </div>
+                        @endif
+                        @if($val->media_type=='png' || $val->media_type=='jpg' || $val->media_type=='jpeg' || $val->media_type=='gif' || $val->media_type=='webp')
+                           @if($val->price > 0 && !in_array($val->id, $isPaid))
+                           <img class="unlock-imag-{{$val->id}}" src="{{ url('images/Feed_media') . '/' . $val->blur_image ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+                           @else
+                           <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
                            @endif 
-                           @if($val->media_type=='png' OR $val->media_type=='jpg'OR
-                           $val->media_type=='jpeg'OR $val->media_type=='gif')
-                           <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" /> 
-                           @endif
-                           @if($val->media_type=='mp4')
+                        @endif
+                        @if($val->media_type=='mp4')
                            <video controls class="feed_video" style="height:180px;">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
+                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}" type="video/mp4" height="180px">
+                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}" type="video/ogg">
                            </video>
-                           @endif
+                        @endif
                         </div>
                      </div>
                      @endforeach  
@@ -745,233 +746,203 @@ li.nav-item.filter-nav.active {
                   </div>
                </div>
             </div>
-            <div class="tab-pane fade " id="pills-pic" role="tabpanel" aria-labelledby="pills-pic-tab"
-               style="color: #fff">
+
+            <div class="tab-pane fade  " id="pills-pic" role="tabpanel" aria-labelledby="pills-pic-tab" style="color: #fff">
                <div class="pictab-wrapper">
-                  <div class="row" id="feed_data">
-                     @if(!empty($model_feeds)) 
-                     @foreach($model_feeds as $key=> $val)
-                    
-                     <div class="col-lg-3 col-md-6 p-0 open-active feed_impressions" data="{{$key}}" value="{{$val->id}}" >
+                  <div class="row">
+                     @if(!empty($model_feeds))
+                        @foreach($model_feeds as $value) 
+                           @if($value->media_type=='png' || $value->media_type=='jpg'|| $value->media_type=='jpeg' || $value->media_type=='gif' || $value->media_type=='webp')
+                           <div class="col-lg-3 col-md-6 p-0 open-active feed_impressions" value="{{$value->id}}" data="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
+                              <div class="media p-1">
+                                 @if($value->price > 0 && !in_array($value->id, $isPaid))
+                                 <div class="unclock-overlay unlock-image-overly-{{$value->id}}">
+                                    <div class="unlock-btn-wrapepr">
+                                       <i class="fa-solid fa-lock"></i>
+                                    </div>
+                                 </div>
+                                 @endif 
+                                 @if($value->price > 0 && !in_array($value->id, $isPaid))
+                                 <img class="unlock-imag-{{$value->id}}" src="{{ url('images/Feed_media') . '/' . $value->blur_image ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+                                 @else
+                                 <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+                                 @endif 
+                                 {{-- <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" />  --}}
+                              </div>
+                           </div>
+                           @endif 
+                        @endforeach 
+                     @endif
+                  </div>
+               </div>
+            </div>
+            <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
+               <div class="videotab-wrapper">
+                  <div class="row">
+                     @foreach($model_feeds as $value) 
+                     @if($value->media_type=='mp4')
+                     <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->id}}" data="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
                         <div class="media p-1">
-                           @if($val->price>0)
-                           <div class="unclock-overlay">
+                           @if($value->price > 0 && !in_array($value->id, $isPaid))
+                           <div class="unclock-overlay unlock-image-overly-{{$value->id}}">
                               <div class="unlock-btn-wrapepr">
                                  <i class="fa-solid fa-lock"></i>
                               </div>
                            </div>
                            @endif 
-                           @if($val->media_type=='png' OR $val->media_type=='jpg'OR
-                           $val->media_type=='jpeg'OR $val->media_type=='gif')
-                           <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" /> 
-                           @endif
-                           @if($val->media_type=='mp4')
                            <video controls class="feed_video" style="height:180px;">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
+                              <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/mp4" height="180px">
+                              <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/ogg">
                            </video>
-                           @endif
                         </div>
                      </div>
-                     @endforeach  
-                     @endif
+                     @endif   
+                     @endforeach 
                   </div>
                </div>
             </div>
-            <div class="tab-pane fade " id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab"
-               style="color: #fff">
-               <div class="pictab-wrapper">
-                  <div class="row" id="feed_data">
-                     @if(!empty($model_feeds)) 
-                     @foreach($model_feeds as $key=> $val)
-                    
-                     <div class="col-lg-3 col-md-6 p-0 open-active feed_impressions" data="{{$key}}" value="{{$val->id}}" >
+            <div class="tab-pane fade" id="pills-free" role="tabpanel" aria-labelledby="pills-free-tab">
+               <div class="freetab-wrapper">
+                  <div class="row">
+                     @foreach($model_feeds as $value) 
+                     @if( $value->schedule_date <= $current_time && $value->price >0) 
+                     <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->id}}" data="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
                         <div class="media p-1">
-                           @if($val->price>0)
-                           <div class="unclock-overlay">
+                           @if($value->price > 0 && !in_array($value->id, $isPaid))
+                           <div class="unclock-overlay unlock-image-overly-{{$value->id}}">
                               <div class="unlock-btn-wrapepr">
                                  <i class="fa-solid fa-lock"></i>
                               </div>
                            </div>
-                           @endif 
-                           @if($val->media_type=='png' OR $val->media_type=='jpg'OR
-                           $val->media_type=='jpeg'OR $val->media_type=='gif')
-                           <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" /> 
                            @endif
-                           @if($val->media_type=='mp4')
-                           <video controls class="feed_video" style="height:180px;">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
-                           </video>
+                           @if(!empty($value->media_type))
+                              @if($value->media_type=='png' || $value->media_type=='jpg'|| $value->media_type=='jpeg' || $value->media_type=='gif' || $value->media_type=='webp')
+                                 @if($value->price > 0 && !in_array($value->id, $isPaid))
+                                 <img class="unlock-imag-{{$value->id}}" src="{{ url('images/Feed_media') . '/' . $value->blur_image ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+                                 @else
+                                 <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+                                 @endif 
+                                 {{-- <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" />  --}}
+                              @endif
+                              @if($value->media_type=='mp4')
+                              <video controls class="feed_video" style="height:180px;">
+                                 <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/mp4" height="180px">
+                                 <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/ogg">
+                              </video>
+                              @endif 
                            @endif
                         </div>
                      </div>
-                     @endforeach  
                      @endif
+                     @endforeach
                   </div>
                </div>
             </div>
-            <div class="tab-pane fade " id="pills-free" role="tabpanel" aria-labelledby="pills-free-tab"
-               style="color: #fff">
-               <div class="pictab-wrapper">
-                  <div class="row" id="feed_data">
-                     @if(!empty($model_feeds)) 
-                     @foreach($model_feeds as $key=> $val)
-                    
-                     <div class="col-lg-3 col-md-6 p-0 open-active feed_impressions" data="{{$key}}" value="{{$val->id}}" >
-                        <div class="media p-1">
-                           @if($val->price>0)
-                           <div class="unclock-overlay">
-                              <div class="unlock-btn-wrapepr">
-                                 <i class="fa-solid fa-lock"></i>
-                              </div>
+            <div class="tab-pane fade" id="pills-Premium" role="tabpanel" aria-labelledby="pills-Premium-tab">
+               <div class="premiumtab-wrapper">
+                  <div class="row">
+                     @foreach($model_feeds as $value) 
+                        @if($value->status=='1' && $value->schedule_date  <=$current_time && $value->price  <=0) 
+                        <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->i}}" data-toggle="modal" data-target="#largeModal">
+                           <div class="media p-1">
+                              @if(!empty($value->media_type))
+                                 @if($value->media_type=='png' || $value->media_type=='jpg'|| $value->media_type=='jpeg' || $value->media_type=='gif' || $value->media_type=='webp')
+                                    @if($val->price>0)
+                                    <img src="{{ url('images/Feed_media') . '/' . $value->blur_image ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+                                    @else
+                                    <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+                                    @endif 
+                                    {{-- <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" style="object-fit: cover;" height="180px" width="150px" alt="" /> --}}
+                                 @endif 
+                                 @if($value->media_type=='mp4')
+                                    <video controls class="feed_video" style="height:180px;">
+                                       <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/mp4" height="180px">
+                                       <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/ogg">
+                                    </video>
+                                 @endif 
+                              @endif
                            </div>
-                           @endif 
-                           @if($val->media_type=='png' OR $val->media_type=='jpg'OR
-                           $val->media_type=='jpeg'OR $val->media_type=='gif')
-                           <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" /> 
-                           @endif
-                           @if($val->media_type=='mp4')
-                           <video controls class="feed_video" style="height:180px;">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
-                           </video>
-                           @endif
                         </div>
-                     </div>
-                     @endforeach  
-                     @endif
+                        @endif 
+                     @endforeach
                   </div>
                </div>
             </div>
-            <div class="tab-pane fade " id="pills-Premium" role="tabpanel" aria-labelledby="pills-Premium-tab"
-               style="color: #fff">
-               <div class="pictab-wrapper">
-                  <div class="row" id="feed_data">
-                     @if(!empty($model_feeds)) 
-                     @foreach($model_feeds as $key=> $val)
-                    
-                     <div class="col-lg-3 col-md-6 p-0 open-active feed_impressions" data="{{$key}}" value="{{$val->id}}" >
-                        <div class="media p-1">
-                           @if($val->price>0)
-                           <div class="unclock-overlay">
-                              <div class="unlock-btn-wrapepr">
-                                 <i class="fa-solid fa-lock"></i>
-                              </div>
-                           </div>
-                           @endif 
-                           @if($val->media_type=='png' OR $val->media_type=='jpg'OR
-                           $val->media_type=='jpeg'OR $val->media_type=='gif')
-                           <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" /> 
-                           @endif
-                           @if($val->media_type=='mp4')
-                           <video controls class="feed_video" style="height:180px;">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
-                           </video>
-                           @endif
-                        </div>
-                     </div>
-                     @endforeach  
-                     @endif
-                  </div>
-               </div>
-            </div>
-        <!-- All feed popup slider -->
-            <div class="Feed-pooup-model">
+
+            <!-- All feed popup slider fsdfsdf -->
+            <div class="Feed-pooup-model" style="opacity: 0;">
                <div class="modal-dialog modal-md mt-5 mb-0">
-                  
-                  
                   <div class="modal-content">
                      <div class="modal-body">
                         <div class="Feed-pooup-model-close">X</div>
                         <div class="main-slick">
                            <div class="slider slide-show">
                               @foreach($model_feeds as $key=> $value)
-                              @php
-                              $feed_media=App\Models\Feed_media::where('feed_id',$value->org_id)->get();
-                              $dt = new DateTime(); $laraveltime = $dt->format('Y-m-d H:i:s'); $date1
-                              = new DateTime($value->created_at); $date2 = new DateTime($laraveltime);
-                              $difference = $date1->diff($date2);
-                              $diffInSeconds = $difference->s;
-                              $diffInMinutes = $difference->i; //23
-                              $diffInHours =
-                              $difference->h; //8
-                              $diffInDays = $difference->d; //21
-                              $diffInMonths =
-                              $difference->m;
-                              $diffInYears = $difference->y;
-                              @endphp
+                                 @php
+                                    $feed_media=App\Models\Feed_media::where('feed_id',$value->org_id)->get();
+                                    $dt = new DateTime(); $laraveltime = $dt->format('Y-m-d H:i:s'); $date1
+                                    = new DateTime($value->created_at); $date2 = new DateTime($laraveltime);
+                                    $difference = $date1->diff($date2);
+                                    $diffInSeconds = $difference->s;
+                                    $diffInMinutes = $difference->i; //23
+                                    $diffInHours =
+                                    $difference->h; //8
+                                    $diffInDays = $difference->d; //21
+                                    $diffInMonths =
+                                    $difference->m;
+                                    $diffInYears = $difference->y;
+                                 @endphp
                                  <div class="slider-item IndexID{{$value->id}}">
                                     <div class="carousel_header">
                                        <div class="d-flex text-white justify-content-between">
                                           <div class="d-flex ">
-                                             <img class="img-fluid header_img"
-                                                src="{{ url('profile-image') . '/' . $slugdata->user->profile_image ?? '' }}"
-                                                alt="" />
+                                             <img class="img-fluid header_img" src="{{ url('profile-image') . '/' . $slugdata->user->profile_image ?? '' }}" alt="" />
                                              <p class="ml-2 mt-2">
-                                                {!!$slugdata->user->first_name ??'' !!}{!!$slugdata->user->last_name ??'' !!}
+                                                {{ $slugdata->user->first_name ??' '.$slugdata->user->last_name ??'' }}
                                              </p>
                                              @if($slugdata->user->user_status=='verified')
-                                             <i class="bi bi-patch-check-fill mt-2 ml-1">@endif
-                                             </i>
+                                             <i class="bi bi-patch-check-fill mt-2 ml-1"></i>
+                                             @endif
                                           </div>
-                                         
-                                             <small class="text-muted">
+                                       
+                                          <small class="text-muted">
                                              @if(!empty($diffInMinutes))
-                                             @if($diffInMinutes>0)
-                                             @if($diffInYears<1) @if($diffInMonths<1) @if($diffInDays<1) @if($diffInHours<1) <i
-                                                class="fa-solid fa-circle">
-                                             </i>  {{$diffInMinutes}} min ago
+                                                @if($diffInMinutes>0)
+                                                   @if($diffInYears<1) 
+                                                      @if($diffInMonths<1) 
+                                                         @if($diffInDays<1) 
+                                                            @if($diffInHours<1) 
+                                                               <i class="fa-solid fa-circle"></i>{{$diffInMinutes}} min ago
+                                                            @else
+                                                               <i class="fa-solid fa-circle"></i>  {{$diffInHours}} hr {{$diffInMinutes}} min ago
+                                                            @endif
+                                                         @else
+                                                         {{$diffInDays}} Days Ago
+                                                      @endif
+                                                   @else
+                                                   {{$diffInMonths}} Months Ago
+                                                @endif
                                              @else
-                                             <i class="fa-solid fa-circle"></i>  {{$diffInHours}} hr {{$diffInMinutes}}
-                                             min ago
+                                             {{$diffInYears}} Years Ago
                                              @endif
-                                             @else
-                                              {{$diffInDays}} Days Ago
+                                                @else
+                                                <i class="fa-solid fa-circle"></i>  Now
+                                                @endif
                                              @endif
-                                             @else
-                                              {{$diffInMonths}} Months Ago
-                                             @endif
-                                             @else
-                                              {{$diffInYears}} Years Ago
-                                             @endif
-                                             @else
-                                             <i class="fa-solid fa-circle"></i>  Now
-                                             @endif
-                                             @endif
-                                             </small>
-                                        
+                                          </small>
+                                       
                                        </div>
                                     </div>
-                                    
                                     @if(count($feed_media)>1)
                                     <div id="myCarousel{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
                                        <!-- Indicators -->
                                        <ol class="carousel-indicators">
                                           @foreach ($feed_media as $valu)
-                                          <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}"
-                                             class="{{ $loop->first ? 'active' : '' }}"></li>
+                                          <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
                                           @endforeach
                                        </ol>
                                        <!-- Wrapper for slides -->
-                                      
+                                    
                                        <div class="carousel-inner">
                                           @foreach ($feed_media as $item)
                                           <div class="item {{ $loop->first ? 'active' : '' }}">
@@ -980,30 +951,17 @@ li.nav-item.filter-nav.active {
                                                 <div class="unclock-overlay1">
                                                    <div class="unlock-btn-wrapepr-slider">
                                                       <i class="fa-solid fa-lock"></i>
-                                                      <button class="unlock-btn">
-                                                      Unlock for ${{$value->price}}
-                                                      </button>
+                                                      <button class="unlock-btn ">Unlock for ${{$value->price}}</button>
                                                    </div>
                                                 </div>
                                                 @endif
-                                                @if ($item->media_type == 'jpg' or
-                                                $item->media_type == 'png' or
-                                                $item->media_type == 'jpeg' or
-                                                $item->media_type == 'gif')
-                                                <img class="expolor-img"
-                                                   src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                   alt="" />
+                                                @if ($item->media_type == 'jpg' || $item->media_type == 'png' || $item->media_type == 'jpeg' || $item->media_type == 'gif' || $item->media_type=='webp')
+                                                <img class="expolor-img" src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" alt="" />
                                                 @endif
                                                 @if ($item->media_type == 'mp4')
-                                                <video width="320" height="240" controls>
-                                                   <source
-                                                      src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                      type="video/mp4">
-                                                   <source
-                                                      src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                      type="video/ogg">
-                                                   Your browser does not support the video
-                                                   tag.
+                                                <video height="240" controls>
+                                                   <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/mp4">
+                                                   <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/ogg">
                                                 </video>
                                                 @endif
                                              </div>
@@ -1022,37 +980,27 @@ li.nav-item.filter-nav.active {
                                     </div>
                                     @else
                                     @foreach ($feed_media as $item)
-                                   
                                     <div class="item {{ $loop->first ? 'active' : '' }}">
                                        <div class="item {{$loop->first?'active':''}}">
-                                          @if($value->price>0)
+                                          @if($value->price > 0 && !in_array($item->id, $isPaid))
                                           <div class="unclock-overlay1">
                                              <div class="unlock-btn-wrapepr-slider">
                                                 <i class="fa-solid fa-lock"></i>
-                                                <button class="unlock-btn">
-                                                Unlock for ${{$value->price}}
-                                                </button>
+                                                <button class="unlock-btn" data-id="{{$value->org_id}}" data-media_id="{{$item->id}}">Unlock for ${{$value->price}}</button>
                                              </div>
                                           </div>
                                           @endif
-                                          @if ($item->media_type == 'jpg' or
-                                          $item->media_type == 'png' or
-                                          $item->media_type == 'jpeg' or
-                                          $item->media_type == 'gif')
-                                          <img class="expolor-img"
-                                             src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                             alt="" />
+                                          @if ($item->media_type == 'jpg' || $item->media_type == 'png' || $item->media_type == 'jpeg' || $item->media_type == 'gif' || $item->media_type=='webp')
+                                             @if($value->price > 0 && !in_array($item->id, $isPaid))
+                                             <img class="expolor-img expolor-img-{{$item->id}}" src="{{ url('images/Feed_media') . '/' . $item->blur_image ?? '' }}" alt="" /> 
+                                             @else
+                                             <img class="expolor-img" src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" alt="" /> 
+                                             @endif 
                                           @endif
                                           @if ($item->media_type == 'mp4')
-                                          <video width="320" height="240" controls>
-                                             <source
-                                                src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                type="video/mp4">
-                                             <source
-                                                src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                                type="video/ogg">
-                                             Your browser does not support the video
-                                             tag.
+                                          <video height="240" controls style="width: 100%">
+                                             <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/mp4">
+                                             <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/ogg">
                                           </video>
                                           @endif
                                        </div>
@@ -1064,274 +1012,265 @@ li.nav-item.filter-nav.active {
                                           {!!$value->description!!}
                                        </div>
                                        <div class=" row footer_row foot_line  mt-1">
-                                        
-                                          
+
                                              <div class="send-mess input-group d-flex">
-                
+               
                                                 <input type="text " id="emoji-picker" value="" placeholder="Send a message for @if(!empty($slugdata->cost_msg))${{$slugdata->cost_msg}}@endif"
                                                 class="postinput emoji-picker-input" />
                                                 <button 
                                                 class="model-contect-btn send-msg send-message-to-feed" value="{{$slugdata->user_id}}">
                                              <span class="send_msgbox"><i class="fa fa-paper-plane " aria-hidden="true"></i></span></button>
-                                              
+                                             
                                           </div>
                                           
                                        </div>
                                        <div  class=" row ml-0 mr-2 footer_row d-flex mt-1 ">
                                           <div class=" d-flex justify-content-around">
-                                             <a class="badge badge-primary" 
-                                                href=""><i class="bi bi-currency-dollar  footer_icon"></i><b>Tip</b>
-                                             </a>
+                                             <a class="" href=""><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                             <button  type="button" data-toggle="modal" data-target="#TipPoPups" data="{{ $slugdata->user->id }}"  class="badge badge-primary btn btn-secondary" ><i class="bi bi-currency-dollar footer_icon"></i><b>Tip</b></button>
                                              @if(count($Contact)>0) 
-                                              <a class="badge badge-primary" 
-                                            >
-                                             <i class="bi bi-plus-lg   footer_icon"></i><b>Added</b>
-                                          </a>  
-                                          @else<a class="badge badge-primary add-to-contact-ajax"  value="{{$slugdata->user->id}}"
-                                         >
-                                          <i class="bi bi-plus-lg   footer_icon" ></i><b>Add</b>
-                                       </a> @endif
-                                             
-                                          </div>
+                                             <a class="badge badge-primary" ><i class="bi bi-plus-lg footer_icon"></i><b>Added</b></a>  
+                                             @else
+                                             <a class="badge badge-primary add-to-contact-ajax"  value="{{$slugdata->user->id}}"><i class="bi bi-plus-lg footer_icon" ></i><b>Add</b></a> 
+                                             @endif
                                           </div>
                                        </div>
+                                    </div>
                                  </div>
                               @endforeach
-                             </div>
-                         </div>
-                       
+                           </div>
+                        </div>
                      </div>
                      <!-- Left and right controls -->
                   </div>
                </div>
-                     </div>
-                  </div>
-               </div>
             </div>
-            <!-- feeds slider end -->
-            <div class="tab-pane fade  " id="pills-pic" role="tabpanel" aria-labelledby="pills-pic-tab"
-               style="color: #fff">
-               <div class="pictab-wrapper">
-                  <div class="row">
-                     @if(!empty($model_feeds))
-                     @foreach($model_feeds as $value) 
-                     @if($value->media_type=='png' OR $value->media_type=='jpg'OR
-                     $value->media_type=='jpeg'OR $value->media_type=='gif')
-                     <div class="col-lg-3 col-md-6 p-0  feed_impressions" value="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
-                        <div class="media p-1">
-                           @if($value->price>0)
-                           <div class="unclock-overlay">
-                              <div class="unlock-btn-wrapepr">
-                                 <i class="fa-solid fa-lock"></i>
-                              </div>
-                           </div>
-                           @endif 
-                           <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" /> 
-                        </div>
-                     </div>
-                     @endif @endforeach @endif
-                  </div>
-               </div>
-            </div>
-            <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
-               <div class="videotab-wrapper">
-                  <div class="row">
-                     @foreach($model_feeds as $value) 
-                     @if($value->media_type=='mp4')
-                     <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
-                        <div class="media p-1">
-                           @if($value->price>0)
-                           <div class="unclock-overlay">
-                              <div class="unlock-btn-wrapepr">
-                                 <i class="fa-solid fa-lock"></i>
-                              </div>
-                           </div>
-                           @endif 
-                           <video controls class="feed_video" style="height:180px;">
-                              <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
-                           </video>
-                        </div>
-                     </div>
-                     @endif   
-                     @endforeach 
-                  </div>
-               </div>
-            </div>
-            <div class="tab-pane fade" id="pills-free" role="tabpanel" aria-labelledby="pills-free-tab">
-               <div class="freetab-wrapper">
-                  <div class="row">
-                     @foreach($model_feeds as $value) 
-                     @if( $value->schedule_date <=$current_time && $value->price >0) 
-                     <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
-                        <div class="media p-1">
-                           @if($value->price>0)
-                           <div class="unclock-overlay">
-                              <div class="unlock-btn-wrapepr">
-                                 <i class="fa-solid fa-lock"></i>
-                              </div>
-                           </div>
-                           @endif
-                           @if(!empty($val->media_type))
-                           @if($val->media_type=='png' OR $val->media_type=='jpg'OR
-                           $val->media_type=='jpeg'OR $val->media_type=='gif')
-                           <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" /> @endif
-                           @if($val->media_type=='mp4')
-                           <video controls class="feed_video" style="height:180px;">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
-                           </video>
-                           @endif @endif
-                        </div>
-                     </div>
-                     @endif
-                     @endforeach
-                  </div>
-               </div>
-            </div>
-            <div class="tab-pane fade" id="pills-Premium" role="tabpanel" aria-labelledby="pills-Premium-tab">
-               <div class="premiumtab-wrapper">
-                  <div class="row">
-                     @foreach($model_feeds as $value) 
-                     @if($value->status=='1' && $value->schedule_date  <=$current_time && $value->price  <=0) 
-                     <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->i}}" data-toggle="modal" data-target="#largeModal">
-                        <div class="media p-1">
-                           @if(!empty($value->media_type))
-                           @if($value->media_type=='png' OR $value->media_type=='jpg'OR $value->media_type=='jpeg'OR $value->media_type=='gif')
-                           <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
-                              style="object-fit: cover;" height="180px" width="150px" alt="" />
-                           @endif 
-                           @if($value->media_type=='mp4')
-                           <video controls class="feed_video" style="height:180px;">
-                              <source
-                                 src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
-                                 type="video/mp4" height="180px">
-                              <source
-                                 src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
-                                 type="video/ogg">
-                              Your browser does not support the video tag.
-                           </video>
-                           @endif 
-                           @endif
-                        </div>
-                     </div>
-                     @endif 
-                     @endforeach
-                  </div>
-               </div>
-            </div>
-            <form>
-               <input type="hidden" id="modelid" name="modelvalue" value="{{$slugdata->user_id}}">
-            </form>
-            @if(count($model_feeds)>=5) 
-            <div class="" id="loadbtn">
-               <button type="button" class="login-btn"   >     View More </button>
-            </div>
-            @endif
-            <!-- <div class="viewmore-btn-wraper" id="loadbtn">
-               <button class="viewmore" value="{{$take}}">     View More </button>
-                </div> -->
-            @php $json_data = json_decode($slugdata->socail_links,true); @endphp
-            @if(( $json_data['twitter']??'') || ($json_data['facebook']??'') || ($json_data['website']??'') || ($json_data['camsite']??'') || ($json_data['spankpay']??'') || ($json_data['instagram']??''))
-            <div class="mylinks-wrapper">
-               <h3 class="my-links ml-4">My Links</h3>
-               {{$hu??''}}
-               <div class="mylink-wrapper row">
-                  @if(!empty($json_data['twitter']))
-                  <div class="modellink-wrrap col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-2">
-                     <img src="./image/ball2.png" alt="" />
-                     <a href="">{{$json_data['twitter']}}</a>
-                  </div>
-                  @endif
-                  @if(!empty($json_data['facebook']))
-                  <div class="modellink-wrrap col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-2">
-                     <img src="./image/ball1.png" alt="" />
-                     <a href="">{{$json_data['facebook']}}</a>
-                  </div>
-                  @endif
-                  @if(!empty($json_data['snapchat']))
-                  <div class="modellink-wrrap col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-2 ">
-                     <img src="./image/ball3.png" alt="" />
-                     <a href="">{{$json_data['snapchat']}}</a>
-                  </div>
-                  @endif
-                  @if(!empty($json_data['website']))
-                  <div class="modellink-wrrap col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-2 ">
-                     <img src="./image/ball3.png" alt="" />
-                     <a href="">{{$json_data['website']}}</a>
-                  </div>
-                  @endif
-                  @if(!empty($json_data['camsite']))
-                  <div class="modellink-wrrap col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-2 ">
-                     <img src="./image/ball3.png" alt="" />
-                     <a href="">{{$json_data['camsite']}}</a>
-                  </div>
-                  @endif
-                  @if(!empty($json_data['spankpay']))
-                  <div class="modellink-wrrap col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-2 ">
-                     <img src="./image/ball3.png" alt="" />
-                     <a href="">{{$json_data['spankpay']}}</a>
-                  </div>
-                  @endif
-                  @if(!empty($json_data['instagram']))
-                  <div class="modellink-wrrap col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-2 ">
-                     <img src="./image/ball3.png" alt="" />
-                     <a href="">{{$json_data['instagram']}}</a>
-                  </div>
-                  @endif
-               </div>
-            </div>
-            @endif
-            
-            <div class="Online-wrapper">
-               <h2>Online Now</h2>
-               <div class="online-imgs-wrapper">
-                  <div class="row  ">
-                     @foreach($online as $key => $value)
-                     @php
-                     $image=(Controller::modelImage('profile-image/'.$value->profile_image,'_250x300'))?Controller::modelImage($value->profile_image,'_250x300') : $value->profile_image;
-                     @endphp 
-                     <div class="col-md-3 col-xl-2 col-lg-2 col-sm-3  col-xs-12 mt-2">
-                        <div class="online_model">
-                           <a href="{{url('/'.$value->slug)}}">
-                           <img 
-                              src="{{ url('profile-image') . '/' . $image ?? '' }}" /></a>
-                        </div>
-                     </div>
-                     @endforeach 
-                     <div class=" col-md-3 col-xl-2 col-lg-2 col-sm-3  col-xs-12 mt-2">
-                        <a class="" href="{{ route('online-now') }}">
-                           <div class="viewmore-ovrelays"><span> View More</span></div>
-                           <div class="online_model">
-                              <img class="overlay_img" src="{{ url('profile-image') . '/' . $value->profile_image ?? '' }}" />
-                           </div>
-                        </a>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            @if(count($slugdata->tags)>0)
-            <div class="modeltags-wrapper">
-               <h2>Tags</h2>
-               <div class="modeltagss-wrapper">
-                  @foreach($slugdata->tags as $value)
-                  <a href=" {{ route('tags', $value->slug) }} ">
-                  <span> #{{$value->title}} </span></a>
-                  @endforeach
-               </div>
-            </div>
-            @endif
          </div>
       </div>
    </div>
+   <!-- feeds slider end -->
+   {{-- <div class="tab-pane fade  " id="pills-pic" role="tabpanel" aria-labelledby="pills-pic-tab"
+      style="color: #fff">
+      <div class="pictab-wrapper">
+         <div class="row">
+            @if(!empty($model_feeds))
+            @foreach($model_feeds as $value) 
+            @if($value->media_type=='png' OR $value->media_type=='jpg'OR
+            $value->media_type=='jpeg'OR $value->media_type=='gif')
+            <div class="col-lg-3 col-md-6 p-0  feed_impressions" value="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
+               <div class="media p-1">
+                  @if($value->price>0)
+                  <div class="unclock-overlay">
+                     <div class="unlock-btn-wrapepr">
+                        <i class="fa-solid fa-lock"></i>
+                     </div>
+                  </div>
+                  @endif 
+                  <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
+                     style="object-fit: cover;" height="180px" width="150px" alt="" /> 
+               </div>
+            </div>
+            @endif @endforeach @endif
+         </div>
+      </div>
+   </div>
+   <div class="tab-pane fade" id="pills-video" role="tabpanel" aria-labelledby="pills-video-tab">
+      <div class="videotab-wrapper">
+         <div class="row">
+            @foreach($model_feeds as $value) 
+            @if($value->media_type=='mp4')
+            <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
+               <div class="media p-1">
+                  @if($value->price>0)
+                  <div class="unclock-overlay">
+                     <div class="unlock-btn-wrapepr">
+                        <i class="fa-solid fa-lock"></i>
+                     </div>
+                  </div>
+                  @endif 
+                  <video controls class="feed_video" style="height:180px;">
+                     <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
+                        type="video/mp4" height="180px">
+                     <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
+                        type="video/ogg">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+            </div>
+            @endif   
+            @endforeach 
+         </div>
+      </div>
+   </div>
+   <div class="tab-pane fade" id="pills-free" role="tabpanel" aria-labelledby="pills-free-tab">
+      <div class="freetab-wrapper">
+         <div class="row">
+            @foreach($model_feeds as $value) 
+            @if( $value->schedule_date <=$current_time && $value->price >0) 
+            <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->id}}" data-toggle="modal" data-target="#largeModal">
+               <div class="media p-1">
+                  @if($value->price>0)
+                  <div class="unclock-overlay">
+                     <div class="unlock-btn-wrapepr">
+                        <i class="fa-solid fa-lock"></i>
+                     </div>
+                  </div>
+                  @endif
+                  @if(!empty($val->media_type))
+                  @if($val->media_type=='png' OR $val->media_type=='jpg'OR
+                  $val->media_type=='jpeg'OR $val->media_type=='gif')
+                  <img src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
+                     style="object-fit: cover;" height="180px" width="150px" alt="" /> @endif
+                  @if($val->media_type=='mp4')
+                  <video controls class="feed_video" style="height:180px;">
+                     <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
+                        type="video/mp4" height="180px">
+                     <source src="{{ url('images/Feed_media') . '/' . $val->medai ?? '' }}"
+                        type="video/ogg">
+                     Your browser does not support the video tag.
+                  </video>
+                  @endif @endif
+               </div>
+            </div>
+            @endif
+            @endforeach
+         </div>
+      </div>
+   </div>
+   <div class="tab-pane fade" id="pills-Premium" role="tabpanel" aria-labelledby="pills-Premium-tab">
+      <div class="premiumtab-wrapper">
+         <div class="row">
+            @foreach($model_feeds as $value) 
+            @if($value->status=='1' && $value->schedule_date  <=$current_time && $value->price  <=0) 
+            <div class="col-lg-3 col-md-6 p-0 feed_impressions" value="{{$value->i}}" data-toggle="modal" data-target="#largeModal">
+               <div class="media p-1">
+                  @if(!empty($value->media_type))
+                  @if($value->media_type=='png' OR $value->media_type=='jpg'OR $value->media_type=='jpeg'OR $value->media_type=='gif')
+                  <img src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
+                     style="object-fit: cover;" height="180px" width="150px" alt="" />
+                  @endif 
+                  @if($value->media_type=='mp4')
+                  <video controls class="feed_video" style="height:180px;">
+                     <source
+                        src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
+                        type="video/mp4" height="180px">
+                     <source
+                        src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}"
+                        type="video/ogg">
+                     Your browser does not support the video tag.
+                  </video>
+                  @endif 
+                  @endif
+               </div>
+            </div>
+            @endif 
+            @endforeach
+         </div>
+      </div>
+   </div> --}}
+   {{-- <form>
+      <input type="hidden" id="modelid" name="modelvalue" value="{{$slugdata->user_id}}">
+   </form> --}}
+   {{-- @if(count($model_feeds)>=5) 
+   <div class="" id="loadbtn">
+      <button type="button" class="login-btn">View More </button>
+   </div>
+   @endif --}}
+   <!-- <div class="viewmore-btn-wraper" id="loadbtn">
+            <button class="viewmore" value="{{$take}}">     View More </button>
+   </div> -->
+   @php $json_data = json_decode($slugdata->socail_links,true); @endphp
+   @if(( $json_data['twitter']??'') || ($json_data['facebook']??'') || ($json_data['website']??'') || ($json_data['camsite']??'') || ($json_data['spankpay']??'') || ($json_data['instagram']??''))
+   <div class="mylinks-wrapper">
+      <h3 class="my-links ml-4">My Links</h3>
+      {{$hu??''}}
+      <div class="mylink-wrapper row">
+         @if(!empty($json_data['twitter']))
+         <div class="modellink-wrrap col-sm-6 col-md-6 mt-2">
+            <img src="./image/ball2.png" alt="" />
+            <a href="">{{$json_data['twitter']}}</a>
+         </div>
+         @endif
+         @if(!empty($json_data['facebook']))
+         <div class="modellink-wrrap col-sm-6 col-md-6  mt-2">
+            <img src="./image/ball1.png" alt="" />
+            <a href="">{{$json_data['facebook']}}</a>
+         </div>
+         @endif
+         @if(!empty($json_data['snapchat']))
+         <div class="modellink-wrrap col-sm-6 col-md-6  mt-2 ">
+            <img src="./image/ball3.png" alt="" />
+            <a href="">{{$json_data['snapchat']}}</a>
+         </div>
+         @endif
+         @if(!empty($json_data['website']))
+         <div class="modellink-wrrap col-sm-6 col-md-6  mt-2 ">
+            <img src="./image/ball3.png" alt="" />
+            <a href="">{{$json_data['website']}}</a>
+         </div>
+         @endif
+         @if(!empty($json_data['camsite']))
+         <div class="modellink-wrrap col-sm-6 col-md-6 mt-2 ">
+            <img src="./image/ball3.png" alt="" />
+            <a href="">{{$json_data['camsite']}}</a>
+         </div>
+         @endif
+         @if(!empty($json_data['spankpay']))
+         <div class="modellink-wrrap col-sm-6 col-md-6  mt-2 ">
+            <img src="./image/ball3.png" alt="" />
+            <a href="">{{$json_data['spankpay']}}</a>
+         </div>
+         @endif
+         @if(!empty($json_data['instagram']))
+         <div class="modellink-wrrap col-sm-6 col-md-6 mt-2 ">
+            <img src="./image/ball3.png" alt="" />
+            <a class="" href="">{{$json_data['instagram']}}</a>
+         </div>
+         @endif
+      </div>
+   </div>
+   @endif
+   
+   <div class="Online-wrapper">
+      <h2>Online Now</h2>
+      <div class="online-imgs-wrapper">
+         <div class="row  ">
+            @foreach($online as $key => $value)
+            @php
+            $image=(Controller::modelImage('profile-image/'.$value->profile_image,'_250x300'))?Controller::modelImage($value->profile_image,'_250x300') : $value->profile_image;
+            @endphp 
+            <div class="col-md-3 col-xl-2 col-lg-2 col-sm-3  col-xs-12 mt-2">
+               <div class="online_model">
+                  <a href="{{url('/'.$value->slug)}}">
+                  <img src="{{ url('profile-image') . '/' . $image ?? '' }}" /></a>
+               </div>
+            </div>
+            @endforeach 
+            <div class=" col-md-3 col-xl-2 col-lg-2 col-sm-3  col-xs-12 mt-2">
+               <a class="" href="{{ route('online-now') }}">
+                  <div class="viewmore-ovrelays"><span> View More</span></div>
+                  <div class="online_model">
+                     <img class="overlay_img" src="{{ url('profile-image') . '/' . $value->profile_image ?? '' }}" />
+                  </div>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+   @if(count($slugdata->tags)>0)
+   <div class="modeltags-wrapper">
+      <h2>Tags</h2>
+      <div class="modeltagss-wrapper">
+         @foreach($slugdata->tags as $value)
+         <a href=" {{ route('tags', $value->slug) }} ">
+         <span> #{{$value->title}} </span></a>
+         @endforeach
+      </div>
+   </div>
+   @endif
+</div>
+</div>
+</div>
 </div>
 <!-- Modal -->
 </div>
@@ -1608,10 +1547,10 @@ li.nav-item.filter-nav.active {
       </div>
    
 
-                              <!-- <div class="modal fade" id="TipPoPup" tabindex="-1" role="dialog"
+                     <!-- <div class="modal fade" id="TipPoPup" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered" role="document">
-                              <div class="modal-content ">
+                              <div class="modal-content "> 
                               <div class="modal-header ">
                               <h5 class="modal-title color-white" id="exampleModalLongTitle">Send a tip to Christine Lewis
                               <br>
@@ -1648,171 +1587,204 @@ li.nav-item.filter-nav.active {
  -->
 
 
-                  @if(isset($copy_post))
+            @if(isset($copy_post))
 
-                              @php
-                              $copy_post_media=App\Models\Feed_media::where('feed_id',$copy_post->id)->get();
-                              $dt = new DateTime(); $laraveltime = $dt->format('Y-m-d H:i:s'); $date1
-                              = new DateTime($copy_post->created_at); $date2 = new DateTime($laraveltime);
-                              $difference = $date1->diff($date2);
-                              $diffInSeconds = $difference->s;
-                              //45
-                              $diffInMinutes = $difference->i; //23
-                              $diffInHours =
-                              $difference->h; //8
-                              $diffInDays = $difference->d; //21
-                              $diffInMonths =
-                              $difference->m;
-                              //4
-                              $diffInYears = $difference->y;
-                              @endphp
-                              <div class="modal fade " id="copy_post_model_fan" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-                                 aria-hidden="true">
-                                 <div class="modal-dialog modal-lg copy_post_popup">
-                                    <div class="modal-content copy_post_model_content">
-                                       <button type="button" class="close copy_pop_close" data-dismiss="modal" aria-label="Close">
-                                       <span aria-hidden="true"><i class="fa fa-times copy_pop_close_btn1" aria-hidden="true"></i></span>
-                                       </button>
-                                       <div class="modal-body">
-                                       <div class="carousel_header">
-                        <div class="d-flex text-white justify-content-between pt-2">
-                           <div class="d-flex ">
-                              <img class="img-fluid header_img"
-                                 src="{{ url('profile-image') . '/' . $slugdata->user->profile_image ?? '' }}"
-                                 alt="" />
-                              <p class="ml-2 mt-3">
-                                 {!!$slugdata->user->first_name!!}{!!$slugdata->user->last_name!!}
-                              </p>
-                              @if($slugdata->user->user_status=='verified')
-                              <i class="bi bi-patch-check-fill mt-2 ml-1">@endif
-                              </i>
-                              <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                                 </button> -->
-                           </div>
-                           <div>
-                              <small class="text-muted">
-                              @if(!empty($diffInMinutes))
-                              @if($diffInMinutes>0)
-                              @if($diffInYears<1) @if($diffInMonths<1) @if($diffInDays<1) @if($diffInHours<1) <i
-                                 class="fa-solid fa-circle">
-                              </i>  {{$diffInMinutes}} min ago
-                              @else
-                              <i class="fa-solid fa-circle"></i>  {{$diffInHours}} hr {{$diffInMinutes}}
-                              min ago
-                              @endif
-                              @else
-                              {{$diffInDays}} Days Ago
-                              @endif
-                              @else
-                              {{$diffInMonths}} Months Ago
-                              @endif
-                              @else
-                              {{$diffInYears}} Years Ago
-                              @endif
-                              @else
-                              <i class="fa-solid fa-circle"></i>  Now
-                              @endif
-                              @endif
-                              </small>
-                           </div>
-                        </div>
-                     </div>
-                        <div id="myCarousel11" class="carousel slide" data-ride="carousel">
-                           <!-- Indicators -->
-                           <ol class="carousel-indicators">
-                              @foreach ($copy_post_media as $valu)
-                              <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}"
-                                 class="{{ $loop->first ? 'active' : '' }}"></li>
-                              @endforeach
-                           </ol>
-                           <!-- Wrapper for slides -->
-                           <div class="carousel-inner gfjser">
-                              @foreach ($copy_post_media as $item)
-                              <div class="item {{ $loop->first ? 'active' : '' }}">
-                                 @if ($item->media_type == 'jpg' or
-                                 $item->media_type == 'png' or
-                                 $item->media_type == 'jpeg' or
-                                 $item->media_type == 'gif')
-                                 <img class="expolor-img"
-                                    src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                    alt="" />
-                                 @endif
-                                 @if ($item->media_type == 'mp4')
-                                 <video width="320" height="240" controls>
-                                    <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                       type="video/mp4">
-                                    <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                                       type="video/ogg">
-                                    Your browser does not support the video
-                                    tag.
-                                 </video>
-                                 @endif
-                              </div>
-                              @endforeach
-                           </div>
-                           <!-- Left and right controls -->
-                           <a class="left carousel-control" href="#myCarousel11" data-slide="prev">
-                           <span class="glyphicon glyphicon-chevron-left"></span>
-                           <span class="sr-only">Previous</span>
-                           </a>
-                           <a class="right carousel-control" href="#myCarousel11" data-slide="next">
-                           <span class="glyphicon glyphicon-chevron-right"></span>
-                           <span class="sr-only">Next</span>
-                           </a>
-                        </div>
-                        <div class=" pl-1 pr-1 text-white ">
-                           <div class="pt-3 footer_row foot_line text-white  ">
-                              {!!$copy_post->description!!}
-                           </div>
-                           <div class=" row footer_row foot_line  mt-1">
-                              <form class="" role="form" id="reg-form" method="POST"
-                                 class="form-horizontal" action="">
-                                 <div class=" ">
-                                    <div class="input-group d-flex">
-                                       <input type="text" placeholder="Send a message for ${{ $value->model->cost_msg }}"
-                                           class="postinput" />
-                                       <button type="button" data-toggle="modal" data-target="#exampleModalCenter3"
-                                           class="model-contect-btn send-msg"><span class="send_msgbox"><i class="fa fa-paper-plane"
-                                               aria-hidden="true"></i></span></button>
-                                   </div>
+            @php
+               $copy_post_media=App\Models\Feed_media::where('feed_id',$copy_post->id)->get();
+               $dt = new DateTime(); $laraveltime = $dt->format('Y-m-d H:i:s'); $date1
+               = new DateTime($copy_post->created_at); $date2 = new DateTime($laraveltime);
+               $difference = $date1->diff($date2);
+               $diffInSeconds = $difference->s;
+               //45
+               $diffInMinutes = $difference->i; //23
+               $diffInHours =
+               $difference->h; //8
+               $diffInDays = $difference->d; //21
+               $diffInMonths =
+               $difference->m;
+               //4
+               $diffInYears = $difference->y;
+            @endphp
+               <div class="modal fade " id="copy_post_model_fan" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg copy_post_popup">
+                     <div class="modal-content copy_post_model_content">
+                        <button type="button" class="close copy_pop_close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fa fa-times copy_pop_close_btn1" aria-hidden="true"></i></span>
+                        </button>
+                        <div class="modal-body">
+                           <div class="carousel_header">
+                              <div class="d-flex text-white justify-content-between pt-2">
+                                 <div class="d-flex ">
+                                    <img class="img-fluid header_img" src="{{ url('profile-image') . '/' . $slugdata->user->profile_image ?? '' }}" alt="" />
+                                    <p class="ml-2 mt-3">{!!$slugdata->user->first_name!!}{!!$slugdata->user->last_name!!}</p>
+                                    @if($slugdata->user->user_status=='verified')
+                                    <i class="bi bi-patch-check-fill mt-2 ml-1">@endif
+                                    </i>
+                                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button> -->
                                  </div>
-                              </form>
-                           </div>
-                           <div  class=" row ml-0 mr-2 footer_row  mt-1 justify-content-between" style="font-size: 16px;">
-                              <div class="col-6 text-center">
-                                 <i class="bi bi-plus-lg text-white  footer_icon"></i><a
-                                    href=""><b>Add</b></a>
+                                 <div>
+                                    <small class="text-muted">
+                                    @if(!empty($diffInMinutes))
+                                       @if($diffInMinutes>0)
+                                          @if($diffInYears<1) 
+                                             @if($diffInMonths<1) 
+                                                @if($diffInDays<1) 
+                                                   @if($diffInHours<1) 
+                                                      <i class="fa-solid fa-circle"></i>  {{$diffInMinutes}} min ago
+                                                   @else
+                                                      <i class="fa-solid fa-circle"></i>  {{$diffInHours}} hr {{$diffInMinutes}} min ago
+                                                   @endif
+                                                @else
+                                                {{$diffInDays}} Days Ago
+                                                @endif
+                                             @else
+                                             {{$diffInMonths}} Months Ago
+                                             @endif
+                                          @else
+                                          {{$diffInYears}} Years Ago
+                                          @endif
+                                       @else
+                                       <i class="fa-solid fa-circle"></i>  Now
+                                       @endif
+                                    @endif
+                                    </small>
+                                 </div>
                               </div>
-                              <div class="col-6 text-center">
-                                 <i class="bi bi-currency-dollar   footer_icon"></i><a
-                                    href=""><b>Tip</b></a>
+                           </div>
+                           <div id="myCarousel11" class="carousel slide" data-ride="carousel">
+                              <!-- Indicators -->
+                              <ol class="carousel-indicators">
+                                 @foreach ($copy_post_media as $valu)
+                                 <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+                                 @endforeach
+                              </ol>
+                              <!-- Wrapper for slides -->
+                              <div class="carousel-inner gfjser">
+                                 @foreach ($copy_post_media as $item)
+                                 <div class="item {{ $loop->first ? 'active' : '' }}">
+                                    @if ($item->media_type == 'jpg' || $item->media_type == 'png' || $item->media_type == 'jpeg' || $item->media_type == 'gif')
+                                    <img class="expolor-img" src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" alt="" />
+                                    @endif
+                                    @if ($item->media_type == 'mp4')
+                                    <video width="320" height="240" controls style="width: 100%">
+                                       <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/mp4">
+                                       <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/ogg">
+                                    </video>
+                                    @endif
+                                 </div>
+                                 @endforeach
+                              </div>
+                              <!-- Left and right controls -->
+                              <a class="left carousel-control" href="#myCarousel11" data-slide="prev">
+                                 <span class="glyphicon glyphicon-chevron-left"></span>
+                                 <span class="sr-only">Previous</span>
+                              </a>
+                              <a class="right carousel-control" href="#myCarousel11" data-slide="next">
+                                 <span class="glyphicon glyphicon-chevron-right"></span>
+                                 <span class="sr-only">Next</span>
+                              </a>
+                           </div>
+                           <div class=" pl-1 pr-1 text-white ">
+                              <div class="pt-3 footer_row foot_line text-white  ">
+                                 {!!$copy_post->description!!}
+                              </div>
+                              <div class=" row footer_row foot_line  mt-1">
+                                 <form class="" role="form" id="reg-form" method="POST"
+                                    class="form-horizontal" action="">
+                                    <div class=" ">
+                                       <div class="input-group d-flex">
+                                          <input type="text" placeholder="Send a message for ${{ $value->model->cost_msg }}"
+                                             class="postinput" />
+                                          <button type="button" data-toggle="modal" data-target="#exampleModalCenter3" class="model-contect-btn send-msg"><span class="send_msgbox"><i class="fa fa-paper-plane" aria-hidden="true"></i></span></button>
+                                    </div>
+                                    </div>
+                                 </form>
+                              </div>
+                              <div  class=" row ml-0 mr-2 footer_row  mt-1 justify-content-between" style="font-size: 16px;">
+                                 <div class="col-6 text-center">
+                                    <i class="bi bi-plus-lg text-white footer_icon"></i><a href=""><b>Add</b></a>
+                                 </div>
+                                 <div class="col-6 text-center">
+                                    <i class="bi bi-currency-dollar footer_icon"></i><a href=""><b>Tip</b></a>
+                                 </div>
                               </div>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
-            </div>
             @endif <!-- copylink end -->
             <script>
                $(document).ready(function() {
        
                   $(document).on("change blur keyup keydown",'#tips_fild',function() 
-                    { 
-                       $(this).val(); 
-                        if($(this).val()!='') 
-                        { 
-                              $('.doller_sin').addClass('d-block');
+                  { 
+                     $(this).val(); 
+                     if($(this).val()!='') 
+                     { 
+                        $('.doller_sin').addClass('d-block');
+                     }
+                     // return $('.PoPup_sign').removeClass('d-none'); 
+                  });
+                  $(document).on("click",".unlock-btn",function() {
+                     alert("click bound to document listening for #test-element");
+                  });
+
+                  $(document).on("click", ".unlock-btn",function() {
+                     var _self = $(this);
+                     var id = $(this).data('id');
+                     var media_id = $(this).data('media_id');
+                     var formData = {
+                        id: id,
+                        media_id:media_id
+                     };
+                     $.ajaxSetup({
+                        headers: {
+                           'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         }
-                        // return $('.PoPup_sign').removeClass('d-none'); 
-                        
-                       
-                    });
-   
-             });
-   
-            </script>
+                     });
+                     $.ajax({
+                        type: 'POST',
+                        url: '{{url('fan/feed-unlock-ajax')}}',
+                        data: formData,
+                        dataType: 'json',
+                        success: function (response) {
+                           console.log(response);
+                           if(response.status) {
+                              _self.closest('.unlock-btn-wrapepr-slider').remove();
+                              $('.unlock-image-overly-'+media_id).remove();
+                              
+                              $('.expolor-img-'+media_id).attr('src', response.image);
+                              $('.unlock-imag-'+media_id).attr('src', response.image);
+                           }
+                        },
+                        error: function (error) {
+                           console.log(error);
+                        }
+                     });
+                  });
+               });
+               function btn() {
+                 let x = document.getElementById("validform").value;
+                 
+                 let text;
+                 if (!x)
+                 {
+                     text = "Please input message";
+                     $("#demo").show().delay(4000).queue(function(n) {
+                        $(this).hide(); n();
+                     });
+                 }
+                 else
+                 {
+                     text = "";
+                 }
+                 document.getElementById("demo").innerHTML = text;
+               }
+               </script>
 @endsection 
 @section('scripts') 
 @parent 

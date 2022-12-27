@@ -862,7 +862,7 @@ span.wishlist {
                   </div>
                   @if(($model_feeds_premium_count)>=5) 
                <div class="" id="loadbtn">
-                  <button type="button" class="login-btn"  data-toggle="modal" data-target="#exampleModalCenter1" >     View More </button>
+                  <button type="button" class="login-btn"  data-toggle="modal" data-target="#exampleModalCenter1" >View More </button>
                </div>
                @endif
                </div>
@@ -1445,6 +1445,9 @@ overflow: hidden;
 position: relative;
 top:-75px;
 }
+.model-detilsinput{
+   font-size: 15px;
+}
 .loginfrom-wrapper1 {
 width: 100% !important;
 height: 100%;
@@ -1455,7 +1458,7 @@ width: 100%;
 height: 100%;
 }
 button.send-msg {
-background: #102437;
+/*background: #102437;*/
 height: 54px !important;
 margin-top: 15px;
 width: 46px;

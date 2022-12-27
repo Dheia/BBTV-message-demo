@@ -285,14 +285,14 @@ use App\Http\Controllers\Controller;
    } 
    .explore-heading-wrappe {
     justify-content: flex-end;
-}
-.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
-    outline: none !important;
-    opacity: .75;
-}
-input#tips_fild {
-    padding-left: 16px;
-}
+   }
+   .close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
+      outline: none !important;
+      opacity: .75;
+   }
+   input#tips_fild {
+      padding-left: 16px;
+   }
 
    .loadMoreBtn {
       background: linear-gradient(90deg, #af2990 0%, #4c2acd 100%);
@@ -413,7 +413,7 @@ input#tips_fild {
                               </div>
                            </div>
                            <div class="bank-balance pr-4" style="color:#A9AEB4;">
-                                 <p class="m-0">Account&nbsp;Balance</p>
+                                 <p class="m-0">Account Balance</p>
                                  <p class="m-0">{{Auth::user()->wallet}} Cr</p>
                               </div>
                            <div class="d-flex justify-content-between pl-2">
@@ -524,7 +524,7 @@ input#tips_fild {
    <div class="Online-now-models mt-3">
       <div class="row mt-4 mb-4">
          <div class="col-6 text-white">
-            <h5>Online&nbsp;<b>Now</b></h5>
+            <h5>Online <b>Now</b></h5>
          </div>
          <div class="col-6">
          </div>
@@ -559,7 +559,7 @@ input#tips_fild {
          <div class="">
             <div class="explore-heading-wrappe">
                <div class="col-6 text-white text-left">
-                  <h3>&nbsp;<b>Feeds</b></h3>
+                  <h3><b>Feeds</b></h3>
                </div>
                <!-- <img src="../image/exlpore-img.png" alt="" class="filter-openimg" />
                   <img
@@ -573,7 +573,7 @@ input#tips_fild {
                <div class="row">
                   <div class="col-lg-4 col-md-4  mt-5  m-screen-filter">
                      <div class="filter-wrapepr-1" style="width:100% !important;">
-                        <form id="serch" method="get" action="http://adultx.eoxyslive.com/fan/dashboard">
+                        <form id="serch" method="get" action="{{route('fan.dashboard.index')}}">
                            <div class="d-flex">
                               <div class="gender-filter-wrapper filt_wrap">
                                  <span> Post Type </span>
@@ -885,6 +885,30 @@ input#tips_fild {
 </div>
 </div>
 </div>
+
+{{-- Popup --}}
+
+<div class="Feed-pooup-model" style="opacity: 0;">
+   <div class="modal-dialog modal-md mt-5 mb-0">
+      <div class="modal-content">
+         <div class="modal-body">
+            <div class="Feed-pooup-model-close">X</div>
+            <div class="main-slick">
+               <div class="slider slide-show add-feed-ajax">
+                  @foreach ($explore as $number => $value)
+                     <div class="slider-item IndexID{{$value->feed_id}}">
+                        @include('frontend.fan.explore_feeds') 
+                     </div>
+                  @endforeach
+               </div>
+            </div>
+         </div>
+         <!-- Left and right controls -->
+      </div>
+   </div>
+</div>
+
+{{-- Popup --}}
 <style type="text/css">
    .d-flex.justify-content-between.account_cards {
    display: flex;

@@ -238,31 +238,31 @@ input#tips_fild {
          <p>{!! $value->description !!}</p>
          <div class="post-img-wrapper">
             @if ($unlock_feed_check <= 0)
-            @if ($value->price > 0)
-            <div class="unclock-overlay">
-               <div class="unlock-btn-wrapepr unlock-text text-center " style="display:none;">
-                  <h5>
-                  Confirm Unlock for ${{ $value->price }}
-                  <span>Once you have unlocked this media,<br>it is available in your
-                  Collection.</span>
-                  <h5>
-                  <form action="{{ url('fan/feed-unlock') }}" method="post">
-                     @csrf
-                     <input type="hidden" name="media_id" value="{{ $value->feed_id }}">
-                     <input type="hidden" name="Model_id" value="{{ $value->model_id }}">
-                     <input type="submit" class="unlock-btn"
-                        data-target="#exampleModalCenter3" value="Unlock">
-                  </form>
+               @if ($value->price > 0)
+               <div class="unclock-overlay">
+                  <div class="unlock-btn-wrapepr unlock-text text-center " style="display:none;">
+                     <h5>
+                     Confirm Unlock for ${{ $value->price }}
+                     <span>Once you have unlocked this media,<br>it is available in your
+                     Collection.</span>
+                     <h5>
+                     <form action="{{ url('fan/feed-unlock') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="media_id" value="{{ $value->feed_id }}">
+                        <input type="hidden" name="Model_id" value="{{ $value->model_id }}">
+                        <input type="submit" class="unlock-btn"
+                           data-target="#exampleModalCenter3" value="Unlock">
+                     </form>
+                  </div>
+                  <div class="unlock-btn-wrapepr locked-text">
+                     <i class="fa-solid fa-lock"></i>
+                     <button class="unlock-btn unlock_feed" data="{{ $value->price }}"
+                        data-target="#exampleModalCenter3" value="{{ $value->id }}">
+                     Unlock for ${{ $value->price }}
+                     </button>
+                  </div>
                </div>
-               <div class="unlock-btn-wrapepr locked-text">
-                  <i class="fa-solid fa-lock"></i>
-                  <button class="unlock-btn unlock_feed" data="{{ $value->price }}"
-                     data-target="#exampleModalCenter3" value="{{ $value->id }}">
-                  Unlock for ${{ $value->price }}
-                  </button>
-               </div>
-            </div>
-            @endif
+               @endif
             @endif
             <div id="myCarousel{{$value->feed_id}}" class="carousel slide" data-ride="carousel">
                <!-- Indicators -->

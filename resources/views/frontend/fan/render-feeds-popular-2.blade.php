@@ -1,5 +1,7 @@
 
 @foreach ($popularSection as $number => $value)
+@isset($value)
+   <div class="slider-item IndexID{{$value->feed_id}}">
    @if($number%2 == 0)
       @php
          $pupular = App\Models\ModelFeed::where('id', $value->feed_id)->first();
@@ -103,11 +105,11 @@
                   $item->media_type == 'jpeg' or
                   $item->media_type == 'jpeg' or
                   $item->media_type == 'webp')
-                  <img src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
+                  <img data="{{$value->feed_id}}" class="feed_impressions" src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
                      alt="" />
                   @endif
                   @if ($item->media_type == 'mp4')
-                  <video width="320" height="240"
+                  <video width="320" data="{{$value->feed_id}}" class="feed_impressions" height="240"
                      controls>
                      <source
                         src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
@@ -137,12 +139,12 @@
                            $item->media_type == 'png' or
                            $item->media_type == 'jpeg' or
                            $item->media_type == 'gif')
-                           <img class="expolor-img curouel-img-item"
+                           <img data="{{$value->feed_id}}" class="feed_impressions expolor-img curouel-img-item"
                               src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
                               alt="" />
                            @endif
                            @if ($item->media_type == 'mp4')
-                           <video width="320" height="240" controls>
+                           <video width="320" data="{{$value->feed_id}}" class="feed_impressions" height="240" controls>
                               <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
                                  type="video/mp4">
                               <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
@@ -198,5 +200,7 @@
       </div>
       @endisset
    @endif
+   </div>
+@endisset
 @endforeach
                                     

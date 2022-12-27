@@ -256,18 +256,14 @@
                         $item->media_type == 'png' or
                         $item->media_type == 'jpeg' or
                         $item->media_type == 'gif')
-                        <img class="expolor-img curouel-img-item"
+                        <img data="{{ $value->feed_id }}" class="expolor-img feed_impressions curouel-img-item"
                            src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
                            alt="" />
                         @endif
                         @if ($item->media_type == 'mp4')
                         <video width="320" height="240" controls>
-                           <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                              type="video/mp4">
-                           <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}"
-                              type="video/ogg">
-                           Your browser does not support the video
-                           tag.
+                           <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/mp4">
+                           <source src="{{ url('images/Feed_media') . '/' . $item->medai ?? '' }}" type="video/ogg">
                         </video>
                         @endif
                      </div>
@@ -310,229 +306,234 @@
 @else
    @php
       $pupular = App\Models\ModelFeed::where('id', $value->feed_id)->first();
-      $unlock_feed_check = App\Models\Feed_unlock::where('fan_id', $auth_id) ->where('model_id', $value->model_id) ->where('feed_id', $pupular->id)->count();
-      $model_contact = App\Models\Contacts::where('fan_id', $auth_id)->where('model_id', $value->model_id)->count();
-      $feedCollection = App\Models\Collection::where('fan_id', $auth_id)->where('feed_id', $value->feed_id)->count();
-      $feedmedialikes = App\Models\Model_feed_likes::where('feed_id', $value->feed_id)->count();
-      $Auth_feed = App\Models\Model_feed_likes::where('user_id', $auth_id)->where('feed_id', $value->feed_id)->count();
-      $total = count($explore);
-      $dt = new DateTime();
-      $laraveltime = $dt->format('Y-m-d H:i:s');
-      $date1 = new DateTime($value->schedule_date);
-      $date2 = new DateTime($laraveltime);
-      $difference = $date1->diff($date2);
-      $diffInSeconds = $difference->s; //45
-      $diffInMinutes = $difference->i; //23
-      $diffInHours = $difference->h; //8
-      $diffInDays = $difference->d; //21
-      $diffInMonths = $difference->m; //4
-      $diffInYears = $difference->y;
    @endphp
-   <!-- <div class="col-lg-6 col-md-6 col-sm-12"> -->
-   <div class="explore-posts-wraper mt-5">
-      <div class="expolor-post-wraper ">
-         <div class="postprofile-wrapper">
-            <div class="profile-img-wrapp mr-1">
-               <a href="{{ url('/', [$pupular->user->slug]) }}">
-               <img src="{{ url('profile-image') . '/' . $value->user->profile_image ?? '' }}"
-                  alt="" class="postprofile-img" /></a>
-            </div>
-            <div class="postname-wrapper ml-3">
-               <a href="{{ url('/', [$pupular->user->slug]) }}">
-                  <span>{{ $value->user->first_name ?? ' ' }}{{ $value->user->last_name ?? '' }}
-                     @if ($value->user->user_status == 'verified')
-                     <i class="fa fa-check-circle"></i>
-                     @endif
-                  </span>
-               </a>
-               <small>
-               @if ($diffInYears < 1)
-                  @if ($diffInMonths < 1)
-                     @if ($diffInDays < 1)
-                        @if ($diffInHours < 1)
-                        {{ $diffInMinutes }} min ago
+   @isset($pupular->id)
+      @php
+         
+         $unlock_feed_check = App\Models\Feed_unlock::where('fan_id', $auth_id) ->where('model_id', $value->model_id) ->where('feed_id', $pupular->id)->count();
+         $model_contact = App\Models\Contacts::where('fan_id', $auth_id)->where('model_id', $value->model_id)->count();
+         $feedCollection = App\Models\Collection::where('fan_id', $auth_id)->where('feed_id', $value->feed_id)->count();
+         $feedmedialikes = App\Models\Model_feed_likes::where('feed_id', $value->feed_id)->count();
+         $Auth_feed = App\Models\Model_feed_likes::where('user_id', $auth_id)->where('feed_id', $value->feed_id)->count();
+         $total = count($explore);
+         $dt = new DateTime();
+         $laraveltime = $dt->format('Y-m-d H:i:s');
+         $date1 = new DateTime($value->schedule_date);
+         $date2 = new DateTime($laraveltime);
+         $difference = $date1->diff($date2);
+         $diffInSeconds = $difference->s; //45
+         $diffInMinutes = $difference->i; //23
+         $diffInHours = $difference->h; //8
+         $diffInDays = $difference->d; //21
+         $diffInMonths = $difference->m; //4
+         $diffInYears = $difference->y;
+      @endphp
+      <!-- <div class="col-lg-6 col-md-6 col-sm-12"> -->
+      <div class="explore-posts-wraper mt-5">
+         <div class="expolor-post-wraper ">
+            <div class="postprofile-wrapper">
+               <div class="profile-img-wrapp mr-1 {{$value->feed_id}}">
+                  <a href="{{ url('/', [$pupular->user->slug]) }}">
+                  <img src="{{ url('profile-image') . '/' . ($value->user->profile_image) ?? '' }}"
+                     alt="" class="postprofile-img" /></a>
+               </div>
+               <div class="postname-wrapper ml-3">
+                  <a href="{{ url('/', [$pupular->user->slug]) }}">
+                     <span>{{ $value->user->first_name ?? ' ' }}{{ $value->user->last_name ?? '' }}
+                        @if ($value->user->user_status == 'verified')
+                        <i class="fa fa-check-circle"></i>
+                        @endif
+                     </span>
+                  </a>
+                  <small>
+                  @if ($diffInYears < 1)
+                     @if ($diffInMonths < 1)
+                        @if ($diffInDays < 1)
+                           @if ($diffInHours < 1)
+                           {{ $diffInMinutes }} min ago
+                           @else
+                           {{ $diffInHours }} hr {{ $diffInMinutes }} min ago
+                           @endif
                         @else
-                        {{ $diffInHours }} hr {{ $diffInMinutes }} min ago
+                        {{ $diffInDays }} Days Ago
                         @endif
                      @else
-                     {{ $diffInDays }} Days Ago
+                     {{ $diffInMonths }} Months Ago
                      @endif
                   @else
-                  {{ $diffInMonths }} Months Ago
+                  {{ $diffInYears }} Years Ago
                   @endif
-               @else
-               {{ $diffInYears }} Years Ago
-               @endif
-               </small>
-            </div>
-            <div class="post-icon-wrapepr">
-               {{-- <a class="addwish"><i data-id="{{ $value->id ?? '' }}"
-                  class="fa fa-heart-o add-to-wishlist"></i>{{ count($value->feedmedialikes) }}</a> --}}
-               <a class="addwish ">
-               <i
-                  data-id="{{ $value->id ?? '' }}"
-                  class=" add-to-wishlist addLike mr-1 @if ($Auth_feed > 0) feed_liked fa fa-heart @else fa fa-heart-o @endif"
-                  feed_id="{{ $value->feed_id }}">
-               </i><span class="LikesOnFeed"> @if($feedmedialikes>999) {{app(\App\Http\Controllers\frontend\model\FeedsController::class)->likesCounter($feedmedialikes)}} @else 
-               {{$feedmedialikes}}
-               @endif</span></a>
-               <div class="added">
-                  <i class="fa-solid fa-ellipsis-vertical dots"></i>
-                  <ul class="mydropdown-menu">
-                     @if ($value->price <= 0)
-                     <li class="feed-menu">
-                        <div 
-                           class="add-collection-ajax"  value="{{ $value->feed_id }}">@if($feedCollection<'1') Add To
-                           Collection @else Added To Collection @endif
-                        </div>
-                     </li>
-                     @endif
-                     <!-- <li><a class="editPostClass CopyLink" data="{{ url('/', [$pupular->user->slug]) }}"
-                        style=" cursor: pointer; " onclick="copy('.copyTo')">Copy Link To Post</a></li> -->
-                     <li class="feed-menu"><a class="editPostClass" onclick="copy('{{ url('/', [$pupular->user->slug ?? ''] ) }}?feed_id={{$value->feed_id}}')" style="cursor: pointer;">Copy Link To Post</a></li>
-                     <li class="feed-menu"><a class="editPostClass report_post" data="{{ $value->feed_id }}"
-                        data-toggle="modal" data-target="#PostReport" style=" cursor: pointer; ">Report
-                        Post</a>
-                     </li>
-                  </ul>
+                  </small>
                </div>
-            </div>
-         </div>
-         <div class="postimgs-wraper">
-            <p>{!! $value->description !!}</p>
-            <div class="post-img-wrapper">
-               @if ($unlock_feed_check <= 0)
-                  @if ($value->price > 0)
-                  @php
-                     $currentfeed = App\Models\Feed_media::where('blur_image', $value->blur_image)->first();
-                  @endphp
-                  <div class="unclock-overlay unlock-image-overly-{{ $currentfeed->id }}">
-                     <div class="unlock-btn-wrapepr unlock-text text-center " style="display:none;">
-                        <h5> Confirm Unlock for ${{ $value->price }} <span>Once you have unlocked this media,<br>it is available in your Collection.</span> </h5>
-                        {{-- 
-                        <form action="{{ url('fan/feed-unlock') }}" method="post">
-                           @csrf
-                           <input type="hidden" name="media_id" value="{{ $value->feed_id }}">
-                           <input type="hidden" name="Model_id" value="{{ $value->model_id }}">
-                           <input type="submit" class="unlock-btn" data-target="#exampleModalCenter3" value="Unlock">
-                        </form>
-                        --}}
-                        
-                        <button class="unlock-btn" data-mediaid="{{ $currentfeed->id }}" data-id="{{ $value->feed_id }}" data-modelId="{{ $value->model_id }}">Unlock</button>
-                     </div>
-                     <div class="unlock-btn-wrapepr locked-text">
-                        <i class="fa-solid fa-lock"></i>
-                        <button class="unlock-bt unlock_feed" data="{{ $value->price }}" data-target="#exampleModalCenter3" value="{{ $value->id }}"> Unlock for ${{ $value->price }}</button>
-                     </div>
+               <div class="post-icon-wrapepr">
+                  {{-- <a class="addwish"><i data-id="{{ $value->id ?? '' }}"
+                     class="fa fa-heart-o add-to-wishlist"></i>{{ count($value->feedmedialikes) }}</a> --}}
+                  <a class="addwish ">
+                  <i
+                     data-id="{{ $value->id ?? '' }}"
+                     class=" add-to-wishlist addLike mr-1 @if ($Auth_feed > 0) feed_liked fa fa-heart @else fa fa-heart-o @endif"
+                     feed_id="{{ $value->feed_id }}">
+                  </i><span class="LikesOnFeed"> @if($feedmedialikes>999) {{app(\App\Http\Controllers\frontend\model\FeedsController::class)->likesCounter($feedmedialikes)}} @else 
+                  {{$feedmedialikes}}
+                  @endif</span></a>
+                  <div class="added">
+                     <i class="fa-solid fa-ellipsis-vertical dots"></i>
+                     <ul class="mydropdown-menu">
+                        @if ($value->price <= 0)
+                        <li class="feed-menu">
+                           <div 
+                              class="add-collection-ajax"  value="{{ $value->feed_id }}">@if($feedCollection<'1') Add To
+                              Collection @else Added To Collection @endif
+                           </div>
+                        </li>
+                        @endif
+                        <!-- <li><a class="editPostClass CopyLink" data="{{ url('/', [$pupular->user->slug]) }}"
+                           style=" cursor: pointer; " onclick="copy('.copyTo')">Copy Link To Post</a></li> -->
+                        <li class="feed-menu"><a class="editPostClass" onclick="copy('{{ url('/', [$pupular->user->slug ?? ''] ) }}?feed_id={{$value->feed_id}}')" style="cursor: pointer;">Copy Link To Post</a></li>
+                        <li class="feed-menu"><a class="editPostClass report_post" data="{{ $value->feed_id }}"
+                           data-toggle="modal" data-target="#PostReport" style=" cursor: pointer; ">Report
+                           Post</a>
+                        </li>
+                     </ul>
                   </div>
-                  @endif
-                  @if(isset($value->blur_image))
+               </div>
+            </div>
+            <div class="postimgs-wraper">
+               <p>{!! $value->description !!}</p>
+               <div class="post-img-wrapper">
+                  @if ($unlock_feed_check <= 0)
+                     @if ($value->price > 0)
+                     @php
+                        $currentfeed = App\Models\Feed_media::where('blur_image', $value->blur_image)->first();
+                     @endphp
+                     <div class="unclock-overlay unlock-image-overly-{{ $currentfeed->id }}">
+                        <div class="unlock-btn-wrapepr unlock-text text-center " style="display:none;">
+                           <h5> Confirm Unlock for ${{ $value->price }} <span>Once you have unlocked this media,<br>it is available in your Collection.</span> </h5>
+                           {{-- 
+                           <form action="{{ url('fan/feed-unlock') }}" method="post">
+                              @csrf
+                              <input type="hidden" name="media_id" value="{{ $value->feed_id }}">
+                              <input type="hidden" name="Model_id" value="{{ $value->model_id }}">
+                              <input type="submit" class="unlock-btn" data-target="#exampleModalCenter3" value="Unlock">
+                           </form>
+                           --}}
+                           
+                           <button class="unlock-btn" data-mediaid="{{ $currentfeed->id }}" data-id="{{ $value->feed_id }}" data-modelId="{{ $value->model_id }}">Unlock</button>
+                        </div>
+                        <div class="unlock-btn-wrapepr locked-text">
+                           <i class="fa-solid fa-lock"></i>
+                           <button class="unlock-bt unlock_feed" data="{{ $value->price }}" data-target="#exampleModalCenter3" value="{{ $value->id }}"> Unlock for ${{ $value->price }}</button>
+                        </div>
+                     </div>
+                     @endif
+                     @if(isset($value->blur_image))
+                        @if ($value->media_type == 'jpg' || $value->media_type == 'png' || $value->media_type == 'jpeg' || $value->media_type == 'gif')
+                           <img data="{{ $value->feed_id }}" class="expolor-img feed_impressions expolor-img-{{ isset($currentfeed->id)?$currentfeed->id:'00' }}" style="min-height: 200px;" src="{{ isset($value->blur_image)? (url('images/Feed_media') . '/' . $value->blur_image ?? ''):'' }}" alt="" />
+                        @endif
+                     @endif
+                  @else 
                      @if ($value->media_type == 'jpg' || $value->media_type == 'png' || $value->media_type == 'jpeg' || $value->media_type == 'gif')
-                        <img class="expolor-img expolor-img-{{ isset($currentfeed->id)?$currentfeed->id:'00' }}" style="min-height: 200px;" src="{{ isset($value->blur_image)? (url('images/Feed_media') . '/' . $value->blur_image ?? ''):'' }}" alt="" />
+                        <img data="{{ $value->feed_id }}" class="expolor-img feed_impressions" style="min-height: 200px;" src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" alt="" />
                      @endif
                   @endif
-               @else 
-                  @if ($value->media_type == 'jpg' || $value->media_type == 'png' || $value->media_type == 'jpeg' || $value->media_type == 'gif')
-                     <img class="expolor-img" style="min-height: 200px;" src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" alt="" />
+                  @if ($value->media_type == 'mp4')
+                  <video width="320" height="240" controls>
+                     <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/mp4">
+                     <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/ogg">
+                  </video>
                   @endif
-               @endif
-               @if ($value->media_type == 'mp4')
-               <video width="320" height="240" controls>
-                  <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/mp4">
-                  <source src="{{ url('images/Feed_media') . '/' . $value->medai ?? '' }}" type="video/ogg">
-               </video>
-               @endif
+               </div>
+               <div class="send-mess d-flex">
+                  <div  class="emoji-btn"><i class="fa fa-smile-o emoji-button"  aria-hidden="true"></i></div>
+                  <input type="text " id="emoji-picker" value="" placeholder="Send a message for ${{ $value->model->cost_msg }}"
+                     class="postinput emoji-picker-input" />
+                  <button  
+                     class="model-contect-btn send-msg send-message-to-feed" value="{{$pupular->user->id}}">
+                  <span class="send_msgbox"><i class="fa fa-paper-plane" aria-hidden="true"></i></span></button>
+               </div>
             </div>
-            <div class="send-mess d-flex">
-               <div  class="emoji-btn"><i class="fa fa-smile-o emoji-button"  aria-hidden="true"></i></div>
-               <input type="text " id="emoji-picker" value="" placeholder="Send a message for ${{ $value->model->cost_msg }}"
-                  class="postinput emoji-picker-input" />
-               <button  
-                  class="model-contect-btn send-msg send-message-to-feed" value="{{$pupular->user->id}}">
-               <span class="send_msgbox"><i class="fa fa-paper-plane" aria-hidden="true"></i></span></button>
+            <div class="tips-add-icon-wrapper">
+               @if ($model_contact <= 0)
+               <a href="{{ url('fan/add-contact', [$value->model_id]) }}"> 
+                  <span data-toggle="modal" data-target="#exampleModalCenter3"> <i class="fa fa-plus"></i>Add</span>
+               </a>
+               @endif
+            <a href="{{route('chatify',$value->model_id)}}"> <span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-phone"></i>Call</span></a>
+               <a href="{{route('chatify',$value->model_id)}}"><span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-video-camera"></i>Video</span></a>
+               <span class="Tip_model_id" data-toggle="modal" data-target="#TipPoPup"
+                  data="{{ $value->model_id }}"> <i class="fa fa-dollar"></i> Tip</span>
             </div>
-         </div>
-         <div class="tips-add-icon-wrapper">
-            @if ($model_contact <= 0)
-            <a href="{{ url('fan/add-contact', [$value->model_id]) }}"> 
-               <span data-toggle="modal" data-target="#exampleModalCenter3"> <i class="fa fa-plus"></i>Add</span>
-            </a>
-            @endif
-           <a href="{{route('chatify',$value->model_id)}}"> <span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-phone"></i>Call</span></a>
-            <a href="{{route('chatify',$value->model_id)}}"><span data-toggle="modal" data-target="#exampleModalCenter3"><i class="fa fa-video-camera"></i>Video</span></a>
-            <span class="Tip_model_id" data-toggle="modal" data-target="#TipPoPup"
-               data="{{ $value->model_id }}"> <i class="fa fa-dollar"></i> Tip</span>
          </div>
       </div>
-   </div>
-   <!-- </div> -->
+      <!-- </div> -->
 
-   <div class="modal fade" id="PostReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content ">
-            <form action="{{ url('fan/report-post') }}" method="post">
-               <div class="modal-header ">
-                  <h4 class="modal-title color-white" id="exampleModalLongTitle">Why are you reporting this post?</h4>
-                  <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true" class="text-white">x</span>
-                  </button>
-               </div>
-               <div class="modal-body">
-                     @csrf
-                     <label for="">Reason</label>
-                     <textarea name="post_report_reason" class="form-control" id="" cols="5" rows="10" placeholder="Reason" required></textarea>
-                     <input type="hidden" name="feed_id" value="" class="report_feed_id">
-               </div>
-               <div class="modal-footer">
-               <button type="submit" class="send-tip-btn">Submit</button> 
-               </div>
-            </form>
+      <div class="modal fade" id="PostReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content ">
+               <form action="{{ url('fan/report-post') }}" method="post">
+                  <div class="modal-header ">
+                     <h4 class="modal-title color-white" id="exampleModalLongTitle">Why are you reporting this post?</h4>
+                     <button type="button" class="close color-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-white">x</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                        @csrf
+                        <label for="">Reason</label>
+                        <textarea name="post_report_reason" class="form-control" id="" cols="5" rows="10" placeholder="Reason" required></textarea>
+                        <input type="hidden" name="feed_id" value="" class="report_feed_id">
+                  </div>
+                  <div class="modal-footer">
+                  <button type="submit" class="send-tip-btn">Submit</button> 
+                  </div>
+               </form>
+            </div>
          </div>
       </div>
-   </div>
-   <script >
-         $(document).on("change blur keyup keydown",'#tips_fild',function() 
-         { 
-            $(this).val(); 
-            if($(this).val()!='') { 
-               $('.doller_sin').addClass('d-block');
-            }
-            // return $('.PoPup_sign').removeClass('d-none'); 
-         });
+      <script >
+            $(document).on("change blur keyup keydown",'#tips_fild',function() 
+            { 
+               $(this).val(); 
+               if($(this).val()!='') { 
+                  $('.doller_sin').addClass('d-block');
+               }
+               // return $('.PoPup_sign').removeClass('d-none'); 
+            });
 
-         // $(document).on("click", ".unlock-btn",function() {
-         //    var _self = $(this);
-         //    var id = $(this).data('id');
-         //    var media_id = $(this).data('media_id');
-         //    var formData = {
-         //       id: id,
-         //       media_id:media_id
-         //    };
-         //    $.ajaxSetup({
-         //       headers: {
-         //          'X-CSRF-TOKEN': '{{ csrf_token() }}'
-         //       }
-         //    });
-         //    $.ajax({
-         //       type: 'POST',
-         //       url: '{{url('fan/feed-unlock-ajax')}}',
-         //       data: formData,
-         //       dataType: 'json',
-         //       success: function (response) {
-         //          console.log(response);
-         //          if(response.status) {
-         //             _self.closest('.unlock-btn-wrapepr-slider').remove();
-         //             $('.unlock-image-overly-'+media_id).remove();
-                     
-         //             $('.expolor-img-'+media_id).attr('src', response.image);
-         //             $('.unlock-imag-'+media_id).attr('src', response.image);
-         //          }
-         //       },
-         //       error: function (error) {
-         //          console.log(error);
-         //       }
-         //    });
-         // });
-   </script>
+            // $(document).on("click", ".unlock-btn",function() {
+            //    var _self = $(this);
+            //    var id = $(this).data('id');
+            //    var media_id = $(this).data('media_id');
+            //    var formData = {
+            //       id: id,
+            //       media_id:media_id
+            //    };
+            //    $.ajaxSetup({
+            //       headers: {
+            //          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            //       }
+            //    });
+            //    $.ajax({
+            //       type: 'POST',
+            //       url: '{{url('fan/feed-unlock-ajax')}}',
+            //       data: formData,
+            //       dataType: 'json',
+            //       success: function (response) {
+            //          console.log(response);
+            //          if(response.status) {
+            //             _self.closest('.unlock-btn-wrapepr-slider').remove();
+            //             $('.unlock-image-overly-'+media_id).remove();
+                        
+            //             $('.expolor-img-'+media_id).attr('src', response.image);
+            //             $('.unlock-imag-'+media_id).attr('src', response.image);
+            //          }
+            //       },
+            //       error: function (error) {
+            //          console.log(error);
+            //       }
+            //    });
+            // });
+      </script>
+   @endisset
 @endif

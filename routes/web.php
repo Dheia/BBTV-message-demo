@@ -170,7 +170,7 @@ Route::group(['prefix' => 'fan', 'as' => 'fan.', 'middleware' => ['auth','FanMid
   
   Route::get('sendSMS', [fandashboardController::class, 'sendsms']);
   Route::get('add-contact-ajax',[ModeldashboardController::class, 'add_contact_ajax']);
-  Route::get('feeds-render',[ModeldashboardController::class, 'feeds_render']);
+  Route::get('feeds-render',[ModeldashboardController::class, ' ']);
   Route::post('prefrence', [fandashboardController::class, 'prefrence']);
   Route::get('online-now',[fandashboardController::class, 'online'])->name('online-now');
   Route::get('phone-sex',[fandashboardController::class, 'phonesex'])->name('phone-sex');

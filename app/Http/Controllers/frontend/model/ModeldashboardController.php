@@ -1951,65 +1951,66 @@ public function dismiss_notifications(Request $request){
     }
     return redirect()->back();
 }
-public function add_contact_ajax(Request $request){
-  $Contact=Contacts::where('fan_id',Auth::user()->id)->where('model_id',$request->ModelID)->count();
-  if($Contact<=0){
-   $newContact=new Contacts;
-   $newContact->fan_id=Auth::user()->id;
-   $newContact->model_id=$request->ModelID;
-   $newContact->save();
-   return response()->json(['status' => 'added']);
-  }
+    public function add_contact_ajax(Request $request){
+        $Contact=Contacts::where('fan_id',Auth::user()->id)->where('model_id',$request->ModelID)->count();
+        if($Contact<=0){
+            $newContact=new Contacts;
+            $newContact->fan_id=Auth::user()->id;
+            $newContact->model_id=$request->ModelID;
+            $newContact->save();
+            return response()->json(['status' => 'added']);
+        }
 
-}
-public function feeds_render(Request $request){
+    }
+    public function feeds_render(Request $request){
 
-    $auth_id=Auth::user()->id;
-    $current_time = Carbon::now();
+        $auth_id=Auth::user()->id;
+        $current_time = Carbon::now();
 
-    $explore=ModelFeed::leftjoin('users', 'users.id', '=', 'model_feeds.model_id')
-        ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
-        ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
-        ->leftjoin('contacts', 'contacts.model_id', '=', 'model_feeds.model_id')
-        ->where('model_feeds.status', '1')
-        ->where('model_feeds.explore', '1')
-        ->where('contacts.fan_id', Auth::user()->id)
-        ->where('model_feeds.schedule_date', '<=', $current_time)
-        ->groupBy('model_feeds.id')
-        ->orderBy('model_feeds.schedule_date','DESC')->skip($request->take)->take(5)->get();
-   
-   
-    $options = view("frontend.fan.render-feeds",compact('explore','auth_id'))->render();
+        $explore=ModelFeed::leftjoin('users', 'users.id', '=', 'model_feeds.model_id')
+            ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
+            ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
+            ->leftjoin('contacts', 'contacts.model_id', '=', 'model_feeds.model_id')
+            ->where('model_feeds.status', '1')
+            ->where('model_feeds.explore', '1')
+            ->where('contacts.fan_id', Auth::user()->id)
+            ->where('model_feeds.schedule_date', '<=', $current_time)
+            ->groupBy('model_feeds.id')
+            ->orderBy('model_feeds.schedule_date','DESC')->skip($request->take)->take(5)->get();
+    
+    
+        $options = view("frontend.fan.render-feeds",compact('explore','auth_id'))->render();
 
         $feed=ModelFeed::leftjoin('users', 'users.id', '=', 'model_feeds.model_id')
-        ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
-        ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
-        ->where('model_feeds.status', '1')
-        ->where('model_feeds.explore', '1')
-        ->where('model_feeds.schedule_date', '<=', $current_time)
-        ->groupBy('model_feeds.id')
-        ->orderBy('model_feeds.schedule_date','DESC')->skip($request->takeFeedPage)->take(6)->get();
+            ->leftjoin('models', 'models.user_id', '=', 'model_feeds.model_id')
+            ->leftjoin('feed_media', 'feed_media.feed_id', '=', 'model_feeds.id')
+            ->where('model_feeds.status', '1')
+            ->where('model_feeds.explore', '1')
+            ->where('model_feeds.schedule_date', '<=', $current_time)
+            ->groupBy('model_feeds.id')
+            ->orderBy('model_feeds.schedule_date','DESC')->skip($request->takeFeedPage)->take(6)->get();
 
+            
         
-      
         $feedData = view("frontend.fan.render-feeds-page",compact('feed','auth_id'))->render();
         $feedDataSecond = view("frontend.fan.render-feeds-page-2",compact('feed','auth_id'))->render();
-          
+            
 
         $popularSection = DB::table('model_feed_like')
-             ->select('feed_id', DB::raw('count(*) as number'))
-             ->orderBy('number','desc')
-             ->groupBy('feed_id')
-             ->skip($request->takeFeedPagePopular)
-             ->take(6)
-             ->get();  
+            ->select('feed_id', DB::raw('count(*) as number'))
+            ->orderBy('number','desc')
+            ->groupBy('feed_id')
+            ->skip($request->takeFeedPagePopular)
+            ->take(6)
+            ->get();  
 
+        // return $popularSection; 
         $puplarData = view("frontend.fan.render-feeds-popular",compact('popularSection','auth_id'))->render();
         $puplarDataSecond = view("frontend.fan.render-feeds-popular-2",compact('popularSection','auth_id'))->render();
 
         $newTake=$request->take+'5';
         $newTakePage=$request->takeFeedPage+'6';
-         $takePopular=$request->takeFeedPagePopular+'6';
+        $takePopular=$request->takeFeedPagePopular+'6';
         return response()->json(['status' => 'added','dataRender'=>$options,'newTake'=>$newTake,'feedData'=>$feedData,'feedDataSecond'=>$feedDataSecond,'newTakePage'=>$newTakePage,'takePopular'=>$takePopular,'puplarData'=>$puplarData,'puplarDataSecond'=>$puplarDataSecond]);
-  }
+    }
 }
